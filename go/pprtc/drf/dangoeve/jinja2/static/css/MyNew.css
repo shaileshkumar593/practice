@@ -1,0 +1,14 @@
+body{
+/*background-image:url(https://image.shutterstock.com/image-vector/jungle-zoo-themed-animal-background-450w-1018271374.jpg);*/
+background-image:url(https://buffer.com/library/content/images/size/w600/library/wp-content/uploads/2016/06/giphy.gif);
+background-repeat:no-repeat;
+background-size:cover;
+}
+
+table{
+margin : auto; background:yellow;
+}
+
+h1{
+color : red; text-align : center; font-family : tahoma;
+}

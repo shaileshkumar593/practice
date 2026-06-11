@@ -1,0 +1,87 @@
+﻿DJANGO Project Files & Description:
+__init__.py: 
+It is an empty file that tells to the Python that this directory should be considered as a Python package.
+
+settings.py: 
+It is the central configuration for all Django projects. 
+
+By default, INSTALLED_APPS contains the following apps:
+django.contrib.admin–The admin site. You’ll use it shortly.
+django.contrib.auth–An authentication system.
+django.contrib.contenttypes–A framework for content types.
+django.contrib.sessions–A session framework.
+django.contrib.messages–A messaging framework.
+django.contrib.staticfiles–Aframework for managing static files
+
+Middleware: 
+It is a framework of hooks into Django's request/response processing.  It has the following major components...!!
+1 TEMPLATES	2 DATABASES
+3 WSGI		4 SECRET_KEY
+5 ALLOWED_HOSTS 6 AUTH_PASSWORD_VALIDATORS
+
+Managing Static Files:
+Websites generally need to serve additional files such as images, JS, or CSS. 
+
+urls.py :
+Contains URL patterns for the Django project.
+
+wsgi.py:
+Contains WSGI configuration properties for the Django project. It is the recommended approach to deploy Django applications on production.
+
+manage.py: 
+It is a command-line utility,which allows us to interact with the project in various ways, also used to manage an application. It can perform app creation, runserver, run test cases and migrations.
+
+Django Admin Commnds:
+$ django-admin help --commands: 
+To display list of commands related django environment..!!
+1. check
+2. compilemessages
+3. createcachetable
+4. dbshell
+5. diffsettings
+6. dumpdata
+7. flush
+8. inspectdb
+9. loaddata
+10. makemessages
+11. makemigrations
+12. migrate
+13. runserver
+14. sendtestemail
+15. shell
+16. showmigrations
+17. sqlflush
+18. sqlmigrate
+19. sqlsequencereset
+20. squashmigrations
+21. startapp
+22. startproject
+23. test
+24. testserver
+
+Syntax:
+$django-admin help <subcommand>
+
+Example:
+$django-admin help check
+
+Example:
+django-admin help shell
+
+Example:
+$ django-admin version
+
+How to change Django Server Port:
+$ py manage.py runserver 8888
+Now Server running on port number: 8888
+We have to send the request with this port number only
+http://127.0.0.1:8888/
+
+NOTE:
+$python manage.py runserver 6666
+http://127.0.0.1:6666/
+If a port number already existed, It displays "This address is restricted" 
+
+BEST BOOKS FOR DJANGO
+Django for Beginners =>William S Vincent
+Build Your First Website with Django 2.2.2 =>Nigel George

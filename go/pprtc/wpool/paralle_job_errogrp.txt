@@ -1,0 +1,144 @@
+Step-by-step execution & semantics
+1. var g errgroup.Group
+    Creates an errgroup.Group value g.
+
+    Internally errgroup.Group wraps a sync.WaitGroup and collects the first non-nil error returned by any goroutine started via g.Go.
+
+    errgroup.Group itself does not provide cancellation unless you use errgroup.WithContext (more on that later).
+
+2. jobs := 10 and the for loop
+    The loop iterates i from 1 to 10 and schedules one goroutine per iteration.
+
+    Important closure gotcha — why jobID := i is used
+
+    If you wrote g.Go(func() error { fmt.Println(i); ... }) directly, all goroutines could print the same i (the loop variable) because the goroutine executes later and i would have advanced.
+
+    jobID := i creates a new local variable captured by the closure. That guarantees each goroutine sees the correct fixed job id.
+
+3. g.Go(func() error { ... })
+    g.Go does two things:
+
+    Internally increments its WaitGroup (so g.Wait() knows to wait for this goroutine).
+
+    Launches the provided function as a new goroutine immediately (non-blocking call).
+
+    The function must return error. If it returns a non-nil error, errgroup records it (see next step).
+
+    Note: g.Go returns immediately; it does not block the loop.
+
+4. The body of each goroutine
+    fmt.Printf("Processing job %d\n", jobID)
+    time.Sleep(500 * time.Millisecond)
+    return nil
+    Here we simulate doing work (sleep). The goroutine returns nil — meaning no error for that job.
+
+    If a goroutine returned a non-nil error, errgroup would record that error (the first non-nil one seen).
+
+5. g.Wait()
+    Blocks until all goroutines started via g.Go(...) have completed.
+
+    Returns:
+
+    nil if every goroutine returned nil.
+
+    The first non-nil error encountered (it does not return multiple errors).
+
+    Important: g.Wait() waits for all goroutines to finish, even if one returned an error — unless you used errgroup.WithContext, which pairs errgroup with a context.Context that is canceled on the first error (allowing goroutines that respect the context to stop early).
+
+6. After g.Wait()
+    If err != nil you handle the error; otherwise you can report success.
+
+    In your code all goroutines return nil, so g.Wait() returns nil and you print ✅ All jobs done.
+
+    Key behaviors & guarantees
+    Concurrency: You create 10 goroutines; they all run concurrently (subject to scheduler/CPU).
+
+    Ordering: No guaranteed ordering of Processing job X prints — depends on scheduler and timing.
+
+    Error handling:
+
+    errgroup.Group records only the first non-nil error.
+
+    Without WithContext there is no automatic cancellation of other goroutines when one errors.
+
+    Resource management: g.Wait() ensures you wait for completion; no goroutine leaks from these g.Go calls (assuming goroutine bodies eventually return).
+
+    Practical production tips
+    Use errgroup.WithContext if you want cancellation on error
+
+    g, ctx := errgroup.WithContext(context.Background())
+    g.Go(func() error {
+        select {
+        case <-ctx.Done(): return ctx.Err()
+        case <-doWork():
+            // ...
+        }
+        return nil
+    })
+When any goroutine returns a non-nil error, ctx is canceled — other goroutines that observe ctx.Done() can stop early.
+
+Limit concurrency when scheduling many tasks
+Launching thousands of goroutines might be fine, but often you want a bounded worker pool. Combine errgroup + semaphore channel:
+
+sem := make(chan struct{}, maxConcurrency)
+for i := 0; i < N; i++ {
+    i := i
+    sem <- struct{}{}       // acquire slot
+    g.Go(func() error {
+        defer func(){ <-sem }() // release slot
+        // work
+        return nil
+    })
+}
+g.Wait()
+Collect all errors if needed
+errgroup returns one error. If you need all errors, accumulate them inside goroutines (protected by a mutex) or use a multi-error aggregator.
+
+Avoid capturing loop variables — always copy into local (as you did with jobID := i).
+
+Make goroutines cancelable — design goroutine work to accept a context.Context so it can stop early when canceled.
+
+Example: WithContext + bounded concurrency
+A compact pattern combining cancellation and max parallelism:
+
+g, ctx := errgroup.WithContext(context.Background())
+sem := make(chan struct{}, 5) // at most 5 concurrent jobs
+
+for i := 1; i <= 20; i++ {
+    i := i
+    sem <- struct{}{} // acquire
+    g.Go(func() error {
+        defer func(){ <-sem }() // release
+        // check cancellation
+        select {
+        case <-ctx.Done():
+            return ctx.Err()
+        default:
+        }
+
+        // do work
+        fmt.Println("processing", i)
+        time.Sleep(200 * time.Millisecond)
+        return nil // or an error
+    })
+}
+
+if err := g.Wait(); err != nil {
+    // first error or context cancellation reason
+    fmt.Println("error:", err)
+}
+Final summary (short)
+errgroup.Group makes launching and waiting for many goroutines easy.
+
+g.Go(fn) starts a goroutine and collects any error fn returns.
+
+g.Wait() blocks until all started goroutines finish and returns the first non-nil error (if any).
+
+Use errgroup.WithContext to propagate cancellation on first error, and consider bounding concurrency for resource control.
+
+If you’d like, I can:
+
+Convert your example to use errgroup.WithContext and show early cancellation behavior, or
+
+Show a version that uses a bounded worker pool + errgroup so you run only N goroutines concurrently while still getting errgroup error semantics. Which one do you want?
+

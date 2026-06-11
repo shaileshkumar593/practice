@@ -1,0 +1,130 @@
+﻿Example: Passing Int values to a Web Page..!!
+STEP1: Create Project
+$django-admin startproject URLSTWO
+$cd URLSTWO
+
+STEP2:Create Application
+$django-admin startapp WebApp
+
+STEP3:$py manage.py runserver
+
+STEP4:Open Project with PyCharm or Any IDE(ATOM, Visual Studio Code, Sublime, Brackets..)
+
+STEP5: Do required settings, App configuration @ Installed Apps..!!
+
+STEP6:views.py
+from django.http import HttpResponse
+# Create your views here.
+def Home_Page(request):
+    return HttpResponse("<h1>Welcome to Home Page</h1>")
+def Index_Page(request,id):
+    return HttpResponse(f"Welcome to Index Page of-- {id}")
+
+NOTE:
+In PYTHON 'f'  indicates that these strings are used for formatting. formatted string literals or simply called "f-strings"
+
+STEP7:urls.py
+from django.urls import path
+from WebApp import views
+
+urlpatterns=[
+    path('',views.Home_Page),
+    path('index/<int:id>/',views.Index_Page),
+]
+
+STEP8:Runserver
+$py manage.py runserver
+
+STEP9:Send the request to Server
+http://127.0.0.1:8000/
+http://127.0.0.1:8000/index/1
+
+Example:kwargs attribute: 
+It allows you to pass additional arguments to the view function or method. It is in dictionary format. 
+
+STEP1: Create Project
+$django-admin startproject URLSTHREE
+$cd URLSTHREE
+
+STEP2:Create Application
+$django-admin startapp WebApp
+
+STEP3:$py manage.py runserver
+
+STEP4:Open Project with PyCharm or Any IDE(ATOM, Visual Studio Code, Sublime, Brackets..)
+
+STEP5: Do required settings, App configuration @ Installed Apps..!!
+
+STEP6:views.py
+from django.shortcuts import render
+from django.http import HttpResponse
+# Create your views here.
+def MyView(request,val1,val2):
+    Msg=val1+" "+val2+" "+"Home Page"
+    return HttpResponse(Msg)
+
+STEP7: urls.py
+from django.contrib import admin
+from django.urls import path
+from WebApp import views
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('home/', views.MyView, {'val1': 'Hey', 'val2': 'Welcome To'}),
+]
+
+STEP8:Runserver
+$py manage.py runserver
+
+STEP9:Send the request to Server
+http://127.0.0.1:8000/home
+
+Example: name attribute
+reverse() function:
+It can reverse a large variety of regular expression patterns for URLs.
+
+Syntax:
+reverse(viewname, urlconf=None, args=None, kwargs=None, current_app=None)
+
+EXAMPLE:
+$django-admin startproject URLSFOUR
+$cd URLSFOUR
+
+STEP2:Create Application
+$django-admin startapp WebApp
+
+STEP3:$py manage.py runserver
+
+STEP4:Open Project with PyCharm or Any IDE(ATOM, Visual Studio Code, Sublime, Brackets..)
+
+STEP5: Do required settings, App configuration @ Installed Apps..!!
+
+STEP6 views.py
+from django.shortcuts import render
+from django.http import HttpResponse,HttpResponseRedirect
+from django.urls import reverse
+# Create your views here.
+def home(request):
+    return HttpResponse("<a href='/hi'>Hello</a>")
+def MyView(request):
+    return HttpResponseRedirect(reverse('bye'))
+def ByeView(request):
+    return HttpResponse("Good Bye")
+
+STEP7: urls.py
+from django.contrib import admin
+from django.urls import path
+from WebApp import  views
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('home/',views.home,name='home'),
+    path('hi/',views.MyView,name='hi'),
+    path('bye/',views.ByeView,name='bye')
+]
+
+STEP8:Runserver
+$py manage.py runserver
+
+STEP9:Send the request to Server
+http://127.0.0.1:8000/home

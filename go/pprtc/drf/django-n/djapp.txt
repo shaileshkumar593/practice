@@ -1,0 +1,112 @@
+﻿Create & Configure Django Apps:
+A Django app is created to perform a particular functionality for your entire web application. 
+
+Example: 
+Login App, Registration App, Polling App, Feedback App..!!
+
+App & Project in Django
+1 An App is a web application which is written to perform business logic.
+2 A Project is a collection of configuration files and apps for a particular website. 
+3 An App can be in multiple projects.
+4 A Project can contain multiple apps. 
+
+Creating an App
+To create an app, we can use the following commands.
+
+Syntax(s):
+$django-admin startapp appname
+$python manage.py startapp appname
+$py manage.py startapp appname
+$python3 manage.py startapp appname (Linux)
+
+Example(s):
+$django-admin startapp WebApp
+$python manage.py startapp WebApp
+$py manage.py startapp WebApp
+$python3 manage.py startapp WebApp (Linux)
+ 
+WebApp Consist following Structure :
+├──WebApp
+│	├── __init__ .py
+│	├──admin.py
+│	├──apps.py
+│	├──migrations
+│	│	└── __init__ .py
+│	├──models.py
+│	├──tests.py
+│	└──views.py
+
+1 __init__.py 
+It is an empty file that tells to the Python that this directory should be considered as a Python package.
+
+2 admin.py
+You can register your models here which Django will use them with Django's admin interface.
+
+3 apps.py 
+Here you can place application specific configurations
+
+4 models.py 
+We define our database models, which Django automatically translates into database tables
+
+5 tests.py 
+Here you can store test functions to test your code.
+
+6 views.py 
+Here we handle the request/response logic for our web app
+
+7 migrations
+This directory stores database specific information as it relates to the models.
+
+Configuring App in Project: //settings.py
+Go to Installed_apps, at the end or start, provide recently created .
+
+Example:
+#User Defined Apps
+    'WebApp',
+
+views:
+A view is a place where we put our business logic of the application. 
+
+urls: 
+This is Python script that will store all URL  patterns for your project. 
+
+How URLs, Views are working? 
+The following diagram describes urls and views working principle..!!
+
+PIC:
+
+LIVE EXAMPLE on VIEWs & URLs:
+STEP1: Create Project
+$django-admin startproject djAppConfig
+$cd djAppConfig
+
+STEP2:Create Application
+$django-admin startapp WebApp
+
+STEP3:$py manage.py runserver
+
+STEP4:Open Project with PyCharm or Any IDE(ATOM, Visual Studio Code, Sublime, Brackets..)
+
+STEP5: Do required settings, App configuration @ Installed Apps..!!
+
+STEP6: views.py
+from django.http import HttpResponse
+# Create your views here.
+def HomePage(request):
+    return HttpResponse("Welcome to DJANGO Web World..!!")
+
+STEP7:urls.py
+from django.contrib import admin
+from django.urls import path
+from WebApp import views
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('home/',views.HomePage),
+]
+
+STEP8:Run the server
+$python manage.py runserver
+
+STEP9: Open web browser, send the request to Server
+127.0.0.1:8000/home

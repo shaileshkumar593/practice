@@ -1,0 +1,145 @@
+Deployment on pythonanywhere.com:
+---------------------------------
+pricing and signup-->beginner account(free)
+
+username:durgasoftdurga
+pwd:github12345
+
+Open the console and Create Virtual Environment:
+------------------------------------------------
+Console-->Bash-->
+
+$mkvirtualevn --python=python3.6 myproj
+$mkvirtualenv --python=python3.6 myproj
+
+
+here myproj is the name of the virtual environment
+
+(myproj) 09:40 ~ $
+
+If we are seeing this means our virtual enviroment created and active.
+
+Which package already installed in this virtual env:
+-----------------------------------------------------
+(myproj) 09:40 ~ $ pip list
+Package    Version
+---------- -------
+pip        18.1   
+setuptools 40.5.0 
+wheel      0.32.2 
+
+install django:
+--------------
+It is highly recommended to install the same version which is available on our local machine. 
+How to check our local machine django version:
+
+C:\Users\LENOVO>python
+Python 3.6.5 (v3.6.5:f59c093
+Type "help", "copyright", "c
+>>> import django
+>>> django.__version__
+'1.11'
+
+We can install django in virtualenv as follows.
+pip install -U django==1.11
+
+How to check whether django installed properly:
+-----------------------------------------------
+(myproj) 09:48 ~ $ pip list
+Package    Version
+---------- -------
+Django     1.11   
+pip        18.1   
+pytz       2018.7 
+setuptools 40.5.0 
+wheel      0.32.2 
+(myproj) 09:49 ~ $ which django-admin
+/home/durgasoftdjango/.virtualenvs/myproj/bin/djan
+go-admin
+
+Copy our application from github to our virtualenvironment(pythonanywhere):
+---------------------------------------------------------------------------
+https://github.com/djangodurga/django-second-deployment
+clone or download
+  copy url: https://github.com/djangodurga/django-second-deployment.git
+
+(myproj) 09:54 ~ $ git clone https://github.com/djangodurga/django-second-deployme
+nt.git                                                                            
+Cloning into 'django-second-deployment'...                                        
+remote: Enumerating objects: 29, done.
+remote: Counting objects: 100% (29/29), done.
+remote: Compressing objects: 100% (25/25), done.
+remote: Total 29 (delta 2), reused 29 (delta 2), pack-reused 0
+Unpacking objects: 100% (29/29), done.                                            
+Checking connectivity... done.  
+
+(myproj) 09:55 ~ $ ls                                                             
+README.txt  django-second-deployment                                              
+(myproj) 09:56 ~ $ cd django-second-deployment/                                   
+(myproj) 09:56 ~/django-second-deployment (master)$ ls                            
+secondproject                                                                     
+(myproj) 09:56 ~/django-second-deployment (master)$ cd secondproject/             
+(myproj) 09:56 ~/django-second-deployment/secondproject (master)$ python manage.py  makemigrations                                                                   
+No changes detected                                                               
+(myproj) 09:57 ~/django-second-deployment/secondproject (master)$ python manage.py  migrate
+
+(myproj) 09:58 ~/django-second-deployment/secondproject (master)$ pwd             
+/home/durgasoftdjango/django-second-deployment/secondproject
+
+This is the sourcecode path
+
+Configuration on the web tab:
+-----------------------------
+Add a new web app--->Next-->
+
+If we want to develop a fresh application we have to select Django.
+But if we have application already then we have to select
+
+Manual configuration (including virtualenvs)
+
+Next-->Select Python Version-->Python 3.6-->Next
+
+Source code:
+/home/durgasoftdjango/django-second-deployment/secondproject
+
+Virtualenv:
+/home/durgasoftdjango/.virtualenvs/myproj
+
+WSGI Configuration:
+-------------------
+WSGI configuration file:/var/www/durgasoftdjango_pythonanywhere_com_wsgi.py
+
+In the configuration file just remove Hello World related things
+
+# +++++++++++ DJANGO +++++++++++
+# To use your own django app use code like this:
+import os
+import sys
+#
+## assuming your django settings file is at '/home/durgasoftdjango/mysite/mysite/settings.py'
+## and your manage.py is is at '/home/durgasoftdjango/mysite/manage.py'
+path = '/home/durgasoftdjango/django-second-deployment/secondproject'
+if path not in sys.path:
+    sys.path.append(path)
+os.chdir(path)
+os.environ.setdefault('DJANGO_SETTINGS_MODULE','secondproject.settings')
+
+import django
+django.setup()
+#
+#os.environ['DJANGO_SETTINGS_MODULE'] = 'mysite.settings'
+#
+## then:
+from django.core.wsgi import get_wsgi_application
+application = get_wsgi_application()
+
+Add 'durgasoftdjango.pythonanywhere.com' to ALLOWED_HOSTS:
+---------------------------------------------------------
+from bash shell
+
+nano settings.py
+move to the required position and add :
+ALLOWED_HOSTS = ['durgasoftdjango.pythonanywhere.com']
+
+ctrl+o  to save
+ctrl+x  to close

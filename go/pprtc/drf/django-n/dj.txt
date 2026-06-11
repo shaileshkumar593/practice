@@ -1,0 +1,74 @@
+﻿What is Django project?
+It is collection of applications and configurations that, when combined together will make up the full web application or web site.
+
+Bank Project: It has the following list of different Apps. Every App performs particular task.
+==> Bank Accounts Application
+==> Fund Transfer Application
+==> Transactions Application
+==> Beneficiary Application
+==> WReports Application
+
+NOTE: 
+Django Applications are Reusable and Pluggable..!! 
+
+Example: 
+Polling App, News App, Every app provide one or more Services to the end user.
+
+Create a Folder or Directory for Django Projects:
+$mkdir djangoprojects6PM
+$cd djangoprojects6PM
+
+Creating the First Project in Django:
+Syntax:
+$ django-admin startproject projectname 
+django-admin ==> Command
+startproject ==> Option
+projectname ==> Name of the Project  as per the business Reqs.
+
+Example
+$ django-admin startproject BFSI
+$cd BFSI
+$dir
+#System Hidden Directories
+. ==> Current Directory
+.. ==> Root Directory/Parent Directory
+manage.py ==> manage django project root
+BFSI ==> Django level Directory
+
+tree: 
+Displays directory paths and (optionally) files in each subdirectory
+
+Syntax: 
+tree [/A][/F]
+
+Example:
+$ tree /f
+
+Django Project Architecture:
+[BFSI]/  <== Project root
+├── [BFSI]/ <== Django root
+     ├──asgi.py
+│   ├── __init__.py
+│   ├── settings.py
+│   ├── urls.py
+│   └── wsgi.py
+└── manage.py
+
+Running the Django Project
+Django project has a built-in development server.
+
+Example:
+$py manage.py runserver (Windows)
+OR
+$python manage.py runserver (Unix/Linux/Windows)
+OR
+$python3 manage.py runserver (Unix/Linux/Mac)
+
+py or python or python3 ==> Interpreter name
+manage.py ==> to mangage project resources
+runserver ==> Command 
+
+Server will run with few warnings, Just open any Major Web Browser , type==> http://127.0.0.1:8000
+It displays successful message with a rocket symbol..!
+
+To Quit the web-server hit the key Ctrl+C OR Ctrl+Break

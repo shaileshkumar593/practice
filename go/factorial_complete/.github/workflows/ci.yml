@@ -1,0 +1,27 @@
+name: Go CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Go
+      uses: actions/setup-go@v4
+      with:
+        go-version: '1.22'
+
+    - name: Test
+      run: go test ./...
+
+    - name: Build Docker
+      run: docker build -t factorial-test .
+
+    - name: Run Docker Tests
+      run: docker run factorial-test

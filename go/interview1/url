@@ -1,0 +1,70 @@
+https://ujjwalkarn.github.io/Machine-Learning-Tutorials/#general
+https://ujjwalkarn.github.io/Machine-Learning-Tutorials/#classification
+https://github.com/markhliu/ml_animated
+https://github.com/coder2j/pyspark-tutorial
+https://www.sparkplayground.com/tutorials/spark-theory/spark-architecture
+https://www.hellointerview.com/learn/system-design/in-a-hurry/introduction
+https://www.geeksforgeeks.org/system-design/indexing-in-system-design/
+https://substack.com/@bytebytego399569
+https://leetcode.com/discuss/post/1105898/system-design-introduction-to-distribute-wbuk/
+https://newsletter.systemdesign.one/p/distributed-systems
+https://github.com/Sairyss/system-design-patterns
+
+
+
+At IBM Software, we transform client challenges into solutions. Building the world’s leading AI-powered, cloud-native products that shape the future of business and society. Our legacy of innovation creates endless opportunities for IBMers to learn, grow, and make an impact on a global scale. Working in Software means joining a team fueled by curiosity and collaboration. You’ll work with diverse technologies, partners, and industries to design, develop, and deliver solutions that power digital transformation. With a culture that values innovation, growth, and continuous learning, IBM Software places you at the heart of IBM’s product and technology landscape. Here, you’ll have the tools and opportunities to advance your career while creating software that changes the world.
+
+Your role and responsibilities
+Contribute to developing and maintaining core Go components of our enterprise cryptographic platform, protecting sensitive data in the era of quantum computing. You will build and ship customer‑facing features and gain hands‑on experience solving high‑impact problems at scale.
+
+Build Go-based microservices following clean coding and secure-by-default principles.
+Build RESTful and gRPC APIs (Gin, Protobuf).
+Contribute test suites for Go code analysis, covering language constructs and crypto libraries.
+Work with Sql/NoSql databases.
+Contribute to Kafka-based event-driven workflows.
+Write meaningful and high coverage unit/integration tests and contribute to e2e tests.
+Containerize services (Docker) and deploy to Kubernetes/OpenShift; troubleshoot basic pods/logs/resource issues.
+Implement observability for services, including tracing, metrics, and logging.
+Participate in code reviews, Git workflows, and CI/CD pipelines following Agile practices.
+Required education
+Bachelor's Degree
+Preferred education
+Master's Degree
+Required technical and professional expertise
+2+ years Go experience (goroutines, channels, interfaces, errors)
+Experience with REST API best practices, familiarity with Gin framework, gRPC/Protobufs
+PostgreSQL + GORM; comfortable with transactions and indexes
+Git/ PR workflows, CI/CD familiarity
+Docker; familiarity with Kubernetes/OpenShift for deployment and debugging
+Strong CS fundamentals: data structures, OOP principles, networking basics
+Clean coding, Agile practices, strong communication
+Preferred technical and professional experience
+OpenTelemetry (traces/metrics/logs), Prometheus
+Swagger/Swaggo; testcontainers
+Kafka basics with Sarama
+Secure coding (OWASP), TLS/mTLS, secrets management
+Cloud exposure (AWS/Azure/IBM)
+Python or Java for tooling; exposure to AI/LLM integration is a plus
+Years of Experience:2 - 4
+
+https://www.bogotobogo.com/
+https://pclub.in/roadmap/2025/11/01/agentic-ai-and-rag-guide/
+https://github.com/NirDiamant/RAG_Techniques
+https://github.com/crewaiinc/crewai
+https://www.digitalocean.com/community/conceptual-articles/rag-ai-agents-agentic-rag-comparative-analysis
+https://refactoring.guru/design-patterns/factory-method
+https://github.com/Devinterview-io/react-interview-questions
+https://github.com/langchain-ai/langchain-mongodb
+https://www.langchain.com/langgraph
+https://github.com/langchain-ai/langchain
+https://www.datacamp.com/code-along/multimodal-ai-applications-langchain-openai-api
+https://medium.com/@sujith.adr/simple-retrieval-augmented-generation-rag-application-with-langchain-27781379c6cc
+https://www.pinecone.io/learn/series/langchain/langchain-intro/
+https://github.com/AdilShamim8/GenAI-Roadmap-with-Notes-Using-LangChain/tree/main/Day%2018%20Building%20end-to-end%20AI%20Agent%20in%20LangChain
+https://huggingface.co/learn/agents-course/en/unit0/introduction
+https://github.com/Devinterview-io/react-interview-questions
+https://www.geeksforgeeks.org/reactjs/react-interview-questions/
+https://doc.rust-lang.org/cargo/index.html
+https://doc.rust-lang.org/book/ch01-01-installation.html#installing-rustup-on-windows
+
+

@@ -1,0 +1,184 @@
+﻿ksrajuby@gmail.com
+ksrajupy@gmail.com 
+https://drive.google.com/drive/u/0/folders/14nch5fGHAM7QWzUsK8PI8X25VcPTsiFa
+
+
+Introduction to HTML:
+Hyper Text Markup Language is the standard markup language used to create web pages. 
+
+Features of HTML:
+1.HTML is highly flexible and Simple
+2.HTML is supported on almost every browser
+3.HTML is user friendly
+4.HTML is an open technology
+5.HTML is consistent and efficient
+
+Disadvantages of HTML:
+1.It can create only static and plain pages
+2.Need to write lot of code for making simple page
+3.Security features are not good in HTML.
+
+History of HTML:
+1989 => GML=> Generalized Markup Language
+1991 => SGML=>Standard Generalized Markup Language
+1994 =>HTML => Hyper Text  Markup Language
+1998 => HTML+XML==> XHTML ==> Extended Hyper Text Markup Language
+2008 ==> HTML5 ==> Advanced Hyper Text  Markup Language for better web Applications
+2016 ==> HTML5.1 ==> Advanced Hyper Text  Markup Language for all Gadgets and Widgets
+
+Define Tag:
+The text placed between left angular brace " < " and right angular brace " > " is called as TAG.
+Syntax:	<------>
+Example:	<html>
+
+Tags are classified into two types:
+1. Paired Tags:
+The tags that have both opening and closing tags are called as paired tags.
+Example:
+	<html>-----------------</html>
+	<body>-----------------</body>
+Note:
+The closing tag starts with a forward slash("/")
+
+2. Non-Paired Tags:
+The tags that have only opening tags but no closing tags are called as non-paired tags. It has the following alias names:
+1 Self closed Tags
+2 Forcefully closed Tags
+3 Empty Tags
+4 Singular Tags
+
+Example:
+	<br> or <br/> ==> break tag
+	<hr> or <hr/> ==> horizontal rule tag
+	<img> or <img/> ==> image tag
+
+Structure of html:
+<html>
+       <head>
+             <title>---------</title>
+       </head>
+       <body>
+            ----------
+            ----------
+       </body>
+</html>
+
+1. Launch any Text Editor (Notepad -Windows, Unix -VI, Linux -VIM)
+2. Enter required html source code
+
+<html>
+<head>
+<title>
+My First Web Page
+</title>
+</head>
+<body>
+Welcome to HTML World...!!
+</body>
+</html>
+
+3. Save with .htm or .html extension
+4. Run on any Major Web Browser (IE, Google Chrome, MFF)
+ 
+HTML Comments
+The comment tag is used to insert comments in the source code. Comments are not displayed in the browsers. You can use comments to explain your code.
+
+In HTML, a comment begins with <! -- And ends with -->. Any text you place after <!-- is comment.
+
+Example:Singline
+<!--This is a small comment-->
+
+Example:MultiLine
+<!-----This comment will not appear 
+in the browser----->
+
+Example
+<html>
+<head>
+<title>
+My First Page
+</title>
+</head>
+<body>
+<!-- Naresh i Technologies, Leader in IT Training-->
+</body>
+</html>
+
+Sections in HTML Document:
+HTML document has the following three Sections:
+
+1. Version Information Section
+2. Head Section
+3. Body Section
+
+1. HTML version information
+The <!DOCTYPE> declaration is not an HTML tag; it is an instruction to the web browser about what version of HTML the page is written in.
+
+NOTE:
+The <!DOCTYPE> declaration is NOT case sensitive
+
+Example:
+<!doctype html> or <DOCTYPE html>
+
+Head Section:
+The Head Tag is a Container Tag. It has the following tags.
+Tag		Description
+<title>		Defines the Document Title
+<link>		Defines the link using External Style Sheet
+<meta>		Defines meta information use to improve the rankings in search engines.
+<style>		To apply Style Sheets
+<script>		To validate the webpage at client side
+
+<title> Tag:
+The <title> tag is required in all HTML documents and it defines the title of the document. It is a paired tag.
+
+Syntax:
+<title> ........................ </title>
+
+<link> Tag:
+It defines a link between a document and an external resource. It is non-paired tag.
+
+Syntax:
+<link> or <link/>
+
+Attributes
+1. href   2. rel  3. type
+
+How to Add a Favicon to your Site?
+Favicons are also called shortcut icons. A favicon is a graphic image associated with a particular Web page and/or Web site. .The format of the image must be one of PNG or GIF or ICO. The format for the image you have chosen must be 16x16 pixels or 32x32 pixels.
+
+Example:
+<!DOCTYPE html>
+
+https://drive.google.com/drive/u/0/folders/14nch5fGHAM7QWzUsK8PI8X25VcPTsiFa
+
+<html>
+<head>
+<link rel="icon" type="image/ico" href="html5.png">
+</head>
+<body>
+Welcome to FavIcons..!!
+</body>
+</html>
+
+<meta> Tag: 
+Metadata is data (information) about data. The <meta> tag provides metadata about the HTML document. Metadata will not be displayed on the page, but will be machine parsable. Meta elements are typically used to specify page:
+
+1. meta keywords
+2. meta description
+3. meta author
+4. meta title
+5. meta charset
+6. meta viewport
+
+<style> Element
+It is used to define style information for an HTML document. It is a paired tag.
+
+Syntax:
+<style> ........................ </style>
+
+The HTML <script> Element
+It is used to define a client-side script, such as a Java Script. It is a paired tag.
+
+Syntax:
+<script> ........................ </script>

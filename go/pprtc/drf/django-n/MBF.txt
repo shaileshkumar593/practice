@@ -1,0 +1,178 @@
+﻿Model Based Forms:(MBF)
+1 We can create form based on Model, such type of forms are called MBF or Model Forms. 
+2 Model forms is we can grab end user input and we can save that input data in the database. 
+3 Django provides inbuilt support to develop model based forms  easily.
+
+How to develop MBF:
+1)While develop Form Class instead of inheriting forms.Form class, we have to inherit forms.ModelForm class.
+2) We have to write one nested class (Meta class) to specify Model information & required fields.
+
+class EmpForm(forms.ModelForm):
+Field declarations if we are performing any custom validations. 
+
+class Meta:
+The use of Meta class is simply to provide metadata to the ModelForm class. 
+
+CASE-1
+class Meta:
+# We have to specify Model class name and requied fields
+model=Emp
+fields='__all__'
+
+Example for meta options:
+I. model: Model class to use for creating Form
+II. fields: list to fields to include in the Form
+III. exclude: list of fields to exclude from the Form
+IV. widgets: a dictionary of field-widget pairs
+
+CASE-2: Instead of all fields if we want only selected fields, then we have to specify in Tuple format:
+class Meta: 
+  model=Emp
+  fields=('field1','field2','field3')#include
+
+CASE-3: Instead of all fields if we want to exclude certain fields,then we have to specify in List format:
+
+class Meta: 
+   model=Emp
+   fields=['field1','field2','field3']#exclude
+
+LIVE PROJECT ON DJ MBF/Model Forms:
+STEP1:
+$django-admin startproject djMBF
+$cd djMBF
+$py manage.py startapp WebApp
+
+STEP2:
+Do required settings, Installed Apps, templates, static folder configuarations....!!
+
+STEP3: models.py:
+from django.db import models
+# Create your models here.
+class Emp(models.Model):
+    Eid=models.IntegerField()
+    Name=models.CharField(max_length=100)
+    Salary=models.IntegerField()
+    Location=models.CharField(max_length=20)
+    Position=models.CharField(max_length=100)
+
+STEP4: Do required Migrations
+$py manage.py makemigrations
+$py manage.py sqlmigrate WebApp 0001
+$py manage.py migrate
+
+STEP5:admin.py
+from django.contrib import admin
+from WebApp.models import Emp
+# Register your models here.
+class EmpAdmin(admin.ModelAdmin):
+    list_display = ['Eid','Name','Salary', 'Location','Position']
+admin.site.register(Emp,EmpAdmin)
+
+STEP6:Creating SuperUser:
+$py manage.py createsuperuser
+Enter user Name:KSRaju
+Enter Email:ksrajupy@gmail.com
+Password:*********
+Re-Password:*********
+User Created Successfully....!!
+
+STEP7: Run The Server  send the request http://127.0.0.1:8000/admin/
+Login and check the Created Models and Tables. Don't enter data manually, Enter data from the Form...!!
+
+STEP8:forms.py:
+from django import forms
+from WebApp.models import Emp
+# fields with validations
+class EmpForm(forms.ModelForm):
+    class Meta:
+        model=Emp
+        fields='__all__'
+
+NOTE: 
+The all() method fetches all the records from the table
+
+STEP9:views.py
+from django.shortcuts import render
+from WebApp import forms
+from django.http import HttpResponseRedirect
+
+# Create your views here.
+def ThankView(request):
+    return render(request,'MyApp/Thanks.html')
+
+def Emp_View(request):
+    #form=forms.EmpForm()
+    if request.method=='POST':
+        form=forms.EmpForm(request.POST)
+        if form.is_valid():
+            form.save(commit=True)
+            return HttpResponseRedirect('/bye')
+    else:
+        form=forms.EmpForm()
+    return render(request,'MyApp/Registration.html',{'form':form})
+
+Step10: edata.html
+<!DOCTYPE html>
+{%load static%}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MBF with Bootstrap Framework..!!</title>
+<link rel="shortcut icon" type="image/png" href="{% static 'images/django.png' %}"/>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link href="{% static 'css/MyFile.css'%}" rel="stylesheet">
+</head>
+<body>
+<h2>Emp Registration Form..!!</h2>
+<div class="container" align="center">
+    <form method="POST">
+{{ form.as_p }}
+        {% csrf_token %}
+<input type="submit" value="StoreData" class="btn btn-success">
+        </form>
+    </div>
+</body>
+</html>
+
+Step11: thanks.html
+<!DOCTYPE html>
+{%load static%}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Thank for Store...!!</title>
+<link rel="shortcut icon" type="image/png" href="{% static 'images/django.png' %}"/>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link href="{% static 'css/MyFile.css' %}" rel="stylesheet"/>
+</head>
+<body>
+<h1>Hello Thanks for Store Data...!</h1>
+<h1>Good Bye....!!</h1>
+<b>To Enter More Data..</b><a href="http://127.0.0.1:8000/regis/">ClickMe</a>
+</body>
+</html>
+
+Step12:MyFile.css
+h2{
+text-align:center;
+}
+body{
+background-image:url(https://image.shutterstock.com/image-vector/christmas-greeting-card-calligraphic-season-450w-1192564498.jpg);
+background-repeat:no-repeat;
+background-size:cover;
+color:red;
+}
+
+Step13:urls.py
+from django.contrib import admin
+from django.urls import path
+from WebApp import views
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('regis/',views.Emp_View),
+    path('thanks/',views.ThankView),
+]
+
+Step:14
+Send the request to server http://127.0.0.1/regis
+Enter requried data, Click on Store Data, goto admin  refresh, entered data visible...!!

@@ -1,0 +1,192 @@
+What is a goroutine leak?
+A goroutine leak happens when a goroutine is started but never exits, even though its work is done or no longer needed.
+
+Result:
+
+Memory keeps growing 📈
+
+Goroutine count increases 📈
+
+CPU spikes or service slows down
+
+Eventually → OOM / crash
+
+🔥 Common causes of goroutine leaks (with fixes)
+1️⃣ Goroutine blocked on channel receive (most common)
+❌ Problem
+func worker(ch chan int) {
+	for {
+		v := <-ch   // blocks forever if no send
+		fmt.Println(v)
+	}
+}
+
+func main() {
+	ch := make(chan int)
+	go worker(ch)
+}
+✅ Fix: close channel
+func worker(ch chan int) {
+	for v := range ch {
+		fmt.Println(v)
+	}
+}
+
+func main() {
+	ch := make(chan int)
+	go worker(ch)
+
+	ch <- 1
+	close(ch)
+}
+📌 Rule: Sender closes, receiver ranges.
+
+2️⃣ Goroutine blocked on channel send
+❌ Problem
+func worker(ch chan int) {
+	ch <- 1 // blocks if no receiver
+}
+✅ Fix: buffered channel or select
+ch := make(chan int, 1)
+ch <- 1
+OR
+
+select {
+case ch <- 1:
+case <-time.After(time.Second):
+	return
+}
+3️⃣ Missing cancellation (no stop signal)
+❌ Problem
+func poll() {
+	for {
+		time.Sleep(time.Second)
+		doWork()
+	}
+}
+
+func main() {
+	go poll() // never stops
+}
+✅ Fix: context cancellation (BEST PRACTICE)
+func poll(ctx context.Context) {
+	for {
+		select {
+		case <-ctx.Done():
+			return
+		default:
+			doWork()
+			time.Sleep(time.Second)
+		}
+	}
+}
+
+func main() {
+	ctx, cancel := context.WithCancel(context.Background())
+	go poll(ctx)
+
+	time.Sleep(5 * time.Second)
+	cancel()
+}
+📌 Always pass context.Context to goroutines
+
+4️⃣ Goroutine leak due to time.Tick
+❌ Problem (classic)
+func worker() {
+	for range time.Tick(time.Second) {
+		doWork()
+	}
+}
+⚠️ time.Tick never stops → leak.
+
+✅ Fix: use time.NewTicker
+func worker(ctx context.Context) {
+	ticker := time.NewTicker(time.Second)
+	defer ticker.Stop()
+
+	for {
+		select {
+		case <-ticker.C:
+			doWork()
+		case <-ctx.Done():
+			return
+		}
+	}
+}
+5️⃣ HTTP request goroutines not exiting
+❌ Problem
+resp, _ := http.Get(url)
+// forgot resp.Body.Close()
+✅ Fix
+resp, err := http.Get(url)
+if err != nil {
+	return
+}
+defer resp.Body.Close()
+📌 Leaks connections + goroutines.
+
+6️⃣ Worker pool leak (jobs channel never closed)
+❌ Problem
+for i := 0; i < 5; i++ {
+	go worker(jobs)
+}
+// jobs never closed
+✅ Fix
+close(jobs)
+wg.Wait()
+Complete pattern:
+
+func worker(jobs <-chan int, wg *sync.WaitGroup) {
+	defer wg.Done()
+	for job := range jobs {
+		process(job)
+	}
+}
+7️⃣ select without exit path
+❌ Problem
+for {
+	select {
+	case msg := <-ch:
+		handle(msg)
+	}
+}
+✅ Fix
+for {
+	select {
+	case msg, ok := <-ch:
+		if !ok {
+			return
+		}
+	case <-ctx.Done():
+		return
+	}
+}
+🧪 How to detect goroutine leaks
+1️⃣ Runtime metrics
+fmt.Println("Goroutines:", runtime.NumGoroutine())
+2️⃣ pprof (BEST)
+import _ "net/http/pprof"
+curl http://localhost:6060/debug/pprof/goroutine?debug=2
+Look for:
+
+chan receive
+
+select
+
+time.Sleep
+stuck forever 👀
+
+3️⃣ Load testing
+Goroutine count should go up and then come down
+
+If it only goes up → leak
+
+🛡️ Golden rules to prevent goroutine leaks
+✅ Always have a shutdown signal
+✅ Use context.Context everywhere
+✅ Close channels properly
+✅ Avoid time.Tick
+✅ Don’t block forever on channels
+✅ Always defer resp.Body.Close()
+✅ Track goroutines with WaitGroup
+

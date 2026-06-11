@@ -1,0 +1,26 @@
+{
+    "scope" :"NATION",
+    "scope_detail":"India",
+    "config_key":"OtherOfficialList",
+	"config_value":{"OtherOfficialList":{"Codes":["979","984","490","985","986","987","988","1770","514","2506","996"
+                    ,"993","1003","1004","1006","529","530","1008","1201","1011","1838","1012","1013","1015","991","999","1047","1001","1002"]}}
+                   
+					
+}worked
+
+
+CREATE TABLE IF NOT EXISTS `risk_check_config`(
+        `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+        `hash_id` varchar(32 ) NOT NULL,
+        `scope` INTEGER DEFAULT 0,
+        `scope_detail` VARCHAR(255) NOT NULL,
+        `config_Key`  json NOT NULL,
+        `config_value`  json NOT NULL,
+        `override` Boolean DEFAULT false,
+        `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+        PRIMARY KEY (`id`),
+        UNIQUE KEY `hash_id` (`hash_id`),
+        KEY `scope_detail_idx` (`scope_detail`),
+        KEY `hash_id_idx` (`hash_id`)
+    );

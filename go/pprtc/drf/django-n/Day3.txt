@@ -1,0 +1,189 @@
+﻿HTML BODY SECTION:
+<body> Tag:
+This section contains, the contents of an HTML document, such as text, hyperlinks, images, Special Character, lists, tables, frames, forms etc. It is a paired tag.
+
+Syntax:
+<body>.......................</body>
+
+Body tag Attributes and Parameters:
+Attributes	Parameters
+bgcolor		ColorName/ColorCode
+background	image path
+text		ColorName/ColorCode
+
+Note: ColorCode Indicates Hexadecimal color number.
+
+HTML Colors
+As per W3C Standard the following 16 Colors are web-safe colors.
+
+White	Gray	Silver	Black
+Yellow	Lime	Aqua	Fuchsia
+Red	Green	Blue	Purple
+Maroon	Olive	Navy	Teal
+
+Color Values
+HTML colors are defined using a hexadecimal notation for the combination of Red, Green, and Blue color values (RGB). The lowest value that can be given to one of the light sources is 0 (in HEX: 00). The highest value is 255 (in HEX: FF). HEX values are specified as 3 pairs of two-digit numbers, starting with a # sign.
+
+#FF0000-->Red
+#00FF00-->Green
+#0000FF-->Blue
+#000000-->Black
+#FFFFFF -->White
+#FFFF00 -->Yellow
+#FF9900 -->Orange
+------------
+------------
+
+Example:
+<!doctype html>
+<html>
+<head>
+<title>
+Hexa Color Codes
+</title>
+</head>
+<body bgcolor="#00FFDD" text="FFFF00">
+<p>Working with Hexa color codes.</p>
+<p>We can make 16 million colors.</p>
+</body>
+</html>
+
+HTML5 SPECIAL CHARACTERS(Entities):
+Character entities can be typed as either a numbered entity or a named entity. All character entities begin with an ampersand (&) and end with a semicolon (;). Although every character entity has a numbered version, not everyone has a named version.
+
+Example:
+<!doctype html>
+<html>
+<head>
+<title>
+HTML Special Characters..!!
+</title>
+</head>
+<body>
+Welcome to Special Characters...!! &copy; &reg; &trade;
+</body>
+</html>
+
+1 Basic HTML:
+1 <!DOCTYPE>  	
+2 <html> 		
+3 <title> 		
+4 <body> 		
+5 <h1> to <h6> 	
+6 <p> 		
+7 <br> 		
+8 <hr> 		
+9 <!--...--> 	
+
+Headings in html:
+In html, we are having six heading styles. All the headings are paired tags.
+
+Syntax:
+<h1>--------------------------</h1>
+<h2>--------------------------</h2>
+<h3>--------------------------</h3>
+<h4>--------------------------</h4>
+<h5>--------------------------</h5>
+<h6>--------------------------</h6>
+
+Attributes	Parameters
+align		left, right, center
+
+Example
+<html>
+<head>
+<title>
+Headings in HTML..!!
+</title>
+</head>
+<body>
+<h1>Header One</h1>
+<h2>Header Two</h2>
+<h3>Header Three</h3>
+<h4>Header Four</h4>
+<h5>Header Five</h5>
+<h6>Header Six</h6>
+</body>
+</html>
+
+Paragraph tag:
+It is used to divide the text into different paragraphs. It is a paired tag.
+
+Syntax: <p>-------------</p>
+
+Attributes	Parameters
+align		left, right, center, justify
+
+Example
+<html>
+<head>
+<title>
+Paragraph tag
+</title>
+</head>
+<body>
+<p align="center">Welcome to Naresh i Technologies </p>
+<p align="left">Welcome to Naresh i Technologies </p>
+<p align="right">Welcome to Naresh i Technologies </p>
+<p align="justify">Some text...</p>
+</body>
+</html>
+
+<br> tag
+br stands for break. It is used to break a line and shift the following text to a new line. It is a non-paired tag.
+
+Syntax:	
+<br>
+
+Example:
+<html>
+<title>
+Welcome to HTML
+</title>
+<body>
+To break<br />lines<br />in a<br />paragraph,<br />use the br element.
+</body>
+</html>
+
+&nbsp;
+It stands for Non-Breaking Space. It is used to add more than one space between the words. It is a special Characters or entity
+
+Syntax: 
+&nbsp;
+
+Example:
+<!doctype html>
+<html>
+<title>
+Special Character
+</title>
+<body>
+This is example using special &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp codes<br>
+a &lt b <br/>
+&copy &trade;&amp;&142
+</body>
+</html>
+
+HR tag: (Horizontal Rule)
+hr tag is used to draw a line across the web page. It is non-paired tag.
+
+Syntax: <hr> or <hr/>
+
+Attributes 	Parameters
+color		ColorName/HexaColorCode
+size		pix
+width		% or pix	
+align		left, right, center
+noshade		noshade
+
+Example
+<head>
+<b><h1 align="center">I am Learning Web Language HTML</b></h1>
+</head>
+<body>
+<p>Naresh i Technologies.</p>
+<hr  size="4pix" width=20% align="right" noshade="noshade">
+<p>Leader in IT Training.</p>
+<hr>
+<p>Hyderabad-Ameerpet.</p>
+</body>

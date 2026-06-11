@@ -1,0 +1,150 @@
+WORKING WITH DJANGO WITH CSV FILES..!!
+Outputting CSV with Django
+Django uses Python's built-in CSV library to create Dynamic CSV (Comma Separated Values) file. We can use this library in our project's view file.
+
+STEP1:
+$django-admin startproject CSVProject
+
+STEP2:
+$django-admin startapp WebApp
+
+STEP3: Do Required Settings in settings.py file
+
+STEP4:views.py
+from django.http import HttpResponse
+import csv
+def getfile(request):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="BigData.csv"'
+    writer = csv.writer(response)
+    writer.writerow(['1001', 'Subba', 'Raju', 'S/W'])
+    writer.writerow(['1002', 'Sara', 'Thomson', 'Networking', '"Testing"'])
+    writer.writerow(['1003', 'Smith', 'John', 'H/W'])
+    return response
+
+NOTE:
+Content-Disposition: attachment; filename=FILENAME. The filename parameter can be used to suggest a name for the file into which the resource is downloaded by the browser.
+
+STEP5:urls.py
+from django.contrib import admin
+from django.urls import path
+from WebApp import views
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('csv/',views.getfile),
+]
+
+STEP6:send the request to webserver, it renders a CSV file
+http://127.0.0.1:8000/csv/
+
+
+EXAMPLE: CSV USING MODELS
+
+STEP1:
+$django-admin startproject CSVMODELPROJECT
+
+STEP2:
+$django-admin startapp WebApp
+
+STEP3: Do Required Settings in settings.py file
+
+STEP4:models.py
+from django.db import models
+# Create your models here.
+class Employee(models.Model):
+    eid=models.IntegerField()
+    ename=models.CharField(max_length=40)
+    econtact=models.CharField(max_length=40)
+
+STEP5:Do required Migrations
+$py manage.py makemigrations
+$py manage.py migrate
+
+STEP6:Creating Super User:
+$ python manage.py createsuperuser
+User Name:KSRAJU
+Email:ksrajupy@gmail.com
+Password:********
+Password(Again):********
+SuperUser Created Successfully..!!
+
+$ python manage.py runserver
+It is a Django Admin Dashboard.  But we can't see any Employee table here, do the following..!!
+
+STEP7:admin.py
+from django.contrib import admin
+from WebApp.models import Employee
+# Register your models here.
+class EmpAdmin(admin.ModelAdmin):
+    list_display = ['eid','ename','econtact']
+admin.site.register(Employee,EmpAdmin)
+
+STEP8:views.py
+from django.http import HttpResponse
+from WebApp.models import Employee
+import csv
+def getfile(request):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="BigData.csv"'
+    employees = Employee.objects.all()
+    writer = csv.writer(response)
+    for employee in employees:
+        writer.writerow([employee.eid, employee.ename, employee.econtact])
+    return response
+
+STEP9: urls.py
+from django.contrib import admin
+from django.urls import path
+from WebApp import views
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('csv/',views.getfile),
+]
+
+STEP10:send the request to web server: http://127.0.0.1:8000/csv
+
+WORKING WITH DJANGO AND PDF FILES:
+Outputting PDFs with Django
+This document explains how to output PDF files dynamically using Django views. This is made possible by the excellent, open-source ReportLab Python PDF library.
+
+$ pip install reportlab  
+>>> import reportlab
+If that command doesn’t raise any errors, the installation success.
+
+STEP1:
+$django-admin startproject PDFProject
+
+STEP2:
+$django-admin startapp WebApp
+
+STEP3:Do required settings in settings.py file
+
+STEP4: views.py
+from reportlab.pdfgen import canvas
+from django.http import HttpResponse
+def getpdf(request):
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="BigData.pdf"'
+    p = canvas.Canvas(response)
+    p.setFont("Times-Roman", 55)
+    p.drawString(100, 700, "Hei,DJANGO.")
+    p.showPage()
+    p.save()
+    return response
+
+NOTE:
+Go to google.com type pdf fonts list for pdf standard fonts..!!
+
+STEP5:urls.py
+from django.contrib import admin
+from django.urls import path
+from WebApp import views
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('pdf/',views.getpdf),
+]
+
+STEP6: send the request to webserver:http://127.0.0.1:8000/pdf/

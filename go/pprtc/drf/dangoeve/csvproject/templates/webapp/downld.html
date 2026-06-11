@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/myfile.css' %}">
+    <title>   Download Link Page ....!!! </title>
+
+</head>
+<body>
+<h1 style="color:red; text-align: center"> Below Is Link to Download file!!!!! </h1>
+<br>
+ <form method="POST"  enctype="multipart/form-data" style="text-align: center">
+     {% csrf_token %}
+     <a href="/getfile/"> Download file </a>&nbsp;&nbsp;
+     <button onclick="window.open('/getfile')">Download</button>&nbsp;&nbsp;
+     <button type="submit" onclick="window.open('/getfile')">Download!</button>
+
+ </form>
+</body>
+</html>

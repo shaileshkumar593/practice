@@ -1,0 +1,363 @@
+DJANGO FILE UPLOAD (DFU):
+In realtime projects, we can do file upload in django effectively through DFU.
+
+1. Basic Concepts
+Sending a file using POST method
+Set proper form encode type ==> enctype="multipart/form-data"
+Files are uploaded to request.FILES
+Dictionary Like Object
+Each file is UploadedFile Instance
+
+For reference:
+https://docs.djangoproject.com/en/2.1/topics/http/file-uploads/
+
+2 Configuration: settings.py 
+1. Media Root
+MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+
+2. Media URL
+MEDIA_URL ='/media/'
+
+3. Saving Media files on local Machine @ urls.py
+from django.conf import settings
+from django.conf.urls.static import static
+
+if settings.DEBUG:
+    urlpatterns +=static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)
+    urlpatterns +=static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+Handling Uploaded Files:
+1.Filestorage API-FileSystemStorage
+2. Model form fields FileField or ImageField
+
+Basics of File Upload:
+1 When files are submitted to the server, the file data ends up placed in request.FILES.
+2 It is mandatory for the HTML form to have the attribute enctype="multipart/form-data" set correctly. Otherwise the request.FILES will be empty.
+3 The form must be submitted using the POST method.
+4 Django have proper model fields to handle uploaded files: FileField and ImageField.
+5 The files uploaded to FileField or ImageField are not stored in the database but in the filesystem.
+6 FileField and ImageField are created as a string field in the database (usually VARCHAR), containing the reference to the actual file.
+7 If you delete a model instance containing FileField or ImageField, Django will not delete the physical file, but only the reference to the file.
+8 The request.FILES is a dictionary-like object. Each key in request.FILES is the name from the <input type="file" name="" />.
+9 Each value in request.FILES is an UploadedFile instance.
+10 You will need to set MEDIA_URL and MEDIA_ROOT in your project’s settings.py.
+
+LIVE  EXAMPLE ON SIMPLE FILE UPLOAD:
+STEP1:
+$django-admin startproject UploadFile
+$cd UploadFile
+
+STEP2:
+$django-admin startapp WebApp
+Configure required settings like templates, static, and Media
+
+STEP3:
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Working With Django File Upload..!!</title>
+</head>
+<body>
+<form method="POST"  enctype="multipart/form-data">
+{% csrf_token %}
+    <input type="file" name="myfile"> <br>
+    <button type="submit">Upload</button>
+</form>
+{% if uploaded_file_url %}
+    <p>File Uploaded at: <a href="{{ uploaded_file_url }}">{{ uploaded_file_url }}</a></p>
+  {% endif %}
+</body>
+</html>
+
+STEP4: views.py
+from django.shortcuts import render
+from django.core.files.storage import FileSystemStorage
+
+def simple_upload(request):
+    if request.method == 'POST' and request.FILES['myfile']:
+        myfile = request.FILES['myfile']
+        print(myfile.name)
+        print(myfile.size)
+        fs = FileSystemStorage()
+        filename = fs.save(myfile.name, myfile)
+        uploaded_file_url = fs.url(filename)
+        return render(request, 'SimpleUp.html',{'uploaded_file_url': uploaded_file_url})
+    return render(request, 'SimpleUp.html')
+
+STEP5: urls.py
+from django.contrib import admin
+from django.urls import path
+from WebApp import views
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('upload/',views.simple_upload),
+]
+
+NOTE:
+Uploaded file unable to display, Page not found (404)
+
+STEP6:
+Goto settings.py add under OS
+MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+Goto settings.py add under STATIC_URL
+MEDIA_URL ='/media/'
+
+STEP7:urls.py  (Add the the following media settings)
+from django.conf import settings
+from django.conf.urls.static import static
+
+if settings.DEBUG:
+    urlpatterns +=static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)
+    urlpatterns +=static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+STEP8:
+Run the server, send the request http://127.0.0.1:8000/upload
+Click on Browse Button, select the media (image, audio, video) resource location. Click on Upload, Click on the link to open uploaded resources on the new tab of the web browser..!!
+
+LIVE EXAMPLE TO UPLOAD A FILE WITH MODEL FORMS in DJANGO: 
+This is a way more convenient way. Model forms perform validation, automatically builds the absolute path for the upload, treats filename conflicts and other common tasks.
+
+STEP1:
+$django-admin startproject Upload_File
+
+STEP2:
+$django-admin startapp WebApp
+Configure app in settings.py
+Add templates ==> MyApp in the main folder
+MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+MEDIA_URL ='/media/'
+
+STEP3:models.py
+from django.db import models
+# Create your models here.
+class Student(models.Model):
+    Stdno=models.IntegerField()
+    Stdname=models.CharField(max_length=30)
+    ProfPic=models.FileField(blank=True,null=True)
+    StdAdd=models.CharField(max_length=30)
+
+STEP4: migrations
+$py manage.py makemigrations
+$py manage.py migrate
+
+STEP5:Create Super User to login to admin Interface:
+$ python manage.py createsuperuser
+User Name:KSRAJU
+Email:ksrajupy@gmail.com
+Password:********
+Password(Again):********
+SuperUser Created Successfully..!!
+
+$ python manage.py runserver
+Provide created username and password to login. It displays Django administration, It is a Django Admin Dashboard.  But we can't see any Student table here, do the following..!!
+
+STEP6:admin.py
+from django.contrib import admin
+from WebApp.models import Student
+# Register your models here.
+admin.site.register(Student)
+
+NOTE: 
+Afer implementing admin.py, refresh the url. It show the Created Table.
+
+Step7: forms.py
+from .models import Student
+from django import forms
+class StdForm(forms.ModelForm):
+    class Meta :
+        model = Student
+        fields =[
+            'Stdno',
+            'Stdname',
+            'ProfPic',
+            'StdAdd'
+        ]
+
+STEP8:Home.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home Page</title>
+</head>
+<body>
+<h1 style='color:red'> Welcome to Students HOME PAGE.....!!</h1>
+</body>
+</html>
+
+STEP9:StdAdd.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Data Add..!!</title>
+</head>
+<body>
+<form method="POST" action="" enctype="multipart/form-data">
+{% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="UpLoad">
+</form>
+</body>
+</html>
+
+Step10: views.py
+from django.shortcuts import render
+from django.http import HttpResponseRedirect
+from WebApp.forms import StdForm
+
+def Home(request):
+    return render(request,'MyApp/home.html')
+
+def AddNewStudent(request):
+    form = StdForm(request.POST or None ,request.FILES or None )
+    if form.is_valid():
+        instance= form.save()
+        instance.save()
+        return HttpResponseRedirect('/')
+    context={'form': form}
+    return  render (request,"MyApp/StdAdd.html",context)
+
+Step11 urls
+from django.contrib import admin
+from django.urls import path
+from WebApp import  views
+from django.conf import settings
+from django.conf.urls.static import static
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('',views.Home),
+    path('Add/',views.AddNewStudent),
+]
+
+if settings.DEBUG:
+    urlpatterns +=static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)
+    urlpatterns +=static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+How to Send Email in Django
+The most common use case for sending emails in a Django Application are for password reset, account activation and sending general notifications related to your app. Django also provides mechanisms to send error reports via email.
+
+Requirements
+To start sending transactional emails you will need:
+    A registered domain
+    An email service
+
+Basic Django Email Functions
+Django implements a module on top of Python’s smtplib, offering some very convenient functions, detailed below. The module is available at django.core.mail.
+
+send_mail()
+This is the simpliest way to send emails. It uses the following parameters:
+subject: A string;     
+message: A string;     
+from_email: A string;
+recipient_list: A list of strings;     
+fail_silently: A boolean;
+auth_user,    
+auth_password,    
+connection
+
+EXAMPLE:
+LIVE PROJECT EMAIL SENDING in DJANGO:
+STEP1:
+$django-admin startproject MailProject
+$cd MailProject
+
+STEP2:
+$django-admin startapp WebApp
+1. Configure the app in settings.py file, do templates settings
+2. Do Mail Configurations in settings.py file
+
+EMAIL_HOST='smtp.gmail.com'
+EMAIL_HOST_USER='djangotest25@gmail.com'
+EMAIL_HOST_PASSWORD='Test@123'
+EMAIL_PORT='587'
+EMAIL_USE_TLS=True
+
+NOTE: TLS ==> Transport Layer Security
+
+STEP3:forms.py
+from django import forms
+class SentForm(forms.Form):
+	name = forms.CharField(max_length=80,)
+	email = forms.CharField(max_length=80)
+	subject = forms.CharField(max_length=80)
+	message = forms.CharField(required=False)
+
+STEP4:mail.html
+<html>
+<head>
+<title>contact us</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+<body>
+<h2>Mail Sending Page..!!</h2>
+<hr>
+ <form  method="post">
+{% csrf_token %}
+     {{form.as_p}}
+ <button type="submit" name="save" class="btn btn-primary">submit </button>
+</form>
+</body>
+</html>
+
+STEP5:thanks.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello Email Services</title>
+</head>
+<body>
+<h1 style="color:red;font-family:tahoma;font-size:40px">Mail Send Successfully...!! </h1>
+</body>
+</html>
+
+STEP6:views.py
+from django.shortcuts import render
+from django.http import HttpResponseRedirect
+from django.core.mail import send_mail,EmailMessage
+from django.conf import settings
+from .forms import SentForm
+# Create your views here.
+
+def sending_mail(request):
+    if request.method == 'POST':
+        form = SentForm(request.POST)
+        if form.is_valid():
+            name= form.cleaned_data['name']
+            mail = form.cleaned_data['email']
+            sub = form.cleaned_data['subject']
+            message = form.cleaned_data['message']
+
+            send_mail('got mail from'+str(mail),
+                "name: "+str(name)+"\n"
+                "email:"+str(mail)+"\n"
+                "subject: "+str(sub)+"\n"
+                "message :"+ str(message),
+                settings.EMAIL_HOST_USER,
+                ['ksrajupy@gmail.com'],
+                fail_silently=False )
+            return HttpResponseRedirect('/thanks')
+    else:
+        form = SentForm()
+    return render(request,'MyApp/mail.html',{'form': form})
+
+def thanks(request):
+    return render(request,'MyApp/thanks.html')
+
+NOTE: To send to Muliple users ==> ['ksraju@gmail.com','rajap@gmail.com',...!!]
+
+STEP7:urls.py
+from django.contrib import admin
+from django.urls import path
+from WebApp import views
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('mail/',views.sending_mail),
+    path('thanks/', views.thanks),
+]
+
+STEP8:send the request to webserver http://127.0.0.1:8000/mail/

@@ -1,0 +1,201 @@
+WORKING WITH DJANGO CLASS BASED VIEWS(CBV)
+Class-based views provide an alternative way to implement views as Python objects instead of functions. They do not replace function-based views. Organization of code related to specific HTTP methods ('get', 'post', 'put', 'patch', 'delete', 'head', 'options', 'trace') can be addressed by separate methods instead of conditional branching.  CBV introduced in Django 1.3 to implement Generic Views.
+
+CBV vs FBV:
+1) When compared with Function Based views,class Based views are simple.
+2)Implicitly Class Based Views will be converted into Function Based Views.
+3)Function Based Views are more efficient than Class Based Views.
+4)For Simple operations CBV, Complex operations FBV are good.
+
+Class-Based View Example
+If you created a view extending the django.views.View base class, the dispatch() method will handle the HTTP method logic. If the request is a POST, it will execute the post() method inside the view, if the request is a GET, it will execute the get() method inside the view.
+
+Live  Project on Basic Class Based Views:
+STEP1:
+$django-admin startproject djClassPro
+
+STEP2:
+$django-admin startapp WebApp (Do required configuarations)
+
+STEP3:views.py
+from django.views.generic import View
+from django.http import HttpResponse
+# Create your views here.
+class CBV(View):
+    def get(self,request):
+        return HttpResponse("<h1 style='color:red'>Welcome to Class Based Views</h1>")
+
+STEP4:urls.py
+from django.contrib import admin
+from django.urls import path
+from WebApp import views
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('CBV/',views.CBV.as_view()),
+]
+
+STEP5:Send the request to WebServer http://127.0.0.1:8000/CBV/
+
+NOTE:
+1 While defining Class Based Views we have to extend View class.
+2 To provide response to GET request, Django will always call get() method
+3 While defining url pattern we have to use as_view() method.
+
+Live  Project on Basic Class Based Views:
+STEP1:
+$django-admin startproject djClassPro
+
+STEP2:
+$django-admin startapp WebApp (Do required configuarations)
+
+STEP3:views.py
+from django.views.generic import View
+from django.http import HttpResponse
+# Create your views here.
+class CBV(View):
+    def get(self,request):
+        return HttpResponse("<h1 style='color:red'>Welcome to Class Based Views</h1>")
+    def post(self,request):
+        return HttpResponse("Thank U")
+
+STEP4:urls.py
+from django.contrib import admin
+from django.urls import path
+from WebApp import views
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('CBV/',views.CBV.as_view()),
+]
+
+STEP5:Send the request to WebServer http://127.0.0.1:8000/CBV/
+
+Live  Project on Basic Function-Based Views: 
+In function-based views, this logic is handled with if statements:
+
+STEP1:
+$django-admin startproject djClassPro
+
+STEP2:
+$django-admin startapp WebApp (Do required configuarations)
+
+STEP3:
+views.py
+from django.views.generic import View
+from django.http import HttpResponse
+# Create your views here.
+def Contact(request):
+    if request.method=='POST':
+        return HttpResponse("<h1 style='color:red'>Welcome to FBV</h1>")
+    else:
+        return HttpResponse("Thank You for Fun")
+
+STEP4:
+from django.contrib import admin
+from django.urls import path
+from WebApp import views
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('CBV/',views.Contact),
+]
+
+Class Based Views Using Templates:
+STEP1:
+$django-admin startproject djClassPro
+
+STEP2:
+$django-admin startapp WebApp (Do required configuarations)
+
+STEP3:views.py
+from django.views.generic import View,TemplateView
+from django.http import HttpResponse
+# Create your views here.
+class TempView(TemplateView):
+    template_name = 'MyApp/Hello.html'
+
+STEP4:Hello.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1  style="color:red">Hello TEmplates Views..!!</h1>
+</body>
+</html>
+
+STEP5:urls.py
+from django.contrib import admin
+from django.urls import path
+from WebApp import views
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('temview/',views.TempView.as_view())
+]
+
+Context Paramters: TemplateView
+It is a generic class-based view that helps developers create a view for a specific template without re-inventing the wheel.
+
+EXAMPLE:
+STEP1:
+$django-admin startproject ClassTempProject
+
+STEP2:
+$django-admin startapp WebApp (Do required configuarations)
+
+STEP3: Hello.html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <style>
+      body{
+        color:#009900;font-family:candara;font-size:40px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Hello Guys Thank You....!!</h1>
+    <ol>
+      <h2><li>Emp Name:{{EmpName}}</li></h2>
+      <h2><li>Emp Location:{{EmpLocation}}</li></h2>
+      <h2><li>Emp Salary:{{EmpSalary}}</li></h2>
+    </ol>
+  </body>
+</html>
+
+STEP4:views.py
+from django.views.generic import View,TemplateView
+from django.http import HttpResponse
+# Create your views here.
+class TempView(View):
+    def get(self,request):
+        return HttpResponse('<h1>Welcome to ClassBasedViews</h1>')
+
+class TempCBV(TemplateView):
+   template_name='MyApp\Hello.html'
+    def get_context_data(self,**kwargs):
+        context=super().get_context_data(**kwargs)
+        context['EmpName']='Subba Raju'
+        context['EmpLocation']='HYDERABAD'
+        context['EmpSalary']='$9000'
+        return context
+
+STEP5:urls.py
+from django.contrib import admin
+from django.urls import path
+from WebApp import views
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('Hei/',views.TempView.as_view()),
+    path('CBV/',views.TempCBV.as_view()),
+]
+
+STEP6:
+Send the request to web server : http://127.0.0.1:8000/CBV/, http://127.0.0.1:8000/Hei/

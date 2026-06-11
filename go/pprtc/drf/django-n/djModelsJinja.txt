@@ -1,0 +1,119 @@
+What is Admin Interface?
+The Admin interface of a website is the control panel of your website/ project. It is used by the administrators of the website to add, delete and edit the content on the site.
+
+What is Django Admin/Superuser?
+Django Admin is the preloaded interface made to fulfill all the needs of the developers. Its language is quite generalized rather than technical. The Django Admin is a fully featured interface and you won’t need to write an Admin interface for your project now. 
+
+Setting Up Django Admin Site:
+$ python manage.py createsuperuser
+Start the server and login to admin interface using the created credentials.
+User Name:KSRAJU
+Email:ksrajupy@gmail.com
+Password:********
+Password(Again):********
+Super User Created Successfully..!!
+
+$ python manage.py runserver
+Provide created username and password to login. It displays Django administration, It is a Django Admin Dashboard.  But we can't see any Emp table here, do the following..!!
+
+http://127.0.0.1:8000/admin
+
+Register Model Inside Admin Interface: (admin.py)
+
+Method-I:
+from django.contrib import admin
+from WebApp.models import Emp
+admin.site.register(Emp)
+
+Adding
+ Users: 
+Click add  ==>Add few records==>finally Click on SAVE..!!
+
+NOTE: 
+If you configure the above admin.py every record show as Object..!
+
+Method-II:
+from django.contrib import admin
+from WebApp.models import Emp
+# Register your models here.
+class EmpAdmin(admin.ModelAdmin):
+    list_display = ['EmpId','EmpName','EmpSal','EmpAdd']
+admin.site.register(Emp,EmpAdmin)
+
+NOTE: 
+Afer implementing admin.py, refresh the url. It show the Created Table.
+Goto admin.py add 'id' column in the list and refresh the Admin Page.
+
+'id' field in Models:
+1) In Django Every Table, generate a special column "id". It is a PK
+2) It is auto increment field.
+3) We can override the behavior of "id" field
+4) In Django Every Field is "NOT NULL"  by default
+
+PYTHON TEMPLATE ENGINE: http://jinja.pocoo.org/
+Jinja2 is one of the most used template engines for Python. It is inspired by Django's templating system but extends it with an expressive language that gives template authors a more powerful set of tools.
+
+Jinja2 is a full featured template engine for Python. It has full unicode support, an optional integrated sandboxed execution environment, widely used and BSD licensed.  
+
+Jinja Features
+1 Jinja is Beautiful
+2 Jinja is Powerful
+3 Sandboxed execution mode
+4 Template inheritance
+5 High performance 
+6 Configurable Syntax
+
+LIVE EXAMPLE ON TEMPLATE ENGINE:
+How to get data from the database and send to TEMPLATE.
+
+STEP1:
+$django-admin startproject TemplateProject
+STEP2:
+$django-admin startapp WebApp
+STEP3:
+Configure App,templates,static in settings.py, create templates==>MyApp==>Welcome.html
+STEP4:
+Create static ==> CSS ==> MyFile.css
+
+STEP5:models.py
+from django.db import models
+# Create your models here.
+class Emp(models.Model):
+    EmpId=models.IntegerField()
+    EmpName=models.CharField(max_length=30)
+    EmpSal=models.IntegerField()
+    EmpAdd=models.CharField(max_length=30)
+
+STEP6:
+$py manage.py makemigrations
+$py manage.py migrate
+
+STEP7:Creating Super User to login to admin Interface:
+$ python manage.py createsuperuser
+User Name:KSRAJU
+Email:ksrajupy@gmail.com
+Password:********
+Password(Again):********
+SuperUser Created Successfully..!!
+
+$ python manage.py runserver
+http://127.0.0.1:8000/admin
+Provide created username and password to login. It displays Django administration, It is a Django Admin Dashboard.  But we can't see any Emp table here, do the following..!!
+Register Model Inside Admin Interface: (admin.py)
+
+STEP8:admin.py
+from django.contrib import admin
+from WebApp.models import Emp
+# Register your models here.
+class EmpAdmin(admin.ModelAdmin):
+    list_display = ['EmpId','EmpName','EmpSal','EmpAdd']
+admin.site.register(Emp,EmpAdmin)
+
+NOTE: 
+Afer implementing admin.py, refresh the url. It show the Created Emp Table.
+
+Adding
+ Records..: 
+Click add  ==>Add few records==>Click on SAVE..!!
+Go to browser for sqlite, execute query
+select * from WebApp_Emp;

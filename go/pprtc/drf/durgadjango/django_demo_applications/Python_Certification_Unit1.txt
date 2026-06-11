@@ -1,0 +1,259 @@
+1. Which expression would evaluate to 3?
+
+A) 3**2
+B) 22%5
+C)13//4
+D)11/2
+
+Answer: C
+
+2. Consider the code
+a=7
+b=3
+c=5
+d=1
+
+Which line of the assigns 9 to the output?
+A) output=a%c-1
+B) output=a-c//d
+C) output=c**d-1
+D) output=a+d*2
+
+Answer: D
+
+3. Consider the code
+x=3
+x +=1
+#Line-1
+
+Which line should be inserted at Line-1 so that x value will become 16?
+A)x+=2
+B)x-=2
+C)x*=2
+D)x**=2
+
+Answer: D
+
+4. In which of the following cases, True will be printed to the console ?
+A)
+a=45
+b=45
+print(a is not b)
+
+B)
+s1='The Python Course'
+s2='The Python Course'.upper()
+print(s1 is s2)
+
+C)
+x=[1,2,3]
+y=[1,2,3]
+print(x is y)
+
+D)
+print('r' in 'durga')
+
+E)
+print('is' in 'This IS a test')
+
+Answer: D,E
+
+5)
+Which expression evaluates to 3?
+
+A) 7/2+3
+B) 7%2*3
+C) 7//2*3
+D)7-2*3
+
+Answer: B
+
+6) Consider the following expression:
+
+6//4%5+2**3-2
+
+This expression results to:
+A)7
+B)3
+C)-1
+D)25
+
+Answer: A
+
+7)Consider the code
+x=2
+y=6
+x+=2**3
+x-=y//2//3
+print(x)
+
+What is the output?
+A)0
+B)9
+C)10
+D)7
+
+Answer: B
+
+8) Consider the Code
+
+x=3/3+3**3
+print(x)
+
+What is the output?
+A)28
+B)32
+C)0.11
+D)28.0
+
+Answer: D
+
+9) Consider the code
+count=input('Enter the number of customers of the bank:')
+#Line-1
+print(output)
+
+Which code inserted at Line-1 will print 20 to the console if we pass 15 as count value from the console?
+
+A)output=int(count)+5
+B)output=count+5
+C)output=str(count)+5
+D)output=float(count)+5
+
+Answer: A
+
+10. In which of the following cases we will get <class 'int'> as output?
+
+A)
+x=47.0
+print(type(x))
+B)
+x='47'
+print(type(x))
+C)
+x=10+20j
+print(type(x))
+D)
+x=2**2**2
+print(type(x))
+
+Answer: D
+
+Q11. Which of the following are valid statements?
+
+A) 5+False evaluates to False
+B) True+1 evaluates to 2
+C) True and False evaluates to False
+D) False and false evaluates to False
+E) type('') is <class 'bool'>
+
+Answer: B,C
+
+Q12. Which of the following string declarations spans more than one line and considers whitespace properly when the string is printed to the console?
+
+A) s1='durga
+       software 
+       solutions'
+
+B) s1="durga
+       software 
+       solutions"
+C) s1='durga\n
+       software\n
+       solutions'
+D) s1='''durga
+       software 
+       solutions'''
+Answer: D
+
+Q13)
+Consider the following code:
+print(type(input('Enter some value:')))
+
+if we enter 10 and 10.0 individually for every run what is the output?
+
+A)
+<class 'str'>
+<class 'str'>
+B)
+<class 'int'>
+<class 'float'>
+C)
+<class 'int'>
+<class 'int'>
+D)
+<class 'float'>
+<class 'float'>
+
+Answer: A
+
+Q14)
+Consider the following code:
+print(type(eval(input('Enter some value:'))))
+
+if we enter 10 and 10.0 individually for every run what is the output?
+
+A)
+<class 'str'>
+<class 'str'>
+B)
+<class 'int'>
+<class 'float'>
+C)
+<class 'int'>
+<class 'int'>
+D)
+<class 'float'>
+<class 'float'>
+
+Answer: B
+
+Q15) Which of the following statements are valid?
+A) s="Durga Sir's Python Classes are Good"
+   It causes error because we cannot use double quotes and sigle quotes simultaneously
+
+B) result=456+456.0
+   type of result is int
+
+C) The followng expression evaluates to 12
+   b=False+5-True+35//4
+
+D) The following line will print  result:4.5
+print('result:',(7/2)+(False or True)+(9%3))
+
+Answer: C,D
+
+Q15) Consider the code
+x='10'
+y='20'
+The type of x+y ?
+
+A)int
+B)float
+C)str
+D)complex
+
+Answer: C
+
+Q16) Consider the code
+a=float('123.456')
+Which expression evaluates to 2?
+
+A)int(a)+False
+B)bool(a)+True
+C)str(a)
+D)bool(a)
+
+Answer: B
+
+Q17) 
+x='TEXT'
+which line of the code will assign 'TT' to the output?
+
+A) output=x[0]+x[2]
+B) output=x[1]+x[1]
+C) output=x[0]+x[-1]
+D) output=x[1]+x[4]
+
+Answer: C
+

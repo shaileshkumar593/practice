@@ -1,0 +1,630 @@
+﻿WORKING WITH PYTHON REGULAR EXPRESSIONS
+
+WHY REGULAR EXPRESSIONS?
+
+#Example1
+str1="My Name is Raju"
+print(str1.replace("Raju","KSRaju"))
+
+#Example2:
+str2="Main Street is broad road"
+print(str2.replace("road","rd"))
+
+NOTE:
+The above example converting all "road" patterns into rd, this is illegal, that time we are counting characters as follows...!!
+
+#Example3: We can replace with the help of index
+print(str2[0:17]+str2[17:].replace("road","rd"))
+
+NOTE:
+The above example display result as per programmer expectation, but counting characters every time is big challange, that time we are implementing PYTHON regexp or regex or re. 
+
+Define re?
+An Expression, which is matching multiple conditions.
+OR
+Regular Expressions are powerful standardized way of searching, replacing, and parsing text with complex patterns of characters.
+
+Syntax
+import re
+
+Regular Expression Patterns
+You can escape a control character by preceding it with a backslash.
+Pattern	Description
+^	Matches beginning of line.
+$	Matches end of line.
+.	Matches any single character except newline.
+re*	Matches 0 or more occurrences of preceding expression.
+re+	Matches 1 or more occurrence of preceding expression.
+re?	Matches 0 or 1 occurrence of preceding expression.
+
+Special Character Classes
+Example	Description
+\d	Match a digit: [0-9]
+\D 	Match a nondigit: [^0-9] 
+\s	Match a whitespace character: [ \t\r\n\f]
+\S 	Match nonwhitespace: [^ \t\r\n\f]
+\w	Match a single word character: [A-Za-z0-9_]
+\W	Match a nonword character: [^A-Za-z0-9_]
+
+Literal characters
+Example		Description
+[Pp]ython 	Match "Python" or "python"
+rub[ye]		Match "ruby" or "rube"
+[0-9]		Match any digit; same as[0123456789]
+[^0-9]		Match anything other than a digit
+[a-z]		Match any lowercase
+[A-Z]		Match any uppercase 
+[a-zA-Z0-9]	Match any of the above
+
+Repetition Cases
+Example	Description
+ruby? 	Match "rub" or "ruby": the y is optional
+ruby* 	Match "rub" plus 0 or more y's
+ruby+	Match "rub" plus 1 or more y's
+\d{3}	Match exactly 3 digits
+\d{3,}	Match 3 or more digits
+\d{3,5}	Match 3, 4, or 5 digits
+
+The most common uses of Regular Expressions are:
+1 Search a string (match & search)
+2 Finding a string (findall)
+3 Break string into a sub strings (split)
+4 Replace part of a string (sub)
+
+Various methods of RE?
+The 're' package provides multiple methods to perform queries on an input string. 
+1 re.match()	2 re.search()
+3 re.findall()	4 re.split()		5 re.sub()
+
+The match Method
+It finds and match, if pattern occurs at start of the string.
+
+Syntax:
+re.match(pattern, string)
+
+Example:
+import re
+line="pet:cat I love cats"
+mat=re.match(r"pet:\w\w\w",line)
+print(mat)
+
+NOTE:
+It shows that pattern match has been found. To print the matching string use method group, It helps to return the matching string.
+
+import re
+line="pet:cat I love cats"
+mat=re.match(r"pet:\w\w\w",line)
+print(mat.group(0))
+
+Example: With Multiple Patterns
+import re
+line="Pet:Cat I like Pets Pet:Cow I love Cows"
+mat=re.match(r"Pet:\w\w\w",line)
+print(mat)
+O/P: 
+<_sre.SRE_Match object; span=(0, 7), match='Pet:Cat'>
+
+Example:With Multiple Groups
+import re
+line="Pet:Cat I like Pets Pet:Cow I love Cows"
+mat=re.match(r"Pet:\w\w\w",line)
+print(mat.group(0)) #Pet:Cat
+print(mat.group(1)) #Index Error no such group
+
+Example:Using start and end methods
+import re
+line="Pet:Cat I like Pets Pet:Cow I love Cows"
+mat=re.match(r"Pet:\w\w\w",line)
+print(mat.group(0)) #Pet:Cat
+print(mat.start())#0
+print(mat.end())#7
+
+NOTE: r always indicates PYTHON raw string..!!
+NOTE: match method only matches the patterns in the starting..!!
+
+The search Method
+It searches for first occurrence of RE pattern within string.
+
+Syntax:
+re.search(pattern, string)
+
+Example:
+import re
+line="pet:cat I love cats"
+mat=re.search(r"pet:\w\w\w",line)
+print(mat.group(0))
+
+NOTE:
+match() function matches starting of the string, search() function search in entire the string..!!
+
+Example:
+import re
+line="I love cats pet:cat"
+mat=re.match(r"pet:\w\w\w",line)
+print(mat)
+
+Example:
+import re
+line="I love cats pet:cat"
+mat=re.search(r"pet:\w\w\w",line)
+print(mat.group(0))
+
+Example:
+import re
+line=" pet:cat I love cats pet:cow I love cow"
+mat=re.search(r"pet:\w\w\w",line)
+print(mat.group(0))
+
+NOTE:
+search method returns only first occurance of the pattern in the string or line. If we need all matching patterns we should use findall().
+
+re.findall Method:
+It helps to get a list of all matching patterns. It has no constraints of searching from start or end. If we will use method findall to search cat in given string it will return both occurrence of cow.
+
+Syntax:
+re.findall (pattern, string)
+
+Example:
+import re
+line=" pet:cat I love cats pet:cow I love cow"
+mat=re.findall(r"pet:\w\w\w",line)
+print(mat)
+
+Example:
+import re
+result=re.findall(r'@\w+.\w+','abc.test@gmail.com, xyz@test.in, test.first@analyticsvidhya.com, first.test@rest.biz')
+print(result)
+
+Example:
+import re
+result=re.findall(r'@\w+.(\w+)','abc.test@gmail.com, xyz@test.in, test.first@analyticsvidhya.com, first.test@rest.biz')
+print(result)
+
+re.split Method:
+It helps to split string by the occurrences of given pattern.
+
+Syntax:
+re.split(pattern,string)
+
+Example:
+import re
+line="I love cats pet:cat I love cows, pet:cow thank U"
+mat=re.split(r"pet:\w\w\w",line)
+print(mat)
+
+Example:
+import re
+print(re.split(r'\s','Naresh i Technologies Ameerpet'))
+print(re.split(r'\s','Leader in IT Training'))
+
+Example:
+import re
+result=re.split(r' ','NareshIT HYDERABAD')
+print(result)
+
+Syntax2:
+re.split(pattern, string, [maxsplit=0])
+
+Example:
+import re
+result=re.split(r'a','NareshITHYDERABAD',maxsplit=1)
+print(result)
+
+re.sub():
+It helps to search a pattern and replace with a new sub string. If the pattern is not found, string is returned unchanged.
+
+Syntax:
+re.sub(pattern, repl, string):
+
+Example:
+import re
+str1="raju@abc.com and ksr@pqr.com and vara@vvv.in"
+mat=re.sub(r"@\w+","@gmail",str1)
+print(mat)
+
+Example:
+import re
+text = "Python for beginners is a cool Scripting"
+pattern = re.sub("cool", "good", text)
+print(pattern)
+*********************************************************************************
+Example:
+import re
+result = re.search(r'BigData', 'Data Science Based on BigData')
+print (result.group(0))
+#group(0) didn't return the entire match
+	
+Example:
+import re
+fi = open('Hai.txt')
+for line in fi:
+       if re.search('^F', line) :
+         print(line)
+
+rstrip() 
+It returns a copy of the string in which all chars have been stripped from the end of the string.
+
+Syntax
+str.rstrip([chars])
+
+Example:
+import re
+fi = open('Hai.txt')
+for line in fi:
+       if re.search('From:', line) :
+         line = line.rstrip()
+         print(line)
+
+Search and Replace
+One of the most important re methods that use regular expressions is sub and search.
+
+Syntax
+re.search(pattern, repl)
+
+Example:
+import re
+s = 'NareshITOn Ameerpet MAIN ROAD..!!'
+Rep=s.replace('NareshIT', 'NiT:')
+print(Rep)
+
+re.findall Method:
+It helps to get a list of all matching patterns. It has no constraints of searching from start or end. If we will use method findall to search NiT in given string it will return both occurrence of nit.
+
+Syntax:
+re.findall (pattern, string)
+
+Example: Extract each character (using "\w")
+import re
+result=re.findall(r'.','Naresh i Technologies')
+print(result)
+result1=re.findall(r'\w','Naresh i Technologies')
+print(result1)
+
+Extract each word (using "*" or "+")
+Example:
+import re
+result=re.findall(r'\w*','Naresh i Technologies Leader in IT Training')
+print (result)
+
+Example:
+import re
+result=re.findall(r'\w+','Naresh i Technologies Leader in IT Training')
+print (result)
+
+Extract each word (using "^")
+Example:
+import re
+result=re.findall(r'^\w+','NiT  Naresh i Technologies')
+print (result)
+
+Example:
+import re
+result=re.findall(r'\w+$','NiT  Naresh i Technologies')
+print (result)
+
+Return the first three character of each word (\w)
+Example:
+import re
+result=re.findall(r'\w\w\w','NiT Naresh i Technologies')
+print (result)
+
+Extract consecutive two characters those available at start of word boundary (using "\b")
+Example:
+import re
+result=re.findall(r'\b\w.','NiT Naresh i Technologies Leader in IT')
+print (result)
+
+Return the domain type of given email-ids
+Extract all characters after “@”
+
+Example:
+import re
+result=re.findall(r'@\w+',"""raju.ksr@gmail.com, xyz@test.in,
+test.first@nareshit.com, first.test@nit.biz""")
+print (result)
+
+NOTE: Above, you can see that ".com", ".in" part is not extracted.
+
+Example:
+import re
+result=re.findall(r'@\w+.\w+',"""raju.ksr@gmail.com, xyz@test.in,
+test.first@nareshit.com, first.test@nit.biz""")
+print (result)
+
+Example:  Extract only domain name using "( )"
+import re
+result=re.findall(r'@\w+.(\w+)',"""raju.ksr@gmail.com, xyz@test.in,
+test.first@nareshit.com, first.test@nit.biz""")
+print (result)
+
+Return date from given string: Here we will use "\d" to extract digit.
+Example:
+import re
+result=re.findall(r'\d{2}-\d{2}-\d{4}',"""Amit 34-3456 12-05-2007,
+XYZ 56-4532 11-11-2011, ABC 67-8945 12-01-2009""")
+print (result)
+
+NOTE: If you want to extract only year again parenthesis "( )" will help you.
+
+Example:
+import re
+result=re.findall(r'\d{2}-\d{2}-(\d{4})',"""Amit 34-3456 12-05-2007,
+XYZ 56-4532 11-11-2011, ABC 67-8945 12-01-2009""")
+print (result)
+
+re.split Method:
+"s": This expression is used for creating a space in the string
+
+Example:
+import re
+print(re.split(r'\s','Naresh i Technologies Ameerpet'))
+print(re.split(r'\s','Leader in IT Training'))
+
+Example: Split a string with multiple delimiters
+import re
+line = 'asdf fjdk;afed,fjek,asdf,foo'
+result= re.split(r'[;,\s]', line)
+print(result)
+
+NOTE: We can also use method re.sub() to replace these multiple delimiters with one as space.
+
+re.sub(pattern, repl, string):
+It helps to search a pattern and replace with a new sub string. If the pattern is not found, string is returned unchanged.
+
+Example:
+import re
+result=re.sub(r'India','the World','NiT is largest Training Center of India')
+print(result)
+
+Example:
+import re
+line = 'asdf fjdk;afed,fjek,asdf,foo'
+result= re.sub(r'[;,\s]',' ', line)
+print(result)
+
+re.compile Method:
+We can combine a regular expression pattern into pattern objects, which can be used for pattern matching. It also helps to search a pattern again without rewriting it.
+
+Syntax:
+re.compile(pattern, repl, string)
+
+Example:
+import re
+pattern=re.compile('NiT')
+result=pattern.findall('NiT Naresh i Technologies NiT')
+print (result)
+
+===========================================================================
+Special characters which are used in regular expression are:
+1. * Repeats a character zero or more times
+Example:-
+ab*c
+Ac
+Abc           ==> Valid
+Abbc    	==> Valid
+
+2.+ Repeats a character one or more times
+eg: ab+c
+    Ac
+    Abc     #Error
+    Abbc
+    Abbbbbc  
+
+3.? It matches zero or one occuance of preceding character.
+Example:
+i)ab?c	ii)Pea?rl 		iii)  colou?r
+ac    	perl                	color
+Abc  	pearl               	colour
+Abbc    #Error
+
+4. . Matches any single character
+Example: 
+a.c
+Agc
+asc
+Abcd     #Error
+
+5 [aeiou]  Matches a single character in the listed set
+Example:
+b[aeiou]ll
+ball
+bell
+bull
+b8d   #Error
+
+6.[^XYZ]   Matches a single character not in the listed set
+Example:
+Bad       #Error
+Bed      #Error
+Bid      #Error
+
+7.[-] It matches any single character in the given range
+Example:
+ x[a-e]y
+xay
+xby
+xey
+x+y        	==>	 #Error
+[0-9]  	==>   	any single digit
+[a-z]   	==>  	any one lowercase alphabet
+[A-Z]     	==>	any one uppercase alphabet
+[a-ZA-Z]  	==>	any one alphabet
+[a-ZA-Z0-9]==>	any one alphanumeric
+[^0-9]     	==>	any single non digit
+[^A-Z]     	==>	any one non uppercase alphabet
+[^a-z]     	==>	any one non lowercase alphabet
+[^a-zA-Z]  ==>	any one non alphabet
+[^a-zA-Z0-9-] ==>	any one non alphanumeric (special character)
+
+
+8.(1) Match any one string in the list
+Example:
+(java|Haddoop|python)
+java
+Hadoop
+python
+.net      #Error
+
+9.{m} -It matches exact occurance of preceding character
+Example:
+ab{3}c
+abbbc
+abc    #Error
+abbc   #Error
+
+10.{m,n} -It matches min m occurance and max n occurance of preceding character
+Ab{3,5}c
+Abbc     #Error
+Abbbc
+Abbbbc
+
+11.{m}-It matches minimum m occurance and max no limit of preceding character.
+Ab{3,}c
+Abc #Error
+Abbbbbc
+
+12.^  ==> Matches the beginning of a line
+Example:
+^Perl
+^[abc]
+^[^abc]
+
+13.$ ==> Matches the end of the line
+[0-9]$
+
+14.\d or [0-9] ->any single digit
+Example: 
+[0-9] [0-9] [0-9] [0-9] or [0-9]{4} or \d \d \d \d or \d{4{
+
+15.\D or [^0-9] -> any single non digit
+16. \w pr [a-zA-Z0-9_] ==>any alphanumeri
+
+Using re.search() Like startswith()
+import re
+fi = open('Hai.txt')
+for line in fi:
+       if line.startswith('From') :
+         line = line.rstrip()
+         print(line)
+
+Matching and Extracting Data
+re.search() returns a True/False depending on whether the string matches  the regular expression
+If we actually want the matching strings to be extracted, we use re.findall()
+
+Example:
+import re
+x = 'My 2 favorite numbers are 19 and 42'
+y = re.findall('[0-9]+',x)
+print(y)
+
+Example:
+import re
+x = 'My 2 favorite numbers are 19 and 42'
+y = re.findall('[0-9]+',x)
+print(y)
+y = re.findall('[AEIOU]+',x)
+print(y)
+
+Warning: Greedy Matching
+The repeat characters (* and +) push outward in both directions (greedy) to match the largest possible string
+
+Example:
+import re
+x = 'From:Using the : character'
+y = re.findall('^F.+:', x)
+print(y)
+
+Non-Greedy Matching
+Not all regular expression repeat codes are greedy!  If you add a ? character, the + and * chill out a bit...
+
+Example:
+import re
+x = 'From: Using the : character'
+y = re.findall('^F.+?:', x)
+print(y)
+
+Fine-Tuning String Extraction
+You can refine the match for re.findall() and separately determine which portion of the match is to be extracted by using parentheses
+
+Example:
+import re
+x = 'From stephen.marquard@uct.ac.za Sat Jan  5 09:14:16 2008'
+y = re.findall('\S+@\S+',x)
+print(y)
+
+Example:
+import re
+x = 'From stephen.marquard@uct.ac.za Sat Jan  5 09:14:16 2008'
+y = re.findall('^From (\S+@\S+)',x)
+print(y)
+
+String Parsing Examples…
+Extracting a host name - using find and string slicing
+
+Example:
+data = 'From stephen.marquard@uct.ac.za Sat Jan  5 09:14:16 2008'
+atpos = data.find('@')
+print(atpos)
+sppos = data.find(' ',atpos)
+print(sppos)
+host = data[atpos+1 : sppos]
+print(host)
+
+The Double Split Pattern
+Sometimes we split a line one way, and then grab one of the pieces of the line and split that piece again
+
+Example:
+line="From stephen.marquard@uct.ac.za Sat Jan  5 09:14:16 2008"
+words = line.split()
+email = words[1]
+pieces = email.split('@')
+print(pieces[1])
+
+Example: The Regex Version
+import re 
+lin = 'From stephen.marquard@uct.ac.za Sat Jan  5 09:14:16 2008'
+y = re.findall('@([^ ]*)',lin)
+print(y)
+
+Even Cooler Regex Version
+
+import re 
+lin = 'From stephen.marquard@uct.ac.za Sat Jan  5 09:14:16 2008'
+y = re.findall('^From .*@([^ ]*)',lin)
+print(y)
+
+Escape Character
+If you want a special regular expression character to just behave normally (most of the time) you prefix it with '\'
+
+Example:
+import re
+x = 'We just received $10.00 for cookies.'
+y = re.findall('\$[0-9.]+',x)
+print(y)
+
+Example:
+import re
+result=re.findall(r'@\w+','abc.test@gmail.com, xyz@test.in, test.first@analyticsvidhya.com, first.test@rest.biz') 
+print(result)
+
+Example:
+import re
+result=re.findall(r'@\w+.\w+','abc.test@gmail.com, xyz@test.in, test.first@analyticsvidhya.com, first.test@rest.biz')
+print(result)
+
+Example:
+import re
+result=re.findall(r'@\w+.(\w+)','abc.test@gmail.com, xyz@test.in, test.first@analyticsvidhya.com, first.test@rest.biz')
+print(result)
+
+re.compile:
+We can combine a regular expression pattern into pattern objects, which can be used for pattern matching. It also helps to search a pattern again without rewriting it.
+
+Syntax:
+re.compile(pattern, repl, string):
+
+Example:
+import re
+pattern=re.compile('nit')
+result=pattern.findall('nit Naresh i Technologies nit')
+print(result)

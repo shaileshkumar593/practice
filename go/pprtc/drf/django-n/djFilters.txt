@@ -1,0 +1,199 @@
+﻿DJANGO TEMPLATE FILTERS
+Django-filter is a generic, reusable application to alleviate(relief) writing some of the more mundane (less)  bits of view code. Specifically, it allows users to filter down a queryset based on a model’s fields.
+
+Syntax:
+{{value|filtername:"argument"}} Filter may take or may not take arguments.i.e arguments are optional.
+
+Example:
+{{msg|lower}} ==>msg will be displayed in lower case
+{{msg|add:"Nit"} ==> "Nit" will be added to msg 
+
+Example:
+{{name|lower}}
+{{subject|upper}}
+{{experience|title}}
+
+Example:
+{{ msg|title }}
+{{ my_date|date:"Y-m-d" }}
+
+HOW TO USE TEMPLATE FILTERS:
+The following example describes the importance of the Template filters..!!
+
+def Display_View(request):
+    name="datascience"
+    subject="machine learning"
+    dept="software"
+    date=requiredate
+   my_dict={'name':name,'subject':subject,'dept':dept,'date':date}
+   return render(request,"MyApp/Welcome.html",my_dict)
+
+In the above example data is from database, that data is display in different views and styles that time Template filters are best solution...!!
+
+Live Example on Template Filters:
+Step1:
+$django-admin startproject djTemplateFilters
+Step2:
+$django-admin startapp WebApp
+Step3:
+Do required Settings in Settings.py and Create required resouces like temaplate and static, create 3 html files in templates Folder.
+
+Step4:models.py
+from django.db import models
+# Create your models here.
+class FilterModel(models.Model):
+    name=models.CharField(max_length=30)
+    subject = models.CharField(max_length=30)
+    dept = models.CharField(max_length=30)
+    date=models.DateField()
+
+Step5:Run DB Migrations
+$py manage.py makemigrations
+$py manage.py sqlmigrate WebApp 0001
+$py manage.py migrate
+
+Step6: admin.py
+from django.contrib import admin
+from WebApp.models import FilterModel
+
+# Register your models here.
+class FilterModelAdmin(admin.ModelAdmin):
+    list_display = ['name','subject','dept','date']
+admin.site.register(FilterModel,FilterModelAdmin)
+
+NOTE:Enter required data manually to display in different formats...!!
+
+Step7:CreateSuperUser
+$py manage.py createsuperuser
+Open URL and Login as Admin, add required data manually...!!
+
+Step8: views.py
+from django.shortcuts import render
+from WebApp.models import FilterModel
+# Create your views here.
+def DataView(request):
+    datalist=FilterModel.objects.all()
+    return render(request,'MyApp/Welcome.html',{'datalist':datalist})
+
+Step9:Welcome.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Django Template Filters</title>
+</head>
+<body>
+{% for item in datalist %}
+<ul>
+    <li>{{item.name}}</li>
+    <li>{{item.subject}}</li>
+    <li>{{item.dept}}</li>
+    <li>{{item.date}}</li>
+</ul><hr>
+{% endfor %}
+</body>
+</html>
+
+step10:urls.py
+from django.contrib import admin
+from django.urls import path
+from WebApp import views
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('DataView/',views.DataView),
+]
+
+Step11: Send the request to server http://127.0.0.1:8000/DataView/
+
+TO Diplay Other formats data in using Template Filters:
+Example:Upper.html (To display Upprecase data)
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% for item in datalist %}
+<ul>
+    <li>{{item.name|upper}}</li>
+    <li>{{item.subject|upper}}</li>
+    <li>{{item.dept|upper}}</li>
+    <li>{{item.date|upper}}</li>
+</ul><hr>
+{% endfor %}
+</body>
+</html>
+
+Example:Lower.html (To display LowerCase data)
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Template Filters</title>
+</head>
+<body>
+{% for item in datalist %}
+<ul>
+    <li>{{item.name|lower}}</li>
+    <li>{{item.subject|lower}}</li>
+    <li>{{item.dept|lower}}</li>
+    <li>{{item.date|lower}}</li>
+</ul><hr>
+{% endfor %}
+</body>
+</html>
+
+Example:Title.html(To Display TitleData)
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Template Filters</title>
+</head>
+<body>
+{% for item in datalist %}
+<ul>
+    <li>{{item.name|title}}</li>
+    <li>{{item.subject|title}}</li>
+    <li>{{item.dept|title}}</li>
+    <li>{{item.date|title}}</li>
+</ul><hr>
+{% endfor %}
+</body>
+</html>
+
+Create a view:views.py
+def Uview(request):
+    datalist=FilterModel.objects.all()
+    return render(request,'MyApp/Upper.html',{'datalist':datalist})
+def Lview(request):
+    datalist=FilterModel.objects.all()
+    return render(request,'MyApp/Lower.html',{'datalist':datalist})
+def Tview(request):
+    datalist=FilterModel.objects.all()
+    return render(request,'MyApp/Title.html',{'datalist':datalist})
+
+Create urls.py
+from django.contrib import admin
+from django.urls import path
+from MyApp import views
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('upper/',views.Uview),
+    path('lower/',views.Lview),
+    path('title/',views.Tview),
+]
+
+Other Filter Names:
+ <li>{{item.name|add:" Pvt Litd"}}</li>
+ <li>{{item.subject|truncatechars:3}}</li>
+<li>{{item.date|timesince}}</li>
+<li>{{item.date|date:"d-m-Y"}}</li>
+
+or
+<li>{{item.date|timesince}}</li>
+
+

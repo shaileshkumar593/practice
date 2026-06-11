@@ -1,0 +1,32 @@
+1.Tell me about your experience
+2.Tell me about your project role responsibility’s and responsibilities
+3.how many types of data structures and explain
+4.diffrence between list and tuple
+5.explain lambda function
+6.how many types of inheritance and explain
+7. What is pass
+8.explain called function
+9.explain function and how many types
+10. how many types of list methods
+11.how many types of modules
+12. Python memory management
+13.what is local and global variables
+14. Explain iterator and generator and decorator
+15.what is multithreading
+16.what is docstring
+17. What is regular expression
+18. How many types of expression and explain
+19.what is liner and non linear data structures
+20. Difference between interpreter and compiler
+21. Which STD liberary are you using
+22. What is python CSV file and how to create a CSV file
+23. What is pandas module in python ...
+24. How many types of pandas modules
+25.what is merge in python
+26. What is python zip() function
+27. What is numpy
+28. Magic function in python
+29.what is map function
+30. List comprehensives
+31. How to create unicode string in python ..what is the use of it
+32. What is the name space in python

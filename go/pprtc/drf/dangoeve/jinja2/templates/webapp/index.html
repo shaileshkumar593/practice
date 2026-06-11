@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+{%load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Displaying Data  from Model</title>
+    <link rel="stylesheet" href="{% static 'css/MyNew.css' %}">
+
+</head>
+<body>
+<h1>EMPLOYEES LIST IS </h1>
+
+{% if elist %}
+    <table border="1px">
+        <thead>
+        <th> ID</th>
+        <th> EMPID</th>
+        <th> EMPNAME</th>
+        <th> EMPSAL</th>
+        <th> EMPADD</th>
+        </thead>
+        {% for emp in elist %}
+        <tr>
+            <td>{{emp.id}}</td>
+            <td>{{emp.EmpId}}</td>
+            <td>{{emp.EmpName}}</td>
+            <td>{{emp.EmpSal}}</td>
+            <td>{{emp.EmpAdd}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+    <h2 text-align="centre"> sorry No record found</h2>
+    {% endif %}
+    <img src="{% static 'images/flwr.jpeg' %}" alt="SorryNoImage"/>
+
+
+</body>
+</html>

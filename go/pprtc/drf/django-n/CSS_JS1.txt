@@ -1,0 +1,353 @@
+﻿What is CSS?
+It is a simple design language intended to simplify the process of making web pages presentable.
+	
+Features of CSS:
+1. Flexibility
+2. Codes Rendering
+3. Accessibility
+4. Easy Manage
+5. Global Change
+6. CSS Save a lot of time
+7. Easy Maintenance
+8. Inline Styles
+9. Internal Style Sheets
+10. External Style Sheets
+11. Page Load Faster
+12. Superior styles to HTML 
+13. Multiple Device Compatibility
+14. Global web standards 
+
+CSS Versions:
+CSS1.0 ==> 1996
+CSS2.0 ==> 1998
+CSS3.0 ==> 2008
+CSS4.0 ==> 2016
+Bootstrap: Mobile Front-End Framework for Responsive Web Design, One Wesite can able to fit on any device..!!
+LESS ==> Linear CSS
+SASS ==> Syntatically Awesome Style Sheets
+
+CSS Syntax:
+Selector: 
+It is an HTML tag at which style will be applied. It could be a tag.
+Property: 
+It is a type of attribute of HTML tag.
+Value:
+These are assigned to properties.
+
+Example:
+h1{color:red}
+h1 ==> Selector (Any Tag from Body section)
+color ==> Property
+red ==> Value
+
+Three Ways to Insert CSS (Types of Style Sheets)
+There are three ways of inserting a style sheet:
+Inline style
+Internal style sheet
+External style sheet
+
+Examples for Inline Style sheets:
+<p style="color: red">Hi I am in RED color</p> 
+This will make that specific paragraph red. 
+<span style="color:blue">Hi I am sky in Blue color</span> 
+This will make that text style in blue color.
+
+2. <b p style="color: green">Hi I am in Bold </b> </p>
+<span style="color:lightblue">Hi I am sky in Blue color</span> 
+
+Examples for Internal Style Sheets:
+1.
+<!doctype html> 
+<html>
+<head>
+<style type="text/css">
+p ==> Selector
+{
+color:red;
+text-align:center; 
+} 
+</style>
+</head>
+<body>
+<p>Hello World!</p>
+<p>This paragraph is styled with CSS.</p>
+</body>
+</html>
+
+2. 
+<html>
+<head>
+<style type="text/css">
+p
+{
+color:pink;
+text-align:right;
+background-color:green;
+} 
+</style>
+</head>
+<body>
+<p>Welcome to CSS</p>
+<p>This paragraph is styled with CSS.</p>
+</body>
+</html>
+
+EXTERNAL STYLE SHEETS
+Example1:
+Step 1
+Prepare CSS file
+Step 2
+Prepare HTML file
+
+Step 1
+h1 {color: green}
+h2 {color: #dda0dd}
+p {color: rgb(0,0,255)}
+
+Step 2
+<head>
+<link rel="stylesheet" href="one.css">
+</head>
+<body>
+ 	<h1>This is header 1</h1>
+ 	<h2>This is header 2</h2>
+ 	<p>This is a paragraph</p>
+</body>
+</html>
+
+
+
+CSS Selectors:
+Selector means Styles Reusability.
+
+Types of Selectors:
+1. Type /Tag
+2. ID Selectors
+3. Class Selectors
+
+Type/Tag selectors
+A type selector matches the name of a document language element type. A type selector matches every instance of the element type in the document tree.
+
+Syntax:
+div 
+{
+Styles
+Styles
+Styles
+}
+
+Example:
+<!doctype html>
+<html>
+<head>
+<style type="text/css">
+body
+{
+background-color:#FF00FF;
+}
+</style>
+</head>
+<body>
+<h1>My CSS web page!</h1>
+<p>Hello world!</p>
+</body>
+</html>
+
+<html>
+<head>
+<style type="text/css">
+h1
+{
+background-color:red;
+}
+div
+{
+background-color:pink;
+}
+</style>
+</head>
+<body>
+<h1>CSS background-color example!</h1>
+<div>
+This is a text inside a div element. We are still in the div element.
+</div>
+</body>
+</html>
+
+The id Selector
+It is used to specify a style for a single, unique element.The id selector uses the id attribute of the HTML element, and is defined with a "#".
+
+Syntax:
+div#div
+{
+styles
+styles
+styles
+}
+
+Example
+<!doctype html>
+<html>
+<head>
+<style type="text/css">
+p#b 
+{ 
+font-weight:bold;font-size:30px;
+}
+</style>
+</head>
+<body>
+<p id="b">This paragraph will be rendered bolder.</p>
+</body>
+</html>
+
+<html>
+<head>
+<style type="text/css">
+#Exa
+{
+text-align:center;
+color:red;
+} 
+</style>
+</head>
+<body>
+<p id="Exa">Hello CSS World!</p>
+<p>This paragraph is not affected by the style.</p>
+</body>
+</html>
+3.
+<html>
+<head>
+<style type="text/css">
+#para1
+{
+text-align:right;
+color:green;
+} 
+#para2
+{
+text-align:center;
+color:red;
+} 
+</style>
+</head>
+<body>
+<p id="para1">Hello World!</p>
+<p id="para2">This paragraph is not affected by the style.</p>
+</body>
+</html>
+
+Example:
+<head>
+<style type='text/css'>
+#div1
+{
+color:blue;
+font-family:tahoma;
+}
+</style>
+<script type='text/javascript'>
+function MySelector()
+{
+document.getElementById("div1").innerHTML="Raju";
+}
+</script>
+</head>
+<body>
+<p style='color:gray'>Click the button to display the ID related result...!!</p>
+<div id="div">HTML5</div>
+<div id="div1">JavaScript</div>
+<button onclick="MySelector()">ClickMe</button>
+</body>
+
+The class Selector
+It is used to specify a style for a group of elements .The class selector uses the HTML class attribute, and is defined with a "."
+
+Syntax:
+.div
+{
+styles
+styles
+styles
+}
+
+Example:
+<!doctype html>
+<head>
+<style type="text/css">
+p.b
+{ 
+font-weight: bold;text-decoration:underline;
+}
+</style>
+</head>
+<body>
+<p class="b">This paragraph will be rendered bold.</p>
+<p class="b">This paragraph will be rendered bold.</p>
+</body>
+
+Example:
+<html>
+<head>
+<style type="text/css">
+.right1
+{
+text-align:right;
+}
+</style>
+</head>
+<body>
+<h1 class="right1">Right-aligned heading</h1>
+<p class="right1">Right-aligned paragraph.</p> 
+</body>
+</html>
+3.
+<html>
+<head>
+<style type="text/css">
+.center
+{
+text-align:center;
+}
+</style>
+</head>
+<body>
+<h1 class="center">Naresh i Technologies</h1>
+<p class="center">Center-aligned paragraph.</p>
+<b class="center">Text is in bold.</b> 
+</body>
+</html>
+4.
+<html>
+<head>
+<style>
+#div1
+{
+text-decoration:underline;
+color:lime;
+}
+.cls1
+{
+border:5px double red;
+width:100;
+height:100;
+}
+</style>
+<body>
+<div id='div1'>Hello</div>
+<div class="cls1">Hii</div>
+</body>
+</html>                    
+
+Selector Grouping
+We can group selectors using a comma (,) separator.
+
+Example1:
+
+h1 { font-family: sans-serif }
+h2 { font-family: sans-serif }
+h3 { font-family: sans-serif }
+
+is equivalent to:
+h1, h2, h3 { font-family: sans-serif }

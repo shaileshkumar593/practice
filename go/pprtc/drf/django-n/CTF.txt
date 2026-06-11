@@ -1,0 +1,122 @@
+﻿DJANGO Customized Template Filters (CTF)
+Based on our client business requirements we can create CTF.
+
+STEP1:
+Create a folder 'templatetags' inside our WebApp Folder.
+STEP2:
+Create a special file named with __init__ .py inside templatetags folder to treat as a Package
+STEP3:
+Create a python file inside templatetags folder to define our own filters cust_filters.py (AnyName)
+
+STEP4:cust_filters.py
+from django import template
+register=template.Library()
+
+def truncate5(value):
+    #Custom Filter
+    result=value[0:5]
+    return result
+register.filter('trun5',truncate5)
+
+STEP5:ctf.html
+Inside template file we have to load this filter file. {% load cust_filters %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Custom Temlpate Filters</title>
+</head>
+<body>
+{%load cust_filters %}
+{% for item in datalist %}
+<ul>
+    <li>{{item.name|lower}}</li>
+    <li>{{item.subject|trun5}}</li>
+    <li>{{item.dept|upper}}</li>
+    <li>{{item.date|date}}</li>
+</ul><hr>
+{% endfor %}
+</body>
+</html>
+
+STEP6: views.py
+def CTFView(request):
+    datalist = FilterModel.objects.all()
+    return render(request, 'MyApp/ctf.html', {'datalist': datalist})
+
+Step7: urls.py
+from django.contrib import admin
+from django.urls import path
+from WebApp import views
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('CTFDataView/',views.CTFview),
+]
+
+STEP7:
+Send the request to server:http://127.0.0.1:8000/CTFDataView/
+
+EXAMPLE:
+Passing the value as parameter as per the business requirements:
+
+STEP1:cust_filters.py
+from django import template
+register=template.Library()
+
+def truncaten(value,n):
+    #Custom Filter
+    result=value[0:n]
+    return result
+register.filter('t_n',truncaten)
+
+STEP2:Welcome.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{%load cust_filters %}
+{% for item in datalist %}
+<ul>
+    <li>{{item.name|t_n:2}}</li>
+    <li>{{item.subject|t_n:3}}</li>
+    <li>{{item.dept|t_n:4}}</li>
+    <li>{{item.date|date}}</li>
+</ul><hr>
+{% endfor %}
+</body>
+</html>
+
+EXAMPLE:Using Decorators
+STEP1:cust_filters.py
+from django import template
+register=template.Library()
+
+@register.filter(name='t_n')
+def truncaten(value,n):
+    #Custom Filter
+    result=value[0:n]
+    return result
+
+STEP2:Welcome.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{%load cust_filters %}
+{% for item in datalist %}
+<ul>
+    <li>{{item.name|t_n:2}}</li>
+    <li>{{item.subject|t_n:3}}</li>
+    <li>{{item.dept|t_n:4}}</li>
+    <li>{{item.date|date}}</li>
+</ul><hr>
+{% endfor %}
+</body>
+</html>

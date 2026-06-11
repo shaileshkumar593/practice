@@ -1,0 +1,219 @@
+﻿DJANGO MODEL (DATA ACCESS LAYER-STORAGE LAYER):
+Define Database?
+A database is an organized collection of data, generally stored and accessed electronically from a computer system. 
+
+Define DBMS
+It is system software for creating and managing databases. 
+
+Define RDBMS
+It is a database management system based on the relational model of data. It is introduced by E.F. Codd. 
+
+What is Model?
+A model is a class that represents table or collection in our DB. It maps to a single database table. Each model is a Python class that subclasses django.db.models.Model
+
+What is SQLite?
+SQLite is embedded relational database management system. It is self-contained, serverless, zero configuration and transactional SQL database engine. It was designed by D. Richard Hipp.
+
+SQLite Features:
+1.SQLite is totally free
+2.SQLite is serverless
+3.SQLite is very flexible
+4.Configuration Not Required
+5.SQLite is a cross-platform DBMS
+
+Download & Installation:
+https://www.sqlite.org/download.html
+
+SQLite Commands
+There are three types of SQLite commands:
+
+DDL: Data Definition Language
+CREATE, ALTER, DROP
+DML: Data Manipulation Language
+INSERT, UPDATE, DELETE
+DQL: Data Query Language
+SELECT
+
+SQLite dot Command
+These commands are not terminated by a semicolon (;).
+.help==> Displays list of help info..!!
+
+Special dot commands
+1 .header on	2 .mode column	3 .timer on
+
+Comments:
+It begin with two consecutive "-" characters.
+It also appears with "/*" and extend up to and including the next "*/" .
+
+SQLite Statements
+All the SQLite statement is started with any of the keywords like CREATE, SELECT, INSERT, UPDATE, DELETE, ALTER, DROP, etc. All the statement will ends with a semicolon (;).
+
+SQLite Create Table:
+Syntax:
+    CREATE TABLE DBName.TableName(  
+       column1 datatype  PRIMARY KEY(one or more columns),  
+       column2 datatype,  
+       column3 datatype,  
+       .....  
+       columnN datatype,  
+    );  
+
+Example:
+CREATE TABLE STUDENT(  
+   ID INT PRIMARY KEY     NOT NULL,  
+   NAME           TEXT    NOT NULL,  
+   AGE            INT     NOT NULL,  
+   ADDRESS        CHAR(50)  
+);  
+
+Use the ".tables" command to see if your table(s)
+.tables 
+
+Django Model Commands:
+1 dbshell
+django-admin dbshell
+2 dumpdata
+django-admin dumpdata [app_label[.ModelName] [app_label[.ModelName] ...]]
+3. flush
+django-admin flush
+4. inspectdb
+django-admin inspectdb [table [table ...]]
+5. loaddata
+django-admin loaddata fixture [fixture ...]
+6. makemessages
+django-admin makemessages
+7. makemigrations
+django-admin makemigrations [app_label [app_label ...]]
+8. migrate
+django-admin migrate [app_label] [migration_name]
+9. shell
+django-admin shell
+Starts the Python interactive interpreter.
+10. showmigrations
+django-admin showmigrations [app_label [app_label ...]]
+Shows all migrations in a project. You can choose from one of two formats:
+--list, -l
+--plan, -p
+11. sqlflush
+django-admin sqlflush
+12. sqlmigrate
+django-admin sqlmigrate app_label migration_name
+13. sqlsequencereset
+django-admin sqlsequencereset app_label [app_label ...]
+14. squashmigrations
+django-admin squashmigrations app_label [start_migration_name] migration_name
+
+SQLite Database Configuration:
+The simplest possible settings file is for a single-database setup using SQLite. 
+settings.py: It is the dictionary format, in dictionary we can take any order...!!
+
+DATABASES = {
+	'default': {
+	'ENGINE': 'django.db.backends.sqlite3',
+	'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+}
+	}	
+
+Configuring Database with the following parameters.
+ENGINE: Name of Database engine (It is like driver software, It is responsable to convert our python code into database specific terminology. It is vary from DB to DB)
+NAME: Database Name (Required database name)
+USER: Database Login user name
+PASSWORD: Database Login password
+HOST: The Machine on which database server is running
+PORT: The port number on which database server is running
+
+Checking Django DB Connection:
+We can check whether django db configurations are properly configured or not.
+$py manage.py shell
+In [2]: or >>> from django.db import connection
+In [3]: or >>> d=connection.cursor()
+In [4]: or >>> print(d)
+In [5]: or >>> exit() or quit()
+
+NOTE: 
+If we are not getting any error, means db configurations success
+
+NOTE:
+Cursor is a temporary work area created in the system memory, when a SQL statement is executed.
+
+MYSQL & DJANGO : MySQL is an open-source RDBMS
+Configuration of MySQL DB:
+We have to install mysqlclient by using pip as follows:
+$ pip install --only-binary :all: mysqlclient
+
+settings.py:
+ DATABASES = {
+     'default': {
+	'ENGINE': 'django.db.backends.mysql',
+	'NAME': 'student',
+	'USER':'root',
+	'PASSWORD':'root',
+                   'HOST':'localhost',
+                   'PORT':3306
+	}
+}	
+
+Checking Django DB Connection(MySQL):
+$py manage.py shell
+In [2]: or >>> from django.db import connection
+In [3]: or >>> d=connection.cursor()
+In [4]: or >>> print(d)
+In [5]: or >>> exit()
+
+If any Error in MySQL:
+Authentication plugin 'caching_sha2_password' cannot be loaded.
+
+Syntax:
+ALTER USER 'username'@'ip_address' IDENTIFIED WITH mysql_native_password BY 'password';
+
+ORACLE:
+Oracle is an ORDBMS developed and marketed by Oracle Corporation. It has four editions of the Oracle DB.
+1 Enterprise Edition	2 Standard Edition
+3 eXpress Edition	4 Oracle Lite
+
+Configuring  Oracle Database:
+DATABASES = {
+  'default': {
+  'ENGINE': 'django.db.backends.oracle',
+  'NAME': 'XE',
+  'USER':'scott',
+  'PASSWORD':'tiger'
+  'HOST':'192.168.2.5',
+  'PORT':1521
+}	
+   }		
+
+PostgreSQL:
+Post-gresS-Q-L is an open source ORDBMS.
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'myproject',
+        'USER': 'ksraju',
+        'PASSWORD': 'root',
+#Optional
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }
+}
+
+DJANGO+MONGODB=DJONGO
+Django with MongoDB without changing the Django ORM Use MongoDB as a backend database for your Django project.
+
+$pip install djongo
+
+Into settings.py file of your project, add:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'djongo',
+            'NAME': 'your-db-name',
+            'HOST': 'your-db-host',
+        }
+    }
+
+
+
+From K SUBBA RAJU SIR to Everyone:  07:30 PM
+11:00 AM Workshop on Django MBF:https://zoom.us/j/98201405133 
+

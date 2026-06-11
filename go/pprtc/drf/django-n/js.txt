@@ -1,0 +1,209 @@
+JavaScript Conditional Statements
+In JavaScript we have the following conditional statements:
+
+1. if statement 
+2. if...else statement
+3. if...else if....else statement 
+4. switch statement 
+
+1. if statement 
+Use this statement to execute some code only if a specified condition is true.
+
+Syntax
+if (condition)
+  {
+  True Statements
+  }
+
+Example:
+<!doctype html>
+<head>
+<script type="text/javascript">
+var x = prompt("Enter number 10","10");
+if(x==10)
+{
+ alert("Its Correct");
+}
+</script>
+
+2. if...else statement: 
+Use this statement to execute some code if the condition is true and another code(else block) if the condition is false.
+
+Syntax
+if (condition)
+  {
+  True Block Statements
+  }
+else
+  {
+   False Block Statements
+   }
+
+Example:
+<!doctype html>
+<head>
+<script type="text/javascript">
+var b=prompt("Enter any number");
+if (b>100)
+{
+document.write("b is greater than 100")
+}
+else
+{
+document.write("b is less than or equal to 100")
+}
+</script>
+</head>
+
+If...else if...else Statement:
+It is used to select one of several blocks of code to be executed.
+
+Syntax
+if (condition1)
+{
+code to be executed if condition1 is true
+}
+else if (condition2)
+{
+code to be executed if condition2 is true
+}
+else
+{
+code to be executed if neither 
+condition1 nor condition2 is true
+}
+
+Example:
+<!doctype html>
+<head>
+<script type="text/javascript">
+var a = prompt("Enter Any Number");
+if (a > 100)
+{
+document.write("a is greater than 100")
+}
+else if(a < 100)
+{
+document.write("a is less than 100")
+}
+else
+{
+document.write("a is equal to 100")
+}
+</script>
+</head>
+
+JavaScript Switch Statement
+Use the switch statement to select one of many blocks of code to be executed. 
+
+Syntax
+switch(n)
+{
+case 1:
+  execute code block 1
+  break;
+case 2:
+  execute code block 2
+  break;
+default:
+  code to be executed if 
+ is different from case 1 and 2
+}
+
+Example:
+<!doctype html>
+<head>
+<script type="text/javascript">
+var book=prompt
+("Enter your favorite book(HTML, JS, CSS, jQuery): ","JS")
+switch(book)
+{
+case 'HTML':
+alert("You are Selected HTML");
+break;
+case 'JS':
+alert("You are Selected JS");
+break;
+case 'CSS':
+alert("You are Selected CSS");
+break;
+default:
+alert("You are Selected Wrong Book");
+}
+</script>
+</head>
+
+JavaScript Reserved Words:
+The following are reserved words in JavaScript. They cannot be used as JavaScript variables, functions, methods, loop labels, or any object names.
+
+abstract, boolean, break, byte, case, catch, char ,class, const, continue, debugger, default ,delete ,do, double, else, enum ,export ,extends, false ,final, finally ,float, for, function, goto ..!!
+
+JavaScript Looping Statements:
+1. for	2. while		3. do-while
+
+1. for: 
+It get executed block of statements repeatedly until the given condition satisfied.
+
+Syntax:
+for (initialization; test condition; iteration statement)
+{
+Statement(s) to be executed if test condition is true
+}
+ 
+Example:
+<!doctype html>
+<body>
+<script type="text/javascript">
+for (i=1;i<=5;i++)
+{
+document.write("The number is " + i);
+document.write("<br />");
+}
+</script>
+</body>
+
+JavaScript While Loop 
+It get executed block of statement n times.
+
+Syntax
+while (Expression/Condition)
+  {
+  code to be executed
+  }
+
+Example:
+<!doctype html>
+<body>
+<script>
+var i=1;
+while (i<=10)
+{
+document.write("The number is " + i + "<br/>" );
+i++;
+}
+</script>
+</body>
+
+do...while Loops
+It get executed block of statements n+1 times.
+
+Syntax
+do
+  {
+  code to be executed
+  }
+while (Expression/Condition);
+
+Example:
+<!doctype html>
+<head>
+<script>
+var i = 1;
+do
+{
+document.write("The number is " + i + "<br/>" );
+i++;
+}
+while (i<=10);
+</script>
+</head>

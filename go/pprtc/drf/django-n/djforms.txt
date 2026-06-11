@@ -1,0 +1,135 @@
+Types of Forms in Django
+1 HTML Forms
+2 django Forms
+3 django Model Forms
+4 django Crispy Forms
+5. django+Bootstrap 5 forms..!! (CSS Frameworks)
+
+HTML Form/WebForm
+In HTML, a form is a collection of elements inside <form>...</form> that allow a visitor to do things like enter text, select options, manipulate objects or controls, and so on, and then send that information back to the server.
+
+A form will take input from the site visitor and then will post it to a back-end application such as CGI, ASP, JSP, PYTHON Scripts. The back-end application will perform required processing on the passed data based on defined business logic inside the application.
+
+HTML Form Controls
+    Text Input Controls
+    Checkboxes Controls
+    Radio Box Controls
+    Select Box Controls
+    File Select boxes
+    Hidden Controls
+    Clickable Buttons
+    Submit and Reset Button
+
+Example:
+<!doctype html>
+<html>
+<head>
+<title>
+RealTime Login Form..!!
+</title>
+<link href="html5.png"  rel="icon" type="image/ico"/>
+</head>
+<body  style="background-repeat:no-repeat" bgcolor='lightgreen'>
+<form action="nit.html" name='myform'  method="post">
+<fieldset style='border:2px double red;border-radius:3px'>
+<legend align="center" style='color:green'>User Login Form...!!</legend>
+<label style='color:blue;font-weight:bold'>User Name:<b style='color:red'>*</b></label> <br/>
+<input type='text' name="user" required="required" placeholder="Enter User Name"><br/>
+<label style='color:blue;font-weight:bold'>Password:<b style='color:red'>*</b></label> <br/>
+<input type="password" name="pass" required="required" placeholder="Enter Password"><br/>
+<input type="Submit" value="Sign-In">
+<input type="reset" value="Cancel">
+</fieldset>
+</form>
+</body>
+</html>
+
+Django Forms:
+Django provides a Form class which is used to create HTML forms. It describes a form and how it works and appears. ... Each field of the form class map to the HTML form <input> element and each one is a class itself, it manages form data and performs validation while submitting the form.
+
+1 Help use the data input
+2 Format the data received so it'll go smoothly in your database
+3 Validate that the data makes sense for the use
+4  Provide security
+5  Pre-populate fields
+6 Django's form class gives is validation
+7 Django's form class also provides validation with many different types of data entry
+8 You can validate email address, integers, decimals, so on and so forth. 
+9 Ease of use when putting the data taken from a form to a database table
+
+Example:
+STEP1: Create Project
+$django-admin startproject djFormsProject
+$cd djFormsProject
+
+STEP2:Create Application
+$django-admin startapp WebApp
+
+STEP3:$py manage.py runserver
+
+STEP4:Open Project with PyCharm or Any IDE(ATOM, Visual Studio Code, Sublime, Brackets..)
+
+STEP5: Do required settings, App configuration @ Installed Apps, Template configuration @ TEMPLATES, Static Configuration @ End of the settings.py.	
+
+STEP6: Create inside the WebApp: forms.py
+from django import forms
+class EmpForm(forms.Form):
+    Name=forms.CharField()
+    Job=forms.CharField()
+    Loc=forms.CharField()
+    Salary=forms.FloatField()
+     
+NOTE:
+Name,Job,Loc and Salary are the field names which are available in html form like labels.
+
+STEP-7: views.py:
+from django.shortcuts import render
+from WebApp import forms
+# Create your views here.
+def EmpView(request):
+    form=forms.EmpForm()
+    return render(request,'MyApp/Welcome.html',{'form':form})
+
+NOTE:
+views.py file is responsible to send this form to the template html file
+
+STEP-8: Welcome.html
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Django Forms..!!</title>
+    <link rel="stylesheet" href="Copy Bootstrap CDN Link">
+    <link href="{% static 'css/MyFile.css' %}" rel="stylesheet">
+</head>
+<body>
+<h1>Employee Sample Form..!!</h1>
+<div class="container" align="center">
+<form method="post">
+{{ form.as_p }}
+ {% csrf_token %}
+<input type="submit" value="Employee" class="btn btn-success">
+</form>
+</div>
+</body>
+</html>
+
+STEP9:MyFile.css
+body{
+background-image:url(https://image.shutterstock.com/image-vector/jungle-zoo-themed-animal-background-450w-1018271374.jpg);
+background-repeat:no-repeat;
+background-size:cover;
+}
+
+STEP-10:urls.py
+from django.contrib import admin
+from django.urls import path
+from WebApp import views
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('djforms/',views.EmpView),
+]
+
+Step11: 
+Send the request to Web Server. http://127.0.0.1:8000/djforms

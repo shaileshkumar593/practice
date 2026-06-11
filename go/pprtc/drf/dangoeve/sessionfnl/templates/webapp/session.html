@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CHAT ROOMS</title>
+
+</head>
+<body>
+<h1>Welcome to ChatRoom </h1>
+<form method="POST">
+    {% csrf_token %}
+    <label> Enter Name to Join IN Chat Room </label><br/>
+    <input type="text" name="username">
+    <input type="submit" value="Enter-Click">
+</form>
+</body>
+</html>

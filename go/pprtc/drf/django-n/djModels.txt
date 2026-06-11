@@ -1,0 +1,131 @@
+﻿Defining Django Models
+A model is a class which is used to contain essential fields and methods. Each model class maps to a single table in the db. Django Model is a subclass of django.db.models.Model and each field of the model class represents a db field.
+
+Django Model Fields
+These fields defined inside the Model class are the columns name of the mapped table. 
+
+Field Name 	Class 	
+AutoField 		class AutoField
+CharField 		class CharField
+DateField		class DateField
+EmailField	class EmailField
+FileField		class FileField
+ImageField 	class ImageField
+TextField 		class TextField
+
+Field Options
+Each field requires some arguments that are used to set column attributes. 
+
+Field Options 	Particulars
+Null 		It will store empty values as NULL
+Blank 		It is used to allowed field to be blank.
+Default 		The default value for the field. 
+primary_key 	It is the primary key for the model.
+Unique 		It must be unique throughout the table.
+
+
+Creating a LiveProject on Django Models:
+
+STEP1: Create Project
+$django-admin startproject djModelProject
+$cd djModelProject
+
+STEP2:Create Application
+$django-admin startapp WebApp
+
+STEP3:$py manage.py runserver
+
+STEP4:Open Project with PyCharm or Any IDE(ATOM, Visual Studio Code, Sublime, Brackets..)
+
+STEP5: Do required settings, App configuration @ Installed Apps, Template configuration @ TEMPLATES, Static Configuration @ End of the settings.py.
+
+STEP6: Configure in Database..!!
+If You are using SQLITE3 No configurations required..!!
+
+STEP7: models.py:
+from django.db import models
+# Create your models here.
+class Emp(models.Model):
+    EmpId=models.IntegerField()
+    EmpName=models.CharField(max_length=30)
+    EmpSal=models.IntegerField()
+    EmpAdd=models.CharField(max_length=30)
+
+NOTE
+This model class will be converted into Database table. Django is responsible for that.
+
+The above Emp model would create a db table as follows:
+CREATE TABLE WebApp_Emp(
+    "id" serial NOT NULL PRIMARY KEY,
+    "EmpId" varchar(30) NOT NULL,      
+    "EmpName" varchar(30) NOT NULL,
+    "EmpSal" varchar(30) NOT NULL,
+    "EmpAdd" varchar(30) NOT NULL
+);
+
+Object Relational Mapper:
+Django ORM provides an elegant & powerful way to interact with the database. It is just a fancy word describing how to access the data stored in the database in Object Oriented fashion.
+
+Block Diagram of ==> ORM_Django
+
+What is Migration?
+A migration allows you to move databasaes from one design to another. Converting Model Class into Database specific SQL Code: 
+
+$ py manage.py makemigrations 
+Migrations for 'WebApp':
+WebApp/migrations/0001_initial.py
+Create model Emp
+
+NOTE:
+"makemigrations" is responsible to generate SQL code for Python model class. 
+
+NOTE:
+In the migrations folder 0001_initial.py existed, It contains all migrations related to DB.
+
+NOTE: 
+1 Table contains an auto-created id field.
+2 The name of the table is a combination of app name and model name.
+
+Syntax:	
+AppName_ModelClassName
+
+Example:
+WebApp_Emp
+
+A Model Class is combinations of
+1 Table Name 	2 Fields 		3 Datatypes
+
+Table Name:WebApp_Emp
+Fields: EmpId, EmpName, EmpSal and EmpAdd. And one extra field: id
+Datatypes: EmpId is of type Integer, EmpName is of type Char and max_length is 40 characters...!!
+
+How to view  SQL Code of Migrations?
+$py manage.py sqlmigrate WebApp 0001
+BEGIN;
+Create model Emp
+CREATE TABLE "WebApp_Emp" ("id" integer NOT NULL PRIMARY KEY AUTOIN CREMENT, "EmpId" integer NOT NULL, "EmpName" varchar(40) NOT NULL, "EmpSal" real NOT NULL, "EmpAdd" varchar(40) NOT NULL);
+COMMIT;
+
+How to generate SQL Tables? (migrate Command):
+After generating sql code, we have to execute that sql code to create table in database. migrate creating several tables internally security, authentication, admin, sessions, contenttypes related.
+
+$ python manage.py migrate
+Apply all migrations: admin, auth, contenttypes, sessions, WebApp
+Running migrations:
+Applying contenttypes.0001_initial... OK
+Applying auth.0001_initial... OK
+Applying admin.0001_initial... OK
+Applying admin.0002_logentry_remove_auto_add... OK
+Applying contenttypes.0002_remove_content_type_name... OK
+Applying auth.0002_alter_permission_name_max_length... OK
+Applying auth.0003_alter_user_  email_max_length... OK
+Applying auth.0004_alter_user_username_opts... OK
+Applying auth.0005_alter_user_last_login_null... OK
+Applying auth.0006_require_contenttypes_0002... OK
+Applying auth.0007_alter_validators_add_error_messages... OK
+Applying auth.0008_alter_user_username_max_length... OK
+Applying sessions.0001_initial... OK
+Applying  WebApp.0001_initial... OK
+
+NOTE:
+Migrate is responsible to execute SQL code, so that tables will be created in the database.

@@ -1,0 +1,125 @@
+DJANGO FORM VALIDATIONS
+Django provides built-in methods to validate form data automatically. Django forms submit only if it contains CSRF tokens. It uses a clean & easy approach to validate data.
+
+The is_valid() method is used to perform validation for each field of the form, it is defined in Django Form class. It returns True if data is valid and place all data into a cleaned_data attribute.
+
+We can implement validation logic by using the following 2 ways.
+1)Explicitly by the programmer by using clean methods
+2)By using Django inbuilt validators
+
+Explicitly by the Programmer by using Clean Methods:
+In the FormClass for any field if we define clean method then at the time of submit the form, Django will call this method automatically to perform validations. If the clean method won't raise any error then only form will be submitted.
+
+LIVE PROJECT ON VALIDATIONS:
+
+STEP1: Create Project
+$django-admin startproject djFormsValidate
+$cd djFormsValidate
+
+STEP2:Create Application
+$django-admin startapp WebApp
+
+STEP3:$py manage.py runserver
+
+STEP4:Open Project with PyCharm or Any IDE(ATOM, Visual Studio Code, Sublime, Brackets..)
+
+STEP5: Do required settings, App configuration @ Installed Apps, Template configuration @ TEMPLATES, Static Configuration @ End of the settings.py.
+
+STEP6: forms.py
+from django import forms
+class EmpForm(forms.Form):
+    Name=forms.CharField()
+    Salary=forms.IntegerField()
+
+STEP7: views.py:
+from django.shortcuts import render
+from WebApp import forms
+from django.http import HttpResponseRedirect
+# Create your views here.
+def EmpView(request):
+    if request.method=='POST':
+        form=forms.EmpForm(request.POST)
+        if form.is_valid():
+            print("Welcome to Validations")
+            print(form.cleaned_data['Name'])
+            print(form.cleaned_data['Salary'])
+            return HttpResponseRedirect('/Thanks')
+    else:
+        form = forms.EmpForm()
+    return render(request,'MyApp/Welcome.html', {'form': form})
+
+def ThankView(request):
+    return render(request,'MyApp/Thanks.html')
+
+STEP8: Welcome.html:
+<!DOCTYPE html>
+{%load static%}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Forms with Bootstrap Framework..!!</title>
+<link rel="stylesheet" href="Copy CDN Link">
+    <link href="{% static 'css/MyFile.css'%}" rel="stylesheet">
+</head>
+<body>
+<h2>Emp Registration Form..!!</h2>
+<div class="container" align="center">
+    <form method="post">
+{{ form.as_p }}
+        {% csrf_token %}
+<input type="submit" value="NewEmp" class="btn btn-success">
+        </form>
+    </div>
+</body>
+</html>
+
+Step9:Thanks.html
+<!DOCTYPE html>
+{%load static%}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Thanks for Click Me...!!</title>
+    <bootstrap>
+    <link href="{% static 'css/MyFile.css'%}" rel="stylesheet">
+</head>
+<body>
+<h1>Hey! Thank You for Submit the Form...!!</h1>
+<h1>Good Bye....!!</h1>
+</body>
+</html>
+
+STEP10:MyFile.css
+h2{
+text-align:center;
+}
+body{
+background-image:url(https://image.shutterstock.com/image-vector/christmas-greeting-card-calligraphic-season-450w-1192564498.jpg);
+background-repeat:no-repeat;
+background-size:cover;
+color:red;
+}
+h1{
+color:purple;font-family:tahoma;font-size:30px;
+text-align:center;
+}
+
+Step11:urls.py:
+from django.contrib import admin
+from django.urls import path
+from WebApp import views
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('Regis/',views.EmpView),
+    path('Thanks/',views.ThankView),
+]
+
+STEP12:
+Send the request to the django web server: http://127.0.0.1:8000/Regis/
+
+NOTE:
+If you click the button all entered details displayed @ command prompt..!!
+
+HTTP - URL Encoding or Percent-encoding
+URL encoding is the practice of translating unprintable characters or characters with special meaning within URLs to a representation that is unambiguous and universally accepted by web browsers and servers. Unsafe characters must be replaced with a % followed by two hexadecimal digits.

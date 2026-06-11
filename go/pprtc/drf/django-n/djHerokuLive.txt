@@ -1,0 +1,223 @@
+Deploying Django Applications @ HEROKU WEB SERVER
+
+What is Web Hosting ?
+A web hosting service is a type of Internet hosting service that allows individuals and organizations to make their own website accessible via the World Wide Web.
+
+What is Domain Name?
+Domain names are used in various networking contexts and application-specific naming and addressing purposes. Domain names are used to identify one or more IP addresses. Domain names consist of two parts. 
+
+1. Primary Level Domain (PLD)
+2. Top Level Domain (TLD)
+
+1. Primary Level Domain
+It is end user requirement based business needs.
+
+Example:
+nareshit, google, facebook, amazon, twitter .................!!
+
+2. Top Level Domain:
+The following are the common TLDs:
+in - India,  gov - Government agencies, edu - Educational institutions
+org - Organizations, mil - Military, com - commercial business
+
+How to Register a Domain Name:
+Heroku is a container-based cloud Platform as a Service (PaaS). Developers use Heroku to deploy, manage, and scale modern apps. Heroku was acquired by Salesforce.com in 2010. Heroku Postgres is a managed SQL database service provided directly by Heroku.
+
+Best DJANGO hosting service providers in 2020: 
+1. Heroku		2. PythonAnywhere
+3. DigitalOcean	4. Linode
+5. WebFaction	6. A2 Hosting
+
+HOSTING DJANGO PROJECT IN HEROKU SERVER:
+1 Heroku account.
+2 Python version 3.7 or latest installed locally
+3 Postgres installed locally, if running the app locally.
+
+The Heroku CLI requires Git, the popular version control system. If you don’t already have Git, Heroku installed, complete the following before proceeding:
+Git installation
+Heroku installation (download)
+C:\Program Files\Heroku\bin
+
+Procfile
+Create the file Procfile (no extension) in the root of your GitHub repository to declare the application's process types and entry points. 
+web: gunicorn locallibrary.wsgi --log-file -
+
+Gunicorn
+Gunicorn is the recommended HTTP server for use with Django on Heroku . It is a pure-Python HTTP server for WSGI applications.
+$ pip install gunicorn
+
+Database configuration
+We can't use the default SQLite database on Heroku because it is file-based. Install dj-database-url locally so that it becomes part of our requirements for Heroku to set up on the remote server.
+$ pip install dj-database-url
+
+psycopg2 (Python Postgres database support)
+Django needs psycopg2 to work with Postgres databases and you will need to add this to the requirements.txt for Heroku to set this up on the remote server.
+$pip install psycopg2-binary
+
+Serving static files in production
+During development we used Django and the Django development web server to serve our static files (CSS, JavaScript, etc.)
+
+STATIC_URL: This is the base URL location from which static files will be served
+STATIC_ROOT: This is the absolute path to a directory where Django's "collectstatic" 
+STATICFILES_DIRS: This lists additional directories that Django's collectstatic tool
+
+Whitenoise
+Heroku recommends using the WhiteNoise project for serving of static assets directly from Gunicorn in production.
+$ pip install whitenoise
+
+Requirements
+The Python requirements of your web application must be stored in a file requirements.txt in the root of your repository. Heroku will then install these automatically when it rebuilds your environment. 
+$pip freeze > requirements.txt
+dj-database-url==0.5.0
+Django==3.0.2
+gunicorn==19.9.0
+psycopg2-binary==2.7.7
+whitenoise==4.1.2
+
+Runtime
+The runtime.txt file, if defined, tells Heroku which programming language to use. Create the file in the root of the repo and add python-3.7.0
+
+Develop required project in Django with Any IDE
+
+Getting Started on Heroku with Python
+https://devcenter.heroku.com/articles/getting-started-with-python
+$pip install pipenv
+
+Create an Heroku account:
+UserID:ksubbaraju.tm@gmail.com
+UserID:ksrajupy@gmail.com
+Password:***********
+
+Login heroku:
+$heroku login
+
+Create a virtual enviroment 
+Virtual Environment (also called a virtualenv). Virtualenv will isolate your Python/Django setup on a per-project basis. This means that any changes you make to one website won't affect any others you're also developing.
+
+Goto Project Folder, Create Virtual Environment..!!
+$virtualenv .
+
+$.\Scripts\activate
+(Publish) C:\users\admin\Desktop\Publish ==> Virtual Environment Successfully Activated
+
+$cd djangoProject
+(DjProject) C:\Users\admin\Desktop\Publish\DjangoMovielens>py manage.py runserver
+Traceback (most recent call last):
+ModuleNotFoundError: No module named 'django'
+
+$pip install django
+All project required resources need to install in the virtual enviroment..!!
+
+Run manage.py, go to web browser check the website running or not, then stop the server..!!
+$py manage.py runserver
+
+Create a Procfile in ourproject folder where manage.py existed...!!
+Open the file and paste: web: gunicorn MBF.wsgi & save it.
+Create a runtime.txt in ourproject folder where manage.py existed...!!
+Open the file python-3.7.0
+This Procfile requires Gunicorn, the production web server that we recommend for Django applications.
+$pip install gunicorn
+$ ren Procfile.txt Procfile
+
+Install django heroku
+The django-heroku package automatically configures your Django application to work on Heroku. 
+$pip install django-heroku
+
+Add stuff to settings.py file
+Add the following import statement to the top of settings.py:
+import django_heroku
+
+Then add the following to the bottom of settings.py:
+#To activate Django-Heroku.
+django_heroku.settings(locals())
+
+import django_heroku
+ALLOWED_HOSTS = ['*']
+
+configure the following @ middlewares
+'whitenoise.middleware.WhiteNoiseMiddleware',
+
+Database configure the following exist comment it
+import dj_database_url
+DATABASES = {
+    'default': dj_database_url.config()
+}
+
+End of settings.py
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_URL = '/static/'
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+django_heroku.settings(locals())
+
+NOTE:
+C:\Program Files\Heroku\bin
+C:\Program Files\Git\bin\
+C:\Windows\System32
+
+$pip freeze > requirements.txt
+
+$git init
+$git status
+$git add manage.py ProjectName WebApp static templates requirements.txt Procfile runtime.txt
+$git commit -m "first commit"
+
+heroku create AnyName (to create an app on heroku)
+$heroku create AppName
+https://AppName.herokuapp.com 
+Open on the web browser It displays Heroku | Welcome to your new app!
+
+$git push heroku master
+It a few minutes to deploy our project at HEROKU
+
+(if static files error)
+$py manage.py collectstatic
+
+Open up the website
+https://AppName.herokuapp.com/
+$heroku open (Website launches successfully)
+
+If Admin panel not working
+$heroku run bash
+$ls or dir
+$python manage.py migrate
+$python manage.py createsuperuser
+$exit
+
+
+STEPS for DJANGO Live Web Hosting:
+C:\Windows\System32
+(To Configure Any Windows Command)
+
+STEP1: Develop required project in Django with Any IDE
+
+STEP2:If any Folder starts with . (period) remove it (.idea, .git, venv), If you want to view these files go views, select show hidden files, folders and drives.
+$cd Project Name
+
+STEP3:C:\Program Files\Heroku\bin (Do the path settings)
+$pip install django-heroku
+Login heroku:
+$heroku login
+
+STEP4:
+Goto Project Folder, Create Virtual Environment..!!
+$virtualenv .
+
+STEP5:
+Goto Project folder and activate the virtual enviroment
+I:\herokuproject>.\Scripts\activate
+(herokuproject) I:\herokuproject>
+
+STEP6:
+(herokuproject) I:\herokuproject> py manage.py runserver
+Traceback (most recent call last):
+ModuleNotFoundError: No module named 'django'
+
+STEP7:
+$pip install django
+All project required resources need to install in the virtual enviroment..!!

@@ -1,0 +1,6 @@
+https://www.golinuxcloud.com/golang-context/
+
+https://linuxhint.com/use-context-golang/
+
+https://blog.prototyp.digital/simplifying-context-in-go/
+

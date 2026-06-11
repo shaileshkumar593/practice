@@ -1,0 +1,259 @@
+﻿1. What is the output when following code is executed ?
+names = ['Amir', 'Bear', 'Charlton', 'Daman']
+print(names[-1][-1])
+a) A
+b) Daman
+c) Error
+d) n *
+
+2. Suppose list1 = [0.5 * x for x in range(0, 4)], list1 is :
+a) [0, 1, 2, 3]
+b) [0, 1, 2, 3, 4]
+c) [0.0, 0.5, 1.0, 1.5]*
+d) [0.0, 0.5, 1.0, 1.5, 2.0]
+
+3. To add a new element to a list we use which command ?
+a) list1.add(5)
+b) list1.append(5) *
+c) list1.addLast(5)
+d) list1.addEnd(5)
+
+4. To insert 5 to the third position in list1, we use which command ?
+a) list1.insert(3, 5) *
+b) list1.insert(2, 5)
+c) list1.add(3, 5)
+d) list1.append(3, 5)
+
+5. Suppose list1 is [3, 4, 5, 20, 5, 25, 1, 3], what is list1 after list1.reverse() ?
+a) [3, 4, 5, 20, 5, 25, 1, 3]
+b) [1, 3, 3, 4, 5, 5, 20, 25]
+c) [25, 20, 5, 5, 4, 3, 3, 1]
+d) [3, 1, 25, 5, 20, 5, 4, 3] *
+
+6. What is the output when the following code is executed ?
+>>>"Welcome to Python".split()
+a) [“Welcome”, “to”, “Python”]*
+b) (“Welcome”, “to”, “Python”)
+c) {“Welcome”, “to”, “Python”}
+d) “Welcome”, “to”, “Python”
+
+7. What is the output when following code is executed ?
+>>>list("a#b#c#d".split('#'))
+a) [‘a’, ‘b’, ‘c’, ‘d’]*
+b) [‘a b c d’]
+c) [‘a#b#c#d’]
+d) [‘abcd’]
+
+8. What is the output when following code is executed ?
+def f(values):
+  values[0] = 44
+v = [1, 2, 3]
+f(v)
+print(v)
+
+a) [1, 44]
+b) [1, 2, 3, 44]
+c) [44, 2, 3]*
+d) [1, 2, 3]
+
+9.What will be the output?
+names1 = ['Amir', 'Bala', 'Chales']
+if 'amir' in names1:
+    print(1)
+else:
+   print(2)
+a) None
+b) 1
+c) 2 *
+d) Error
+
+10. What will be the output?
+m = [[x, x + 1, x + 2] for x in range(0, 3)]
+a) [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+b) [[0, 1, 2], [1, 2, 3], [2, 3, 4]]*
+c) [1, 2, 3, 4, 5, 6, 7, 8, 9]
+d) [0, 1, 2, 1, 2, 3, 2, 3, 4]
+
+11. How many elements are in m?
+m = [[x, y] for x in range(0, 4) for y in range(0, 4)]
+a) 8
+b) 12
+c) 16 *
+d) 32
+
+12. What will be the output?
+data = [[[1, 2], [3, 4]], [[5, 6], [7, 8]]]
+print(data[1][0][0])
+a) 1
+b) 2
+c) 4
+d) 5*
+
+13. What will be the output?
+points = [[1, 2], [3, 1.5], [0.5, 0.5]]
+points.sort()
+print(points)
+a) [[1, 2], [3, 1.5], [0.5, 0.5]]
+b) [[3, 1.5], [1, 2], [0.5, 0.5]]
+c) [[0.5, 0.5], [1, 2], [3, 1.5]]*
+d) [[0.5, 0.5], [3, 1.5], [1, 2]]
+
+14. What is the output of the following code?
+a=[10,23,56,[78]]
+b=list(a)
+a[3][0]=95
+a[1]=34
+print(b)
+a) [10,34,56,[95]]
+b) [10,23,56,[78]]
+c) [10,23,56,[95]] *
+d) [10,34,56,[78]]
+
+15. What is the output of the following code?
+lst=[3,4,6,1,2]
+lst[1:2]=[7,8]
+print(lst)
+a) [3, 7, 8, 6, 1, 2]*
+b) Syntax error
+c) [3,[7,8],6,1,2]
+d) [3,4,6,7,8]
+
+16. What is the output of the following code?
+a=["Apple","Ball","Cobra"]
+a.sort(key=len)
+print(a)
+a) [‘Apple’, ‘Ball’, ‘Cobra’]
+b) [‘Ball’, ‘Apple’, ‘Cobra’]*
+c) [‘Cobra’, ‘Apple’, ‘Ball’]
+d) Invalid syntax for sort()
+
+17. What is the out put of the code
+print(list(map(lambda x: x**-1, [1, 2, 3])))
+a) [1.0, 0.5, 0.3333333333333333] *
+b) None
+c) [0.3333333333333333,1.0, 0.5]
+d) error
+
+18. Suppose t = (1, 2, 4, 3), which of the following is incorrect?
+a) print(t[3])
+b) t[3] = 45 *
+c) print(max(t))
+d) print(len(t))
+
+19.What is the output of the following piece of code when executed in Python shell?
+a=(1,2)
+b=(3,4)
+c=a+b
+print(c)
+
+a) (4,6)
+b) (1,2,3,4) *
+c) Error as tuples are immutable
+d) None
+
+20. What is the output of the following piece of code?
+a=[(2,4),(1,2),(3,9)]
+a.sort()
+print(a)
+a) [(1, 2), (2, 4), (3, 9)] *
+b) [(2,4),(1,2),(3,9)]
+c) Error because tuples are immutable
+d) Error, tuple has no sort attribute
+
+21. What is the output of the following code?
+a={4,5,6}
+b={2,8,6}
+print(a+b)
+a) {4,5,6,2,8}
+b) {4,5,6,2,8,6}
+c) Error as unsupported operand type for sets *
+d) Error as the duplicate item 6 is present in both sets
+
+22. What is the output of the following piece of code?
+a={5,6,7,8}
+b={7,8,10,11}
+print(a^b)
+
+a) {5,6,7,8,10,11}
+b) {7,8}
+c) Error as unsupported operand type of set data type
+d) {5,6,10,11} *
+
+23. What is the output of the following piece of code?
+a={5,6,7,8}
+b={7,5,6,8}
+print(a==b)
+
+a)True *
+b)False
+c)None
+d)Error
+
+24. Is the following piece of code valid?
+a={3,4,{7,5}}
+print(a[2][0])
+
+a) Yes, 7 is printed
+b) Error, elements of a set can’t be printed
+c) Error, unhashable type: 'set' *
+d) Yes, {7,5} is printed
+
+25. What is the output of the following piece of code?
+a={1,2,3}
+b=a.copy()
+b.add(4)
+print(a)
+
+a) {1,2,3} *
+b) Error, invalid syntax for add
+c) {1,2,3,4}
+d) Error, copying of sets isn’t allowed
+
+26. What is the output of the following piece of code?
+a={1,2,3}
+b={1,2,3}
+c=a.issubset(b)
+print(c)
+
+a) True*
+b) Error, no method called issubset() exists
+c) Syntax error for issubset() method
+d) False
+
+27. Set makes use of __________
+ Dictionary makes use of ____________
+a) keys, keys
+b) key values, keys
+c) keys, key values *
+d) key values, key values
+
+28. Write a list comprehension for number and its cube for:
+l=[1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+a) [x**3 for x in l] *
+b) [x^3 for x in l]
+c) [x**3 in l]
+d) [x^3 in l]
+
+29. What is the output of the code shown below?
+for x in set('pqr'):
+      print(x*2)
+a) qq, rr, pp,
+b) pqr,  pqr
+c) ppqqrr
+d) pqrpqr
+
+30. What is the output of the code shown below?
+s1={1, 2, 3}
+s2={3, 4, 5, 6}
+print(s1.difference(s2))
+print(s2.difference(s1))
+
+a) {1, 2}
+ {4, 5, 6} *
+b) {1, 2}
+ {1, 2}
+c) {4, 5, 6}
+ {1, 2}
+d) {4, 5, 6}
+ {4, 5, 6}

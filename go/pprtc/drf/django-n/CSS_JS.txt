@@ -1,0 +1,585 @@
+﻿CSS Units
+CSS supports a number of measurements including absolute units such as inches, centimeters, points, and so on..!!
+
+em 
+An em is a unit of measurement in the field of typography.
+
+Syntax: em;
+
+Example:
+<html>
+<head>
+<style type="text/css">
+p 
+{
+letter-spacing: 7em;
+}
+</style>
+</head>
+<body>
+<h1>CSS Units!</h1>
+<p>This text is not easy to read on page.</p>
+</body>
+</html>
+
+ex
+This value defines a measurement relative to a font's x-height.
+
+Syntax: ex;
+
+Example:
+<html>
+<head>
+<style type="text/css">
+p 
+{
+font-size: 24pt; 
+line-height: 3ex;
+}
+</style>
+</head>
+<body>
+<h1>CSS Units!</h1>
+<p>This text is not easy to read on page.</p>
+</body>
+</html>
+
+Defines a measurement in screen pixels.
+px (pixels, relative to the canvas resolution)
+
+Syntax: px;
+
+Example:
+<html>
+<head>
+<style type="text/css">
+p 
+{
+padding: 25px;
+}
+</style>
+</head>
+<body>
+<h1>CSS Units!</h1>
+<p>This text is not easy to read on page.</p>
+</body>
+</html>
+
+Absolute length units are highly dependent on the output medium, and so are less useful than relative units. The following absolute units are available:
+
+in (inches; 1in=2.54cm)
+Defines a measurement in inches.
+
+Syntax: in
+
+Example:
+<html>
+<head>
+<style type="text/css">
+p 
+{
+word-spacing: .15in;
+}
+</style>
+</head>
+<body>
+<h1>CSS Units!</h1>
+<p>This text is not easy to read on page.</p>
+</body>
+</html>
+
+cm (centimeters; 1cm=10mm)
+Defines a measurement in centimeters
+
+Syntax: cm;
+
+div 
+{
+margin-bottom: 2cm;
+}
+
+mm (millimeters)
+Defines a measurement in millimeters
+
+Syntax:mm;
+
+<html>
+<head>
+<style type="text/css">
+p
+{
+word-spacing: 15mm;
+}
+</style>
+</head>
+<body>
+<h1>CSS Units!</h1>
+<p >This text is not easy to read on page.</p>
+</body>
+</html>
+
+pt
+Defines a measurement in points. A point is defined as 1/72nd of an inch. pt (points; 1pt=1/72in)
+
+Syntax:pt;
+
+<html>
+<head>
+<style type="text/css">
+body 
+{
+font-size: 18pt;
+}
+</style>
+</head>
+<body>
+<h1>CSS Units!</h1>
+<p >This text is not easy to read on page.</p>
+</body>
+</html>
+
+pc (picas; 1pc=12pt)
+Defines a measurement in picas. A pica is equivalent to 12 points; thus, there are 6 picas per inch.
+
+Syntax: pc;
+
+<html>
+<head>
+<style type="text/css">
+p
+{
+font-size: 20pc;
+}
+</style>
+</head>
+<body>
+<h1>CSS Units!</h1>
+<p >This text is not easy to read on page.</p>
+</body>
+</html>
+
+% 
+Defines a measurement as a percentage relative to another value, typically an enclosing element.
+
+Example:
+<html>
+<head>
+<style type="text/css">
+p 
+{
+font-size: 16pt; 
+line-height: 125%;
+}
+</style>
+</head>
+<body>
+<h1>CSS Units!</h1>
+<p >This text is not easy to read on page.</p>
+</body>
+</html>
+
+CSS background Properties:
+1. The background-color property is used to set the background color of an element.
+2. The background-image property is used to set the background image of an element.
+3. The background-repeat property is used to control the repetition of an image in the background.
+4. The background-position property is used to control the position of an image in the background.
+5. The background-attachment property is used to control the scrolling of an image in the background.
+
+
+1 background-color Porperty:
+The background-color property is used to set the background color of an element.
+Syntax:
+background-color:colorName/ColorCode/HexaCode;
+or
+background:colorName/ColorCode/HexaCode;
+
+Example:
+<head>
+<style type='text/css'>
+div
+{
+background-color:#FFFF00;
+}
+</style>
+<body>
+<div>Working with Typography...!!</div>
+</body>
+
+Example2:
+<head>
+<style type='text/css'>
+div
+{
+background:red;
+}
+</style>
+<body>
+<div>Working with Typography...!!</div>
+</body>
+
+Example:
+<p style="background-color:yellow;">
+This text has a yellow background color.
+</p>
+
+
+2. The background-image property is used to set the background image of an element.
+
+Syntax:
+background-image:url('ImgPath');
+or
+background:url('ImgPath');
+
+Example1:
+<head>
+<style type='text/css'>
+body
+{
+background-image:url("html5.png");
+}
+</style>
+<body>
+<div>Working with Typography...!!</div>
+</body>
+
+Example2:
+<head>
+<style type='text/css'>
+body
+{
+background:url("html5.png");
+}
+</style>
+<body>
+<div>Working with Typography...!!</div>
+</body>
+
+Example3:
+<p style="background-color:yellow;background-image:url('html.png')">This text has a yellow background color.
+</p>
+
+
+3. The background-repeat property is used to control the repetition of an image in the background.
+
+Syntax:
+background-repeat:no-repeat;
+or
+background:no-repeat;
+
+Property Values
+Value		Description	
+repeat		The background image repeated both vertically and horizontally. 	
+repeat-x		The background image repeated only horizontally	
+repeat-y		The background image repeated only vertically	
+no-repeat		The background-image not repeated	
+
+Example:
+<head>
+<style>
+body
+{
+background-image:url('water.gif');
+background-repeat:no-repeat;
+}
+</style>
+</head>
+<body>
+<p>repeat-x will repeat a background image only vertically.</p>
+</body>
+
+Example:
+<style>
+<body background="chrome.png" style="background-repeat:no-repeat;background-attachment:fixed;margin:100;text-align:justify">
+</style>
+
+
+4. The background-attachment property is used to control the scrolling of an image in the background.
+
+Syntax:
+background-attachment:fixed;
+or
+background:fixed;
+
+Example:
+<body background="html5.png" style="background-repeat:no-repeat;background-attachment:fixed;text-align:justify">
+Some Text...
+Some Text...
+</body>
+
+5. The background-position property is used to control the position of an image in the background.
+
+Syntax:
+background-position:left/center/right;
+or
+background:center;
+
+
+CSS font-properties:
+1. The font-family property is used to change the face of a font.
+2. The font-style property is used to make a font italic or oblique.
+3. The font-variant property is used to create a small-caps effect.
+4. The font-weight property is used to display bold or light a font appears
+5. The font-size property is used to increase or decrease the size of a font.
+
+Example:
+<p style="font-family:georgia,garamond,serif;">
+This text is rendered in either georgia, garamond, or the default
+serif font depending on which font  you have at your system.
+</p>
+
+<html>
+<head>
+<style>
+p.normal {font-style:normal;}
+p.italic {font-style:italic;}
+p.oblique {font-style:oblique;}
+</style>
+</head>
+<body>
+<p class="normal">This is a paragraph, normal.</p>
+<p class="italic">This is a paragraph, italic.</p>
+<p class="oblique">This is a paragraph, oblique.</p>
+</body>
+</html>
+
+
+<p style="font-weight:bold;">
+This font is bold.
+</p>
+<p style="font-weight:bolder;">
+This font is bolder.
+</p>
+<p style="font-weight:900;">
+This font is 900 weight.
+</p>
+
+<p style="font-size:20px;">
+This font size is 20 pixels
+</p>
+<p style="font-size:small;">
+This font size is small
+</p>
+<p style="font-size:large;">
+This font size is large
+</p>
+
+<head>
+<style type="text/css">
+p.normal {font-variant:normal;}
+p.small {font-variant:small-caps;}
+</style>
+</head>
+<body>
+<p class="normal">My name is SubbaRaju.</p>
+<p class="small">My name is SubbaRaju.</p>
+</body>
+
+font Example:
+<html>
+<head>
+<style type='text/css'>
+p.ex1
+{
+font:25px tahoma;
+}
+</style>
+</head>
+<body>
+<p class="ex1">This is a paragraph. This is a paragraph. This is a paragraph.</p>
+</body>
+</html>
+
+Advanced CSS3:
+@font-face
+font-size-adjust
+font-stretch
+
+CSS Basic Text Properties:
+1. color
+2. direction
+3. letter-spacing 
+4. word-spacing
+5. text-indent 
+6. text-align
+7. text-decoration
+8. text-transform 
+9. white-space
+10. vertical-align 
+	
+Manipulating Text using CSS
+1. The color property is used to set the color of a text.
+2. The direction property is used to set the text direction.
+3. The letter-spacing property is used to add or subtract space between the letters that make up a word.
+4. The word-spacing property is used to add or subtract space between the words of a sentence.
+5. The text-indent property is used to indent the text of a paragraph.
+6. The text-align property is used to align the text of a  document.
+7. The text-decoration property is used to underline, overline, and line-through text.
+8. The text-transform property is used to capitalize text or convert text to uppercase or lowercase letters.
+9. The white-space property is used to control the flow and formatting of text.
+10. vertical-align property sets the vertical alignment of an element.
+
+
+1. The color property is used to set the color of a text.
+
+Syntax:
+color:colorName/ColorCode
+
+Example:
+<head>
+<style type="text/css">
+p
+{ 
+color:blue;
+}
+</style>
+</head>
+<body>
+<p>Welcome to CSS Text Properties..!!</p>
+</body>
+
+Example:
+<body>
+<p style="color:blue">Welcome to CSS Text Properties..!!</p>
+</body>
+
+Examples
+<p style="direction:rtl;">
+This text will be renedered from right to left
+</p>
+
+<p style="letter-spacing:5px;">
+This text is having space between letters.
+</p>
+
+<head>
+<style type="text/css">
+p 
+{
+text-indent:50px;
+}
+</style>
+</head>
+<body>
+<p>jQuery is a fast and concise JavaScript library created by John Resig in 2006 with a nice motto: Write less, do more. jQuery simplifies HTML document traversing, event handling, animating, and Ajax interactions for Rapid Web Development. jQuery is library of JavaScript file, containing all jQuery functions. jQuery developing Ajax base Application.</p>
+</body>
+
+<p style="text-align:right;">
+This will be right aligned.
+</p>
+<p style="text-align:center;">
+This will be center aligned.
+</p>
+<p style="text-align:left;">
+This will be left aligned.
+</p>
+
+<p style="text-decoration:underline;">
+This will be underlined
+</p>
+<p style="text-decoration:line-through;">
+This will be striked through.
+</p>
+<p style="text-decoration:overline;">
+This will have a over line.
+</p>
+<p style="text-decoration:blink;">
+This text will have blinking effect
+</p>
+
+<p style="text-transform:capitalize;">
+This will be capitalized
+</p>
+<p style="text-transform:uppercase;">
+This will be in uppercase
+</p>
+<p style="text-transform:lowercase;">
+This will be in lowercase
+</p>
+
+<head>
+<style type="text/css">
+p
+{
+white-space:nowrap;
+}
+</style>
+</head>
+<body>
+<p>
+This is some text. This is some text. This is some text.
+This is some text. This is some text. This is some text.
+</p>
+</body>
+
+<p style="text-shadow:4px 4px 8px blue;">
+If your browser supports the CSS text-shadow property, 
+this text will have a  blue shadow.</p>
+
+vertical-align Property Values
+baseline
+sub
+super
+top
+text-top
+middle
+bottom
+text-bottom
+
+Example:
+<head>
+<style type="text/css">
+b
+{
+background-color:yellow;
+vertical-align:super;
+}
+</style>
+</head>
+<body>
+vertical alignment of an <b> element </b>
+</body>
+
+
+Using Comments
+1.
+// This is a comment
+This style uses a pair of forward slash characters (//) to inform JavaScript that everything following is to be ignored.
+2.
+
+/* This is a section 
+of multiline comments 
+that will not be
+interpreted */
+
+Here you start a multiline comment with the sequence /* and end it with */. Just remember that you cannot nest multiline comments, so make sure that you don’t comment out large sections of code that already contain multiline comments.
+
+JavaScript Place in HTML File:
+There is a flexibility given to include JavaScript code anywhere in  HTML document. But there are following most preferred ways to include JavaScript in your HTML file.
+1. Script in <head>...</head> section.
+2. Script in <body>...</body> section.
+3. Script in <body>...</body> and <head>...</head> sections.
+4. Script in and external file and then include in  <head>...</head> section.
+
+Using an External JavaScript
+JavaScript can also be placed in external files. External JavaScript files often contain code to be used on several different web pages. External JavaScript files have the file extension .js.
+
+NOTE:
+External script cannot contain the <script></script> tags!
+
+NOTE:
+To use an external script, point to the .js file in the "src" attribute of the <script> tag:
+
+1. Step1 --> Create JavaScript File
+document.write("<h1>Wecome to JS External Programming!!</h1>");
+document.write("<b>Bye...!!");  
+
+Save with myscript.js Extension....!!
+
+2. Step2 --> Create HTML file
+<html>
+<head>
+<script type="text/javascript" src="myscript.js"></script>
+</head>
+<body>
+</body>
+</html>

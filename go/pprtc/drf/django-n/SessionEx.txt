@@ -1,0 +1,107 @@
+﻿REALTIME EXAMPLE ON SESSION FRAMEWORK
+STEP1:
+$django-admin startproject Session_Django
+$cd Session_Django
+
+STEP2:
+$django-admin startapp WebApp
+
+STEP3:
+Do required settings in Settings.py file, Create required html file in templates folder
+
+STEP4:
+$py manage.py makemigrations
+
+STEP5:
+$py manage.py migrate
+
+STEP6:views.py
+from django.shortcuts import render
+from django.http import HttpResponse,HttpResponseRedirect
+# Create your views here.
+def WelcomeView(request):
+    if request.method=='POST':
+        request.session['username']=request.POST['username']
+        return  HttpResponseRedirect('/home')
+    return render(request,'Welcome.html')
+
+def home(request):
+    if request.session.has_key('username'):
+        user=request.session['username']
+        return render(request, 'home.html', {'user': user})
+    else:
+        return render(request,'warning.html')
+
+def bye(request):
+    try:
+        del request.session['username']
+    except KeyError:
+        pass
+    return HttpResponse("You're logged out.")
+
+STEP7:welcome.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chat Rooms</title>
+</head>
+<body>
+<h1>Hey Welcome To ChatRoom</h1>
+<form method="POST">
+    {% csrf_token %}
+    <label>Enter Your Name To Join In Chat Room</label> <br/>
+    <input type="text" name="username">
+    <input type="submit" value="Enter-Click">
+</form>
+</body>
+</html>
+
+STEP8:home.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home_Page</title>
+</head>
+<body>
+Welcome To Chat Room Mr./Mrs.{{ user }}
+<a href="/bye">Logout</a>
+</body>
+</html>
+
+STEP9:warning.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Warning Msg</title>
+</head>
+<body>
+Enter Your Name To Join Chat Room <a href="/">Click Here</a>
+</body>
+</html>
+
+STEP10: Thanks.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Thank U</title>
+</head>
+<body>
+<h1> Thanks for Visiting {{ thank }}...!!</h1>
+</body>
+</html>
+
+STEP11:urls.py
+from django.contrib import admin
+from django.urls import path
+from WebApp import views
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('set-cook/',views.setcookie),
+    path('get-cook/',views.getcookie),
+    path('del-cook/',views.delcookie)
+]

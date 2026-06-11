@@ -1,0 +1,21 @@
+1. What is django
+2. Explain django architecture
+3. How to explain MVC & MVTpattern
+4. What are the inheritance styles in django.
+5. Advantages & disadvantages of django
+6. How to create django application
+7. Tell me about your current project
+8. What are the applications in django
+9. Features of django
+10. Django current version & python current version
+11. What is design pattern and MVC and MVT
+12. Explain file operations
+13. How to create django project and explain project structure
+14. What is HTML & what is SQL
+15. Explain tuple methods and list methods
+16. How to fetch the MySQL db on your project
+17. Difference between python & java
+18. Daily your work on your project
+19. What is template
+20. Your role and job timings
+21. What is indentation

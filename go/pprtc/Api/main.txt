@@ -1,0 +1,214 @@
+package main
+
+import (
+	"encoding/json"
+	"log"
+	"net/http"
+	"strconv"
+	"strings"
+	"sync"
+	"time"
+)
+
+// Order model
+type Order struct {
+	OrderID      string    `json:"orderId"`
+	CustomerName string    `json:"customerName"`
+	OrderedAt    time.Time `json:"orderedAt"`
+	Items        []Item    `json:"items"`
+}
+
+type Item struct {
+	ItemID      int    `json:"itemID"`
+	Description string `json:"description"`
+	Quantity    int    `json:"quantity"`
+}
+
+var (
+	orders      = make(map[string]Order) // 🔥 better than slice
+	prevOrderID = 0
+	mu          sync.RWMutex // 🔥 concurrency safe
+)
+
+func main() {
+	http.HandleFunc("/orders", ordersHandler)
+	http.HandleFunc("/orders/", orderHandler)
+
+	log.Println("Server running on :8080")
+	log.Fatal(http.ListenAndServe(":8080", nil))
+}
+
+//
+// 🔹 HANDLER 1: /orders
+//
+func ordersHandler(w http.ResponseWriter, r *http.Request) {
+	switch r.Method {
+	case http.MethodPost:
+		createOrder(w, r)
+	case http.MethodGet:
+		getOrders(w, r)
+	default:
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+	}
+}
+
+//
+// 🔹 HANDLER 2: /orders/{id}
+//
+func orderHandler(w http.ResponseWriter, r *http.Request) {
+	id := strings.TrimPrefix(r.URL.Path, "/orders/")
+
+	if id == "" {
+		http.Error(w, "Missing order ID", http.StatusBadRequest)
+		return
+	}
+
+	switch r.Method {
+	case http.MethodGet:
+		getOrder(w, r, id)
+	case http.MethodPut:
+		updateOrder(w, r, id)
+	case http.MethodDelete:
+		deleteOrder(w, r, id)
+	default:
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+	}
+}
+
+//
+// 🔹 CREATE
+//
+func createOrder(w http.ResponseWriter, r *http.Request) {
+	var order Order
+
+	if err := json.NewDecoder(r.Body).Decode(&order); err != nil {
+		http.Error(w, "Invalid request body", http.StatusBadRequest)
+		return
+	}
+
+	mu.Lock()
+	prevOrderID++
+	order.OrderID = strconv.Itoa(prevOrderID)
+	order.OrderedAt = time.Now()
+	orders[order.OrderID] = order
+	mu.Unlock()
+
+	writeJSON(w, order, http.StatusCreated)
+}
+
+//
+// 🔹 GET ALL
+//
+func getOrders(w http.ResponseWriter, r *http.Request) {
+	mu.RLock()
+	defer mu.RUnlock()
+
+	var result []Order
+	for _, o := range orders {
+		result = append(result, o)
+	}
+
+	writeJSON(w, result, http.StatusOK)
+}
+
+//
+// 🔹 GET ONE
+//
+func getOrder(w http.ResponseWriter, r *http.Request, id string) {
+	mu.RLock()
+	order, ok := orders[id]
+	mu.RUnlock()
+
+	if !ok {
+		http.Error(w, "Order not found", http.StatusNotFound)
+		return
+	}
+
+	writeJSON(w, order, http.StatusOK)
+}
+
+//
+// 🔹 UPDATE
+//
+func updateOrder(w http.ResponseWriter, r *http.Request, id string) {
+	var updated Order
+
+	if err := json.NewDecoder(r.Body).Decode(&updated); err != nil {
+		http.Error(w, "Invalid request body", http.StatusBadRequest)
+		return
+	}
+
+	mu.Lock()
+	defer mu.Unlock()
+
+	if _, ok := orders[id]; !ok {
+		http.Error(w, "Order not found", http.StatusNotFound)
+		return
+	}
+
+	updated.OrderID = id
+	updated.OrderedAt = time.Now()
+	orders[id] = updated
+
+	writeJSON(w, updated, http.StatusOK)
+}
+
+//
+// 🔹 DELETE
+//
+func deleteOrder(w http.ResponseWriter, r *http.Request, id string) {
+	mu.Lock()
+	defer mu.Unlock()
+
+	if _, ok := orders[id]; !ok {
+		http.Error(w, "Order not found", http.StatusNotFound)
+		return
+	}
+
+	delete(orders, id)
+	w.WriteHeader(http.StatusNoContent)
+}
+
+//
+// 🔹 Helper
+//
+func writeJSON(w http.ResponseWriter, data interface{}, status int) {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(status)
+	json.NewEncoder(w).Encode(data)
+}
+
+
+/*
+Why your code works without explicitly calling NewServeMux
+Your code:
+
+http.HandleFunc("/orders", ordersHandler)
+http.HandleFunc("/orders/", orderHandler)
+
+log.Fatal(http.ListenAndServe(":8080", nil))
+👉 You didn’t create a mux, but it still works. Why?
+
+🔥 Key Concept: DefaultServeMux
+net/http has a global router:
+
+http.DefaultServeMux
+What happens internally
+1. When you call:
+http.HandleFunc("/orders", ordersHandler)
+👉 It actually does:
+
+http.DefaultServeMux.HandleFunc("/orders", ordersHandler)
+2. When you pass nil here:
+http.ListenAndServe(":8080", nil)
+👉 Go replaces it with:
+
+handler = http.DefaultServeMux
+💥 So your code is actually equivalent to:
+mux := http.NewServeMux()
+
+mux.HandleFunc("/orders", ordersHandler)
+mux.HandleFunc("/orders/", orderHandler)
+
+http.ListenAndServe(":8080", mux)*/
+

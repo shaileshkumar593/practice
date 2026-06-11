@@ -1,0 +1,257 @@
+﻿HTML Presentational Tags:
+1 <blockquote>	2 <pre> 	3.  <sub> 	4 <sup> 		
+
+<blockquote>
+It specifies a section that is quoted from another source. It is a paired tag.
+
+Syntax:
+<blockquote>-----------</blockquote>
+
+Pre tag: 
+Pre stands for pre-formatted text. It is a paired tag.
+
+Syntax:
+<pre>---------------</pre>
+
+<sup>
+It is used to display superscript text. It is a paired tag.
+
+Syntax:
+<sup>------------</sup>
+
+<sub>
+It is used to display subscript text. It is a paired tag.
+
+Syntax:
+<sub>-------------</sub>
+
+Example:
+<!doctype html>
+<html>
+<head>
+<title>
+formated tags..!!
+</title>
+</head>
+<body>
+<blockquote>Hello It is adding Identation..!! </blockquote>
+<code>It is looking like Code Formated text </code>
+<br/>
+Hit the Key <kbd>Ctrl+S</kbd> to save the doc <br/>
+<pre>
+Hello Welcome to
+Django Full Stack
+Web
+development        Thank U
+     Good Bye..!!
+</pre> <br/>
+It is the Power of (100) <sup>2</sup> <br/>
+It is the Base of (100) <sub>10</sub>
+</body>
+</html>
+
+HTML Table tag
+Tables are used to represent our data in a tabular format. It is a paired tag.
+
+Syntax:	<table>-----------</table>
+
+Table rows:
+The horizontal lines present in the tables are called as table rows. It is a paired tag.
+
+Syntax:	<tr>--------------</tr>
+
+Table Cells
+Each row consists of a number of cells. The tag looks like <td>. It is a paired tag.
+
+Syntax:	
+<td>--------------</td>
+
+Table Headings:
+To represent table headings we are using th tag. It is a paired tag.
+
+Syntax:
+<th>-----------------</th>
+
+Attributes		Parameters
+border		pixels
+bordercolor	any color/Color code(hexa)
+bgcolor		any color/Color code(hexa)
+background	image path
+height		pixels or %
+width		pixels or %	
+align		left, right, center
+valign		top, middle, bottom
+rules		rows, cols, all, none
+cellspacing	pixels
+cellpadding	pixels
+rowspan		number
+colspan		number
+
+Example:
+<table border=1>
+<tr>
+<td>cell1</td>
+<td>cell2</td>
+</tr>
+<tr>
+<td>cell3</td>
+<td>cell4</td>
+</tr>
+</table>
+
+Example2:
+<table border=1>
+<tr>
+<th>Name</th>
+<th>Number</th>
+</tr>
+<tr>
+<td>Raju</td>
+<td>1001</td>
+</tr>
+<tr>
+<td>Raju</td>
+<td>1001</td>
+</tr>
+</table>
+
+Example4: Table Rules
+<table border="5" rules=rows>
+<tr>
+<td>Row 1</td>
+<td>Row 1</td>
+<td>Row 1</td>
+</tr>
+<tr>
+<td>Row 2</td>
+<td>Row 2</td>
+<td>Row 2</td>
+</tr>
+</table>
+
+Cell Padding
+Cell Padding controls the distance between the text in the cell and the edge of the cell. To specify cell padding and it's distance, you add the line CELLPADDING="X" to the <TABLE> tag so the final result looks like:
+
+   Syntax:  <TABLE CELLPADDING="X"> 
+
+Example:
+<TABLE CELLPADDING="15">
+<TR> 
+<TD> Cell 1 </TD> 
+<TD> Cell 2 </TD> 
+</TR>
+<TR> 
+<TD> Cell 3 </TD> 
+<TD> Cell 4 </TD> 
+</TR>
+</TABLE> 
+
+Cell Spacing
+Cell Spacing controls the distance between the cells. To specify cell spacing and it's distance, you add the line CELLSPACING="X" to the <TABLE> tag so the final result looks like:
+
+Syntax:    <TABLE CELLSPACING="X"> 
+
+Example:
+<TABLE CELLSPACING="15">
+<TR> 
+<TD> Cell 1 </TD> 
+<TD> Cell 2 </TD> 
+</TR>
+<TR> 
+<TD> Cell 3 </TD> 
+<TD> Cell 4 </TD> 
+</TR>
+</TABLE>
+
+Colspan and Rowspan
+These two features, Colspan and Rowspan, allow you to extend columns and rows across multiple other columns and rows .
+
+Column Span
+It extends cells on a horizontal row (left and right). 
+
+Syntax:    <TD COLSPAN="X">
+
+Example:
+<table border=2 bordercolor="pink" bgcolor="green">
+<tr>
+<th>Name</th>
+<th>Nos</th>
+</tr>
+<tr> 
+<td colspan="2"> Hello </td> 
+</tr>
+</table>
+
+Row Span
+Row Span extends cells on a vertical row (up and down). 
+
+Syntax:    <TD ROWSPAN="X">
+
+Example:
+<table border=2 bordercolor="pink" bgcolor="green">
+<tr> 
+<td rowspan="2"> Cell 1 </td>
+<td> cell 2 </td> 
+</tr> 
+<tr> 
+<td> cell 3 </td> 
+</tr>
+</table>  
+
+Table Alignment
+There are two main ways you can align text in a cell, horizontally and vertically. There are 3 ways of aligning it for both of these. Horizontally, you can align it left, right, and center. Vertically, you can align it top, bottom, and middle. 
+
+Align Left
+To align the text or objects in a cell to the left side of the cell, the line ALIGN="left" needs to be added to the <TD> tag, so the final result looks like this:
+
+Syntax:   <TD ALIGN="left"> 
+
+Example:
+<table border="1">
+  <tr>
+    <th>StdName</th>
+    <th>Grade</th>
+  </tr>
+  <tr>
+    <td align="right">NiT</td>
+    <td align="left">A++</td>
+  </tr>
+  <tr>
+    <td align="center">Nacre</td>
+    <td align="right">A</td>
+  </tr>
+</table>
+
+HTML <span> Tag
+It is used to apply the inline styles on some specific character, words or other HTML elements.It is a paired tag
+
+Syntax: 
+ <span>-----------------</span>
+
+HTML <div> Tag:
+By using this tag we can design the webpage as multuple divisions. It is a paired tag.
+
+Syntax:
+<div>-------------</div>
+
+Attributes:
+align:left, right, center
+
+Example:
+<!doctype html>
+<body>
+<div style='color:red;font-family:tahoma'>
+<b>Welcome to Bold Tag</b> <br/>
+<i>Welcome to Italics Tag</i>
+</div> 
+
+<div style='color:green;font-family:candara' align="center">
+<b>Welcome to Bold Tag</b> <br/>
+<i>Welcome to Italics Tag</i>
+</div> 
+
+<div style='color:blue;font-family:century' align="right">
+<b>Welcome to Bold Tag</b> <br/>
+<i>Welcome to Italics Tag</i>
+</div> 
+</body>

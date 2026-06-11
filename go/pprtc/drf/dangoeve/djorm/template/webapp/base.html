@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+{% extends 'webapp/inde.html'%}
+      {%block body_block%}
+      <h1>Student Detailed Information..!!</h1><hr>
+      <table border='1'>
+        <thead>
+          <th>EId</th>
+          <th>EName</th>
+          <th>EEmail</th>
+          <th>ECompany</th>
+          <th>ESalary</th>
+          <th>EAddress</th>
+
+        </thead>
+        {%for  emp in Employee %}
+        <tr>
+            <td>{{emp.Eid}}</td>
+            <td>{{emp.Name}}</td>
+            <td>{{emp.Email}}</td>
+            <td>{{emp.Company}}</td>
+            <td>{{emp.Salary}}</td>
+            <td>{{emp.Eaddress}}</td>
+        </tr>
+        {%endfor%}
+      </table><br><br><br>
+      {%endblock%}

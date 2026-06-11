@@ -1,0 +1,123 @@
+﻿What is Jinja?
+A full featured template engine for Python.
+OR
+It is a modern and designer-friendly templating language for Python, modelled after Django’s templates. It is fast, widely used and secure with the optional sandboxed template execution environment:
+
+NOTE:
+A Jinja template doesn’t need to have a specific extension: .html, .xml, or any other extension is just fine.
+
+Features:
+1 sandboxed execution (Evaluate untrusted code)
+2 powerful automatic HTML escaping system for XSS(Cross-site scripting) prevention
+3 template inheritance
+4 compiles down to the optimal python code just in time
+5 optional ahead-of-time template compilation
+6 easy to debug. 
+7 configurable syntax
+
+Cross-site scripting:
+XSS is a security breach that takes advantage of dynamically generated Web pages.  It is a client-side code injection attack. The attacker aims to execute malicious scripts in a web browser. XSS attacks are possible in VBScript, ActiveX, Flash, and even CSS.
+
+Prerequisites:
+Jinja2 works with Python 2.6.x, 2.7.x and => 3.x.
+
+Installation:
+$easy_install Jinja2
+$pip install Jinja2
+
+There are a few kinds of delimiters. The default Jinja delimiters are configured as follows:
+{% ... %} for Statements
+{{ ... }} for Expressions to print to the template output
+{# ... #} for Comments not included in the template output
+ #  ... ## for Line Statements
+
+List of JINJA Keywords:
+1 {% for %}.. {% endfor %}
+2 {% block %}..{% endblock %}
+3 {% raw %}..{% endraw %}
+4 {% if %} .. {% endif %}
+5 {% macro %}..{% endmacro %}
+6 {% call %} ..{% endcall %}
+7 {% filter %} ..{% endfilter %}
+8 {% set %} .. {% endset %}
+9 {% trans %} .. {% endtrans %}
+10 {% with %}..{% endwith %}
+11 {% autoescape %}..{% endautoescape %}
+12 {% pluralize %}
+13 {% extends %}
+14 {% include %}
+
+https://jinja.palletsprojects.com/en/2.10.x/templates/#variables
+
+DJANGO TEMPLATE LANGUAGE (DTL)
+Django template uses its own syntax to deal with variable, tags, expressions etc. A template is rendered with a context which is used to get value at a web page. From Python views.py we can inject dynamic content to the template file by using template tags.
+
+Template Tags or Template Variables
+Variables associated with a context can be accessed by {{}}. A template can have variable names in double curly braces. 
+
+Syntax:
+My name is {{name}}   (String interpolation)
+
+What is a context?
+It  is a variable name, variable value mapping that is passed to a template. It is a dictionary with variable names as the "key" and their values as the "value". 
+
+Syntax:
+{key: value, key: value}.
+
+Example:
+{dt_now:date, name: name}.
+
+1. {% %} is basically used when you have an expression, called tags.
+2. {{ }} is used to simply access the variable.
+
+LIVE EXAMPLE ON DJANGO TEMPLATE LANGUAGE:
+
+STEP1: Create Project
+$django-admin startproject JinjaProject
+$cd JinjaProject
+
+STEP2:Create Application
+$django-admin startapp WebApp
+
+STEP3:$py manage.py runserver
+
+STEP4:Open Project with PyCharm or Any IDE(ATOM, Visual Studio Code, Sublime, Brackets..)
+
+STEP5: Do required settings, App configuration @ Installed Apps, Template configuration @ TEMPLATES
+
+STEP6: Welcome.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Django Template Language..!!</title>
+</head>
+<body>
+<h1>{{ dt }}</h1>
+<h2>{{ name }}</h2>
+</body>
+</html>
+
+STEP7: views.py
+from django.shortcuts import render
+import datetime
+# Create your views here.
+def DateView(request):
+    dt=datetime.datetime.now()
+    name="PYTHON DJANGO WEB FRAMEWORK..!!"
+    dic={'dt':dt,'name':name}
+    return render(request,'MyApp/Welcome.html',dic)
+
+STEP8:urls.py
+from django.contrib import admin
+from django.urls import path
+from WebApp import views
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('dtl/',views.DateView),
+]
+
+STEP9:SendTheRequestToServer
+Run the django server, Open the url on the web browser..!!
+http://127.0.0.1:8000/dtl/

@@ -1,0 +1,128 @@
+1. Create Project $django-admin startproject djProjectFive
+$cd djProjectFive
+$ tree /f
+2. Create App $django-admin startapp WebApp
+3. RunServer :$python manage.py runserver or py manage.py runserver
+4. Run on your web browser, http://127.0.0.1:8000
+(Please update browsers -Any Browser Google chrome, MozillaFireFox, IE, Edge, Opera, Apple Safari, Torch, Lion ......!!!)
+5. Launch PyCharm, Go to file menu, click on Open, select Django Project Location, Select Current Window...!!
+6. Do required settings in settings.py file
+7. Write required python logic in views.py file
+8. Develop urls.py for running on your major web browser
+
+
+
+LIVE EXAMPLE on VIEWs & URLs:
+STEP1: Create Project
+$django-admin startproject djAppConfig
+$cd djAppConfig
+
+STEP2:Create Application
+$django-admin startapp WebApp
+
+STEP3:$py manage.py runserver
+
+STEP4:Open Project with PyCharm or Any IDE(ATOM, Visual Studio Code, Sublime, Brackets..)
+
+STEP5: Do required settings, App configuration @ Installed Apps..!!
+
+STEP6: views.py
+from django.http import HttpResponse
+# Create your views here.
+def HomePage(request):
+    return HttpResponse("Welcome to DJANGO Web World..!!")
+
+STEP7:urls.py
+from django.contrib import admin
+from django.urls import path
+from WebApp import views
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('home/',views.HomePage),
+]
+
+STEP8:Run the server
+$python manage.py runserver
+
+STEP9: Open web browser, send the request to Server
+127.0.0.1:8000/home
+
+Example:
+STEP1: Create Project
+$django-admin startproject ViewsUrls
+$cd ViewsUrls
+
+STEP2:Create Application
+$django-admin startapp WebApp
+
+STEP3:$py manage.py runserver
+
+STEP4:Open Project with PyCharm or Any IDE(ATOM, Visual Studio Code, Sublime, Brackets..)
+
+STEP5: Do required settings, App configuration @ Installed Apps..!!
+
+STEP6: views.py
+from django.shortcuts import render
+from django.http import HttpResponse
+# Create your views here.
+def Home_Page(request):
+    return HttpResponse("<h1>Welcome to Django World</h1>")
+
+STEP7:urls.py
+from django.contrib import admin
+from django.urls import path
+from WebApp import views
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('home/',views.Home_Page),
+]
+
+STEP8:Run the server
+$python manage.py runserver
+
+STEP9:Open web browser, send the request to server
+127.0.0.1:8000/home
+
+Example:
+STEP1: Create Project
+$django-admin startproject ViewsUrlsTwo
+$cd ViewsUrlsTwo
+
+STEP2:Create Application
+$django-admin startapp WebApp
+
+STEP3:$py manage.py runserver
+
+STEP4:Open Project with PyCharm or Any IDE(ATOM, Visual Studio Code, Sublime, Brackets..)
+
+STEP5: Do required settings, App configuration @ Installed Apps..!!
+
+STEP6 views.py
+from django.shortcuts import render
+from django.http import HttpResponse
+# Create your views here.
+def Index(request):
+    return HttpResponse("<h1>Welcome to Django World</h1>")
+def Home(request):
+    return HttpResponse("Welcome to Home Page..!!")
+
+STEP7: urls.py
+from django.contrib import admin
+from django.urls import path
+from WebApp import views
+from WebApp import views as MyView
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('Index/',views.Index),
+    path('Home/',MyView.Home),
+]
+
+STEP8: Run the Server
+$ python manage.py runserver  
+
+STEP9:Open any web browser and enter the URL
+http://127.0.0.1:8000/Index/
+http://127.0.0.1:8000/Home/

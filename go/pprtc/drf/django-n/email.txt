@@ -1,0 +1,125 @@
+How to Send Email in Django
+The most common use case for sending emails in a Django Application are for password reset, account activation and sending general notifications related to your app. Django also provides mechanisms to send error reports via email.
+
+Requirements
+To start sending transactional emails you will need:
+    A registered domain
+    An email service
+
+Basic Django Email Functions
+Django implements a module on top of Python’s smtplib, offering some very convenient functions, detailed below. The module is available at django.core.mail.
+
+send_mail()
+This is the simpliest way to send emails. It uses the following parameters:
+subject: A string;     
+message: A string;     
+from_email: A string;
+recipient_list: A list of strings;     
+fail_silently: A boolean;
+auth_user,    
+auth_password,    
+connection
+
+EXAMPLE:
+LIVE PROJECT EMAIL SENDING in DJANGO:
+STEP1:
+$django-admin startproject MailProject
+$cd MailProject
+
+STEP2:
+$django-admin startapp WebApp
+1. Configure the app in settings.py file, do templates settings
+2. Do Mail Configurations in settings.py file
+
+EMAIL_HOST='smtp.gmail.com'
+EMAIL_HOST_USER='djangotest25@gmail.com'
+EMAIL_HOST_PASSWORD='Test@123'
+EMAIL_PORT='587'
+EMAIL_USE_TLS=True
+
+NOTE: TLS ==> Transport Layer Security
+
+STEP3:forms.py
+from django import forms
+class SentForm(forms.Form):
+	name = forms.CharField(max_length=80,)
+	email = forms.CharField(max_length=80)
+	subject = forms.CharField(max_length=80)
+	message = forms.CharField(required=False)
+
+STEP4:mail.html
+<html>
+<head>
+<title>contact us</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+<body>
+<h2>Mail Sending Page..!!</h2>
+<hr>
+ <form  method="post">
+{% csrf_token %}
+     {{form.as_p}}
+ <button type="submit" name="save" class="btn btn-primary">submit </button>
+</form>
+</body>
+</html>
+
+STEP5:thanks.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello Email Services</title>
+</head>
+<body>
+<h1 style="color:red;font-family:tahoma;font-size:40px">Mail Send Successfully...!! </h1>
+</body>
+</html>
+
+STEP6:views.py
+from django.shortcuts import render
+from django.http import HttpResponseRedirect
+from django.core.mail import send_mail,EmailMessage
+from django.conf import settings
+from .forms import SentForm
+# Create your views here.
+
+def sending_mail(request):
+    if request.method == 'POST':
+        form = SentForm(request.POST)
+        if form.is_valid():
+            name= form.cleaned_data['name']
+            mail = form.cleaned_data['email']
+            sub = form.cleaned_data['subject']
+            message = form.cleaned_data['message']
+
+            send_mail('got mail from'+str(mail),
+                "name: "+str(name)+"\n"
+                "email:"+str(mail)+"\n"
+                "subject: "+str(sub)+"\n"
+                "message :"+ str(message),
+                settings.EMAIL_HOST_USER,
+                ['ksrajupy@gmail.com'],
+                fail_silently=False )
+            return HttpResponseRedirect('/thanks')
+    else:
+        form = SentForm()
+    return render(request,'MyApp/mail.html',{'form': form})
+
+def thanks(request):
+    return render(request,'MyApp/thanks.html')
+
+NOTE: To send to Muliple users ==> ['ksraju@gmail.com','rajap@gmail.com',...!!]
+
+STEP7:urls.py
+from django.contrib import admin
+from django.urls import path
+from WebApp import views
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('mail/',views.sending_mail),
+    path('thanks/', views.thanks),
+]
+
+STEP8:send the request to webserver http://127.0.0.1:8000/mail/

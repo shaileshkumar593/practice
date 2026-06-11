@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/create.iml" filepath="$PROJECT_DIR$/.idea/create.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../python/practice_intrvw/.idea/practice_intrvw.iml" filepath="$PROJECT_DIR$/../../python/practice_intrvw/.idea/practice_intrvw.iml" />
+    </modules>
+  </component>
+</project>

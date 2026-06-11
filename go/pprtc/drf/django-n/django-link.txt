@@ -1,0 +1,16 @@
+https://www.vskills.in/practice/index.php?route=test/search&search=django
+
+
+question:
+
+1. how can I add any field in model after running migrate comman
+ans: Alter
+
+durga sir:
+
+{ is my favourite symbol ===>output
+
+name='Durga'
+Student Name:{Durga} ===>output
+https://django-downloadview.readthedocs.io/en/latest/
+https://django-book.readthedocs.io/en/latest/chapter01.html

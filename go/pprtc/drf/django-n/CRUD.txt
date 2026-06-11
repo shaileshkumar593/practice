@@ -1,0 +1,141 @@
+CRUD Operations In Django:
+CRUD is the abbreviation used for four major operations performed on a data-center. Every programmer has to deal with these operations at some point. These operations usually include the following.
+1)C => Create (Insert Query)
+2)R => Retrieve/Read (Select Query)
+3)U =>Update (Update Query)
+4)D => Delete (Delete Query)
+
+CRUD                            HTTP Verbs  
+Create <-------------------->  POST
+Read   <-------------------->  GET
+Update  <-------------------->  PUT
+Delete  <-------------------->  DELETE
+
+LIVE EXAMPLE ON DJANGO CRUD OPERATIONS:Create (Insert Query)
+STEP1:
+$django-admin startproject Crud_Project
+
+STEP2:
+$django-admin startapp WebApp
+
+STEP3:
+Configure the WebApp in settings.py file
+Configure Media Resources
+MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+MEDIA_URL ='/media/'
+Configure template resources
+
+STEP4:models.py 
+from django.db import models
+from django.urls import reverse
+# Create your models here.
+class Company(models.Model):
+	company_name = models.CharField(max_length=40)
+	company_logo = models.FileField(null='True',blank='True')
+	company_city = models.CharField(max_length=40)
+
+STEP5:Migrations
+$py manage.py makemigrations
+$py manage.py migrate
+
+STEP6:Create Super User to login to admin Interface:
+$ python manage.py createsuperuser
+User Name:KSRAJU
+Email:ksrajupy@gmail.com
+Password:********
+Password(Again):********
+SuperUser Created Successfully..!!
+
+$ python manage.py runserver
+Provide created username and password to login. It displays Django administration, It is a Django Admin Dashboard.  But we can't see any Company table here, do the following..!!
+
+STEP7:admin.py
+from django.contrib import admin
+from WebApp.models import Company
+# Register your models here.
+admin.site.register(Company)
+
+NOTE: Afer implementing admin.py, refresh the url. It show the Created Table.
+
+STEP8:forms.py
+from .models import Company
+from django import forms
+
+class NewForm(forms.ModelForm):
+    class Meta :
+        model = Company
+        fields =[
+            'company_name',
+            'company_logo',
+            'company_city',
+        ]
+
+STEP9:home.html
+<!DOCTYPE html>
+{% load static %}
+<html>
+    <head>
+        <title>HomePage_CRUD_OPERATIONS</title>
+    </head>
+    <body>
+        <a href="{% url 'home' %}"> Companies List </a>
+            <a href="/create/">AddNewPic</a><br>
+             {% for obj in orglist %}
+                <a href="{{ obj.get_absolute_url }}"> {{ obj.id }}.{{ obj.company_name }}
+                {% if obj.company_logo %} <img src='{{obj.company_logo.url}}'/>
+                {% endif %} </a>
+            {% endfor %}
+    </body>
+</html>
+
+STEP10:create.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>CREATE DATA</title>
+</head>
+<body>
+<form method="POST" action="" enctype="multipart/form-data">
+{% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Save">
+</form>
+</body>
+</html>
+
+STEP11:views.py
+from django.shortcuts import render,get_object_or_404
+from django.http import HttpResponseRedirect
+from .models import Company
+from .forms import NewForm
+# Create your views here.
+def home(request):
+	orglist=Company.objects.all()
+	return render(request,'MyApp/home.html',{ 'orglist':orglist })
+
+def org_create(request):
+	form = NewForm(request.POST or None ,request.FILES or None )
+	if form.is_valid():
+		instance= form.save()
+		instance.save()
+		return HttpResponseRedirect('/')
+	context={'form': form}
+	return  render (request,"MyApp/create.html", context)
+
+STEP12:urls.py
+from django.contrib import admin
+from django.urls import path,include
+from WebApp import views
+from django.conf import settings
+from django.conf.urls.static import static
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('',views.home,name='home'),
+    path('create/',views.org_create),
+]
+if settings.DEBUG:
+    urlpatterns +=static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)
+    urlpatterns +=static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+STEP13:send the request to webserver http://127.0.0.1:8000/create

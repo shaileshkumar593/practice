@@ -1,0 +1,52 @@
+﻿WORKING WITH DJANGO TEMPLATES
+Django needs a convenient way to generate HTML dynamically. The most common approach relies on templates. It is not recommended to write html code inside python script (views.py):
+1 It reduces readability, if Python code mixed with html code.
+2 Python developer need to concentrate on PYTHON & HTML.
+
+NOTE:
+1 To overcome these problems by seperate html. This html file is nothing but Template. 
+2 Write templates at project level one time, We can use these in multiple Apps.
+
+Django Template Configuration(DTC):
+Do the following updates in settings.py, Run in command Prompt:
+
+Creating Project in Django:
+1. $django-admin startproject TemplateProject
+2.$cd TemplateProject
+3.$py manage.py startapp WebApp
+4. Configure this WebApp to the project in settings.py file
+5. Create a 'templates' folder inside main project folder. In that, create a  seperate folder to hold templates.
+6. Configure templates folder in settings.py file @ TEMPLATES
+
+TEMPLATES = [
+{
+...,
+'DIRS': ['I:\TemplateProject\templates'],
+},]
+
+NOTE: 
+In Django, never recommended to hard-code specific locations.!
+
+Configuring relative path in TEMPLATES:
+STEP1:Assigning Template Variable
+import os
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) 
+TEMPLATE_DIR = os.path.join(BASE_DIR,'templates')
+
+STEP2: Specify this TEMPLATE_DIR in settings.py:
+TEMPLATES = [
+{
+...,
+'DIRS': [TEMPLATE_DIR,],
+},]
+
+render() function:
+Combines a given template with a given context dictionary and returns an HttpResponse object with that rendered text.
+
+Syntax:
+render(request, template_name, context=None)
+
+Arguments:
+1 request: The request object used to generate this response
+2 template_name: The full name of a template to use or sequence of template names.
+3 context: A dictionary of values to add to the template context. By default, this is an empty dictionary.

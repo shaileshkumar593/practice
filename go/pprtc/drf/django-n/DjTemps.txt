@@ -1,0 +1,183 @@
+﻿WORKING WITH DJANGO TEMPLATES
+Django needs a convenient way to generate HTML dynamically. The most common approach relies on templates. It is not recommended to write html code inside python script (views.py):
+1 It reduces readability, if Python code mixed with html code.
+2 Python developer need to concentrate on PYTHON & HTML.
+
+NOTE:
+1 To overcome these problems by seperate html. This html file is nothing but Template. 
+2 Write templates at project level one time, We can use these in multiple Apps.
+
+Django Template Configuration(DTC):
+Do the following updates in settings.py, Run in command Prompt:
+
+Creating Project in Django:
+1. $django-admin startproject TemplateProject
+2.$cd TemplateProject
+3.$py manage.py startapp WebApp
+4. Configure this WebApp to the project in settings.py file
+5. Create a 'templates' folder inside main project folder. In that, create a  seperate folder to hold templates.
+6. Configure templates folder in settings.py file @ TEMPLATES
+
+TEMPLATES = [
+{
+...,
+'DIRS': ['I:\TemplateProject\templates'],
+},]
+
+NOTE: 
+In Django, never recommended to hard-code specific locations.!
+
+Configuring relative path in TEMPLATES:
+STEP1:Assigning Template Variable
+import os
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) 
+TEMPLATE_DIR = os.path.join(BASE_DIR,'templates')
+
+STEP2: Specify this TEMPLATE_DIR in settings.py:
+TEMPLATES = [
+{
+...,
+'DIRS': [TEMPLATE_DIR,],
+},]
+
+render() function:
+Combines a given template with a given context dictionary and returns an HttpResponse object with that rendered text.
+
+Syntax:
+render(request, template_name, context=None)
+
+Arguments:
+1 request: The request object used to generate this response
+2 template_name: The full name of a template to use or sequence of template names.
+3 context: A dictionary of values to add to the template context. By default, this is an empty dictionary.
+
+LIVE EXAMPLE ON TEMPLATE(s):
+STEP1: Create Project
+$django-admin startproject TemplateProject
+$cd TemplateProject
+
+STEP2:Create Application
+$django-admin startapp WebApp
+
+STEP3:$py manage.py runserver
+
+STEP4:Open Project with PyCharm or Any IDE(ATOM, Visual Studio Code, Sublime, Brackets..)
+
+STEP5: Do required settings, App configuration @ Installed Apps, Template configuration @ TEMPLATES
+
+Step6:Welcome.html 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Django Templates...!!</title>
+    <style type="text/css">
+        h1{
+        color:red;font-family:candara;
+        text-decoration:underline;
+        }
+    </style>
+</head>
+<body>
+<h1>Welcome to Django World..!!</h1>
+<h1>Say Hey Django Templates.!</h1>
+</body>
+</html>
+
+Step7: views.py:
+from django.shortcuts import render
+# Create your views here.
+def MyTempView(request):
+    return render(request,'MyApp/Welcome.html')
+
+Step8:urls.py
+from django.contrib import admin
+from django.urls import path
+from WebApp import views
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('temp/',views.MyTempView),
+]
+
+Step9:Send the request to web server
+http://127.0.0.1:8000/temp/
+
+EXAMPLE ON TEMPLATES USING TABLE TAG:
+STEP1: Create Project
+$django-admin startproject TemplateProject
+$cd TemplateProject
+
+STEP2:Create Application
+$django-admin startapp WebApp
+
+STEP3:$py manage.py runserver
+
+STEP4:Open Project with PyCharm or Any IDE(ATOM, Visual Studio Code, Sublime, Brackets..)
+
+STEP5: Do required settings, App configuration @ Installed Apps, Template configuration @ TEMPLATES
+
+STEP6:Welcome.html file
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Django Templates..!!</title>
+</head>
+<body>
+<table>
+    <tr>
+        <th>StdNo</th>
+        <th>StdName</th>
+        <th>Result</th>
+    </tr>
+    <tr>
+        <td>101</td>
+        <td>Raaj</td>
+        <td>Pass</td>
+    </tr>
+    <tr>
+        <td>102</td>
+        <td>SARA</td>
+        <td>Fail</td>
+    </tr>
+</table>
+</body>
+</html>
+
+STEP7: Thanks.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Django Templates..!!</title>
+</head>
+<body>
+<h1>Thanks you for Visiting Our Page...!!</h1>
+</body>
+</html>
+
+STEP8:views.py:
+from django.shortcuts import render
+# Create your views here.
+def Welcome_Page(request):
+    return render(request,'MyApp/Welcome.html')
+def Thanks_Page(request):
+    return render(request,'MyApp/Thanks.html')
+
+STEP9:urls.py
+from django.contrib import admin
+from django.urls import path
+from WebApp import views
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('wish/',views.Welcome_Page),
+    path('thank/',views.Thanks_Page),
+]
+
+STEP10:Run the Web Server
+$py manage.py runserver
+
+STEP11:Send the Request to Web Server
+Open urls on the any web browser..!!

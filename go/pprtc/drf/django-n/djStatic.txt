@@ -1,0 +1,113 @@
+﻿Working with Static Files:
+We worked with text data into template by using Template Tags. We will insert static files like images, css and JavaScript files etc inside template file.
+
+Process to include Static Files inside Template:
+1. Create a folder named with 'static' inside main project folder.
+2. In 'static' folder Create 'css' folder to insert css style sheets.
+3. In 'static' folder Create 'images' folder to place image files.
+4. Create static directory Path at BASE_DIR
+STATIC_DIR=os.path.join(BASE_DIR,'static')
+5. Configure static directory path to settings.py file.
+
+Goto Project settings.py file do the following needs:
+STATIC_URL = '/static/'
+STATICFILES_DIRS=[
+	STATIC_DIR,
+] #Array or List data structure
+
+Configuring static files to Django framework..!!
+{% load static %}
+Available all static files for our template file or html file(s).
+
+To include image follow the Syntax:
+<img src="{% static 'images/django.png' %}" alt="SorryNoImage"/>
+
+To Include our css file follow the Syntax:
+<link href="{%  static 'css/MyFile.css'  %}" rel="stylesheet">
+
+NOTE:
+At the beginning of HTML file, next to <!DOCTYPE html> we have to include template tag:
+{% load static %}
+
+LIVE Example on STATIC RESOURCES:
+STEP1: Create Project
+$django-admin startproject StaticProject
+$cd StaticProject
+
+STEP2:Create Application
+$django-admin startapp WebApp
+
+STEP3:$py manage.py runserver
+
+STEP4:Open Project with PyCharm or Any IDE(ATOM, Visual Studio Code, Sublime, Brackets..)
+
+STEP5: Do required settings, App configuration @ Installed Apps, Template configuration @ TEMPLATES, Static Configuration @ End of the settings.py.
+
+STEP6:Welcome.html 
+<!DOCTYPE html>
+{% load static %}
+<html lang="en-IN">
+<head>
+<meta charset="utf-8">
+<title>Hello Static Page</title>
+<link href="{% static 'css/MyFile.css' %}" rel="stylesheet"/>
+</head>
+<body>
+<h1>{{ dt }}</h1>
+<h2>{{ name }}</h2>
+<h3>{{ wish }}</h3>
+<img src="{% static 'images/django.png' %}" alt="SorryNoImg">
+<img src="{% static 'images/IndiaElections.png' %}" alt="Sorry NoImage">
+</body>
+</html>
+
+Step7: MyFile.css
+h1{
+color:#FF0000;text-align:right;text-decoration:overline;
+}
+h2{
+color:#0000FF;text-align:left;text-decoration:underline;
+}
+h3{
+color:#00FFFF;text-align:center;text-decoration:line-through;
+}
+
+Step8: views.py
+from django.shortcuts import render
+from datetime  import datetime
+# Create your views here.
+def TimeInfo(request):
+    dt=datetime.now()
+    name = 'NareshIT-HYDERABAD'
+    th=int(dt.strftime('%H'))
+    if th<12:
+        wish="Good Morning Buddy"
+    elif th<16:
+        wish="Good Afternoon Dude"
+    else:
+        wish="Good Night Guys-Sleep Well"
+    PyDict={'dt':dt,'name':name,'wish':wish}
+    return render(request,'MyApp/Welcome.html',context=PyDict)
+
+Step9:urls.py:
+from django.contrib import admin
+from django.urls import path
+from WebApp import  views
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('tinfo/',views.TimeInfo),
+]
+
+Step10:
+Run the django server, Open the url on the web browser..!!
+http://127.0.0.1:8000/tinfo/
+
+Adding More in HTML file:
+<marquee scrollamount="40" onmouseover="this.stop()" onmouseout="this.start()">
+<img src="{% static 'images/django.png' %}" alt="SorryImageNotFound">
+<img src="{% static 'images/butterfly.gif' %}" alt="SorryImageNotFound">
+</marquee>
+
+NOTE: 
+if url is 'static' name, django framework returns Page not found (404) error. Directory indexes are not allowed here..!

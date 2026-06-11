@@ -1,0 +1,205 @@
+2 Many-to-one relationships
+A Many-to-one relationship implies that one model record can have many other model records associated with itself.  To define a Many-to-one relationship in Django models you use the ForeignKey data type on the model that has the many records.
+
+NOTE: A record in one table is related to many records in another table.
+
+LIVE PROJECT ON MANY to ONE RELATION:
+STEP1
+$django-admin startproject ManyToOneRelations
+STEP2
+$django-admin startapp WebApp
+STEP3
+$do required settings and template files
+STEP4: Models.py
+from django.db import models
+class Team(models.Model):
+    tname = models.CharField(max_length=255)
+    def __str__(self):
+        return self.tname
+
+class Player(models.Model):
+    pname = models.CharField(max_length=255)
+    team= models.ForeignKey(Team,on_delete=models.CASCADE,)
+    def __str__(self):
+        return self.pname
+
+STEP5:Migrations
+$py manage.py makemigrations
+$py manage.py migrate
+
+STEP6:Creating Super User:
+$ python manage.py createsuperuser
+User Name:KSRAJU
+Email:ksrajupy@gmail.com
+Password:********
+Password(Again):********
+SuperUser Created Successfully..!!
+
+$ python manage.py runserver
+It is a Django Admin Dashboard.  But we can't see any table here, do the following..!!
+
+STEP7:admin.py
+from django.contrib import admin
+from .models import Team,Player
+# Register your models here.
+admin.site.register(Team)
+admin.site.register(Player)
+
+NOTE: Add required data in admin @TNames(1) @TPlayers(2)
+
+STEP8:TeamPlayer.html
+<!doctype html>
+<html lang = "en">
+   <head>
+      <meta charset = "utf-8">
+      <title>ManyToOneRelations</title>
+           <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    </head>
+   <body>
+          <nav class="navbar navbar-expand navbar-dark bg-dark">
+           <h2 style="color: #fff">ManyToOneRelations</h2>
+     </nav>
+      <div class='container'>
+         <div class='row'>
+            <div class="col-md-6">
+               {% for instance in items %}
+               <h2>{{instance.tname}} :</h2>
+               {% for player in instance.player_set.all %}
+                  {{ player.pname }} <br>
+                {% endfor %}
+               {% endfor %}
+            </div>
+            <div class="col-md-6">
+            </div>
+         </div>
+      </div>
+  </body>
+</html>
+
+STEP9:views.py
+from django.shortcuts import render
+from .models import Team
+# Create your views here.
+def teamslist(request):
+	items = Team.objects.all()
+	return render(request,'MyApp/TeamPlayer.html',{'items':items})
+
+STEP10:urls.py
+from django.contrib import admin
+from django.urls import path
+from WebApp import views
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('TP/',views.teamslist),
+]
+
+STEP11:send the request to webserver: http://127.0.0.1:8000/TP/
+
+Live UseCases:
+1. Country & States
+2. Teacher & Subject
+3. Product & Customer
+
+3 Many-to-Many Relationships
+A many to many relationship implies that many records can have many other records associated amongst one another. To define a many to many relationship in Django models you use the ManyToManyField data type. 
+
+NOTE: Multiple records in one table are related to multiple records in another table.
+
+LIVE PROJECT ON MANY to MANY RELATION:
+STEP1
+$django-admin startproject ManyToManyRelations
+STEP2
+$django-admin startapp WebApp
+STEP3
+$do required settings and template files
+
+STEP4: Models.py
+from django.db import models
+# Create your models here.
+class Driver(models.Model):
+    dname = models.CharField(max_length=255)
+    def __str__(self):
+        return self.dname
+
+class Car(models.Model):
+    cname = models.CharField(max_length=255)
+    drivers = models.ManyToManyField(Driver,)
+    def __str__(self):
+        return self.cname
+
+STEP5:Migrations
+$py manage.py makemigrations
+$py manage.py migrate
+
+STEP6:Creating Super User:
+$ python manage.py createsuperuser
+User Name:KSRAJU
+Email:ksrajupy@gmail.com
+Password:********
+Password(Again):********
+SuperUser Created Successfully..!!
+
+$ python manage.py runserver
+It is a Django Admin Dashboard.  But we can't see any table here, do the following..!!
+
+STEP7:admin.py
+from django.contrib import admin
+from .models import Driver,Car
+admin.site.register(Driver)
+admin.site.register(Car)
+
+NOTE: Add required data in admin @AddCar @AddDriver
+
+STEP8:CarDriver.html
+<!doctype html>
+<html lang = "en">
+   <head>
+      <meta charset = "utf-8">
+      <title>ManyToMany</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+   </head>
+   <body>
+          <nav class="navbar navbar-expand navbar-dark bg-dark">
+           <h2 style="color: #fff">ManyToManyRelations</h2>
+     </nav>
+      <div class='container'>
+         <div class='row'>
+            <div class="col-md-6">
+               {% for instance in items %}
+               <h2>{{instance.dname}} :</h2>
+               {% for car in instance.car_set.all %}
+                  {{ car.cname }} <br>
+                {% endfor %}
+               {% endfor %}
+            </div>
+            <div class="col-md-6">
+            </div>
+         </div>
+      </div>
+  </body>
+</html>
+
+STEP9:views.py
+from django.shortcuts import render
+from WebApp.models import Driver
+# Create your views here.
+def driverslist(request):
+	items = Driver.objects.all()
+	return render(request,'MyApp/CarDriver.html',{'items':items})
+
+STEP10:urls.py
+from django.contrib import admin
+from django.urls import path
+from WebApp import views
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('CD/',views.driverslist),
+]
+
+STEP11:send the request to webserver: http://127.0.0.1:8000/CD/
+
+Usecases for ManyToMany
+1. Books ==> Authors
+2 Students ==> Classes

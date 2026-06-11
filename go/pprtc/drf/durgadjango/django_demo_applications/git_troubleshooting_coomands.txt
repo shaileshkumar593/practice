@@ -1,0 +1,33 @@
+1. How to install GIT:
+----------------------
+GIT Repository:
+---------------
+3. which acts as git repository
+   the required files added to that folder
+   git intialization
+   We required to add required files to the git for tracking purpose
+   git add .
+   git status
+   commit changes whatever we did
+   git commit -m 'firstcommit'
+
+
+echo "# durga-jobs-project" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git remote add origin https://github.com/djangoprojectsot/durga-jobs-project.git
+git push -u origin master
+
+
+git config  user.name "djangoprojectsot"
+git config  user.email "durgatoc@gmail.com"
+git config --list
+
+### git config --global user.name "djangodurga"
+-### git config --global user.email "durgaadvjava@gmail.com"
+
+
+git remote set-url origin https://djangodurga@github.com/djangodurga/repo.git
+
+Go to: Control Panel -> User Accounts -> Manage your credentials -> Windows Credentials -> under Generic Credentials there are some credentials related to Github, click on them and click "Remove".

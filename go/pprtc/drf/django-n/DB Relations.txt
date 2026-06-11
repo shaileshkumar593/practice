@@ -1,0 +1,114 @@
+WORKING WITH RELATION-SHIPS IN DJANGO MODELS:
+Django models operate by default on relational database systems (RDBMS) and thus they also support relationships amongst one another. In the simplest terms, database relationships are used to associate records on the basis of a key or id, resulting in improved data maintenance, query performance and less duplicate data, among other things.
+
+Django models support the same three relationships supported by relational database systems:
+1 One-to-one relationships (PK to PK)
+2 Many-to-one relationships (PK to FK)
+3 Many-to-many relationships(FK to FK)
+
+One to one relationships in Django models.
+A one to one relationship implies that one record is associated with another record. If you're familiar with object-orientated programming, a one to one relationship in RDBMS is similar to object-oriented inheritance
+
+Model records can have a one to one relationship to State model records, Where state has a specific Capital City. To define a one to one relationship in Django models you use the OneToOneField data type.
+
+LIVE PROJECT ON ONE to ONE RELATION:
+STEP1
+$django-admin startproject OneToOneRelations
+STEP2
+$django-admin startapp WebApp
+STEP3
+$do required settings and template files
+
+STEP4: Models.py
+from django.db import models
+# Create your models here.
+class State(models.Model):
+    sname = models.CharField(max_length=255)
+    def __str__(self):
+        return self.sname
+
+class CapitalCity(models.Model):
+    cname = models.CharField(max_length=255,primary_key=True)
+    state = models.OneToOneField(State,on_delete=models.CASCADE,)
+    def __str__(self):
+        return self.cname
+
+STEP5:Migrations
+$py manage.py makemigrations
+$py manage.py migrate
+
+STEP6:Creating Super User:
+$ python manage.py createsuperuser
+User Name:KSRAJU
+Email:ksrajupy@gmail.com
+Password:********
+Password(Again):********
+SuperUser Created Successfully..!!
+
+$ python manage.py runserver
+It is a Django Admin Dashboard.  But we can't see any table here, do the following..!!
+
+STEP7:admin.py
+from django.contrib import admin
+from WebApp.models import State,CapitalCity
+
+# Register your models here.
+admin.site.register(State)
+admin.site.register(CapitalCity)
+
+NOTE: Add required data in admin @State(First) and @ CapitalCity (Second)
+
+STEP8:StateCapital.html
+<!doctype html>
+<html lang = "en">
+   <head>
+      <meta charset = "utf-8">
+      <title>Django Relations..!!</title>
+           <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+   </head>
+   <body>
+          <nav class="navbar navbar-expand navbar-dark bg-dark">
+           <h2 style="color: #fff">OneToOne Relations</h2>
+     </nav>
+      <div class='container'>
+         <div class='row'>
+            <div class="col-md-6">
+               {% for i in items %}
+               <p>{{i.sname}} : {{i.capitalcity.cname}}</p> 
+	#@models all are converted into lowercase..!!
+               {% endfor %}
+            </div>
+            <div class="col-md-6">
+            </div>
+         </div>
+      </div>
+  </body>
+</html>
+
+STEP9:views.py
+from django.shortcuts import render
+from .models import State
+# Create your views here.
+def statelist(request):
+	items = State.objects.all()
+	return render(request,'MyApp/StateCapital.html',{'items':items})
+
+STEP10:urls.py
+from django.contrib import admin
+from django.urls import path
+from WebApp import views
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('SC/',views.statelist),
+]
+
+STEP11:send the request to web server http://127.0.0.1:8000/SC/
+
+Usecases for One-to-one
+1. Person ==> SSN, AadharNumber
+
+2 Many-to-one relationships
+A Many-to-one relationship implies that one model record can have many other model records associated with itself.  To define a Many-to-one relationship in Django models you use the ForeignKey data type on the model that has the many records.
+
+NOTE: A record in one table is related to many records in another table.

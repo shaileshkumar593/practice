@@ -1,0 +1,138 @@
+re_path(): It returns an element, that contains regular expression.
+
+Syntax:
+re_path(route, view, kwargs=None, name=None)	
+
+a The route argument should be a string, that contains regular expression, compatible with Python’s re module
+b. The view, kwargs and name arguments are the same as for path().
+
+EXAMPLE:
+$django-admin startproject URLSFIVE
+$cd URLSFIVE
+
+STEP2:Create Application
+$django-admin startapp WebApp
+
+STEP3:$py manage.py runserver
+
+STEP4:Open Project with PyCharm or Any IDE(ATOM, Visual Studio Code, Sublime, Brackets..)
+
+STEP5: Do required settings, App configuration @ Installed Apps..!!
+
+STEP6:views.py
+from django.http import HttpResponse
+# Create your views here.
+def Home_Page(request):
+    return HttpResponse("<h1>Welcome to Home Page</h1>")
+def Index_Page(request):
+    return HttpResponse("It is Index Page")
+
+STEP7:urls.py
+from django.contrib import admin
+from django.urls import path, re_path
+from WebApp import views
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    re_path(r'^home/$',views.Home_Page),
+    re_path(r'^index/$',views.Index_Page),
+]
+
+STEP8:Runserver
+$py manage.py runserver
+
+STEP9:Send the request to Server
+http://127.0.0.1:8000/home
+http://127.0.0.1:8000/index
+
+Example:
+$django-admin startproject URLSSIX
+$cd URLSSIX
+
+STEP2:Create Application
+$django-admin startapp WebApp
+
+STEP3:$py manage.py runserver
+
+STEP4:Open Project with PyCharm or Any IDE(ATOM, Visual Studio Code, Sublime, Brackets..)
+
+STEP5: Do required settings, App configuration @ Installed Apps..!!
+
+STEP6:views.py
+from django.http import HttpResponse
+# Create your views here.
+def Home_Page(request):
+    return HttpResponse("<h1>Welcome to Home Page</h1>")
+def Index_Page(request,year):
+    return HttpResponse(f'Welcome to Index Page of {year}')
+
+STEP7:urls.py
+from django.urls import path,re_path
+from WebApp import views
+urlpatterns=[
+    path('',views.Home_Page),
+    re_path(r'^index/(?P<year>[0-9]{4})/$',views.Index_Page),
+]
+
+STEP8:Runserver
+$py manage.py runserver
+
+STEP9:Send the request to Server
+http://127.0.0.1:8000/index/2019
+
+include():
+A function that takes a full Python import path to another URLconf module that should be "included" in this place. 
+
+Syntax:
+include(module, namespace=None)	
+OR
+include(pattern_list)
+
+Parameters:	
+module ==>URLconf module (or module name)
+namespace (str) ==>Instance namespace for the URL entries being included
+pattern_list ==> Iterable of path() and/or re_path() instances.
+
+EXAMPLE:
+$django-admin startproject URLSIX
+$cd URLSIX
+
+STEP2:Create Application
+$django-admin startapp WebApp
+
+STEP3:$py manage.py runserver
+
+STEP4:Open Project with PyCharm or Any IDE(ATOM, Visual Studio Code, Sublime, Brackets..)
+
+STEP5: Do required settings, App configuration @ Installed Apps..!!
+
+STEP6:views.py
+from django.http import HttpResponse
+# Create your views here.
+def Home(request):
+    return HttpResponse("<h1>Welcome to Home Page</h1>")
+
+STEP8: Create urls.py @ WebApp level
+from django.urls import path
+from WebApp import views
+
+urlpatterns = [
+    path('AppUrl/',views.Home),
+]
+
+STEP9: Include this urls.py into Root(Project) Config urls..!!
+from django.urls import path,include
+urlpatterns = [
+    path('ProUrl/',include('WebApp.urls'))
+]
+
+STEP10: Run the server
+$python manage.py runserver
+
+STEP11:Send the request to Server..!!
+Open any web browser and enter the URL http://127.0.0.1:8000/ProUrl/AppUrl/
+
+Advantages:
+urlpatterns at AppLevel instead of ProjectLevel:
+1 It promotes reusability of Django Applications across multiple projects
+2 Project level urls.py file will be clean and more readable

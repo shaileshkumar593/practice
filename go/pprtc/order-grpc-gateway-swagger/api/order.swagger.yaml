@@ -1,0 +1,62 @@
+openapi: 3.0.0
+info:
+  title: Order Service API
+  version: "1.0"
+paths:
+  /v1/orders:
+    post:
+      summary: Create order
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                items:
+                  type: array
+                  items:
+                    type: string
+                price:
+                  type: number
+      responses:
+        '200':
+          description: created
+  /v1/orders/{id}:
+    get:
+      summary: Get order by id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+    put:
+      summary: Update order
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                items:
+                  type: array
+                  items:
+                    type: string
+                price:
+                  type: number
+                status:
+                  type: string
+      responses:
+        '200':
+          description: updated

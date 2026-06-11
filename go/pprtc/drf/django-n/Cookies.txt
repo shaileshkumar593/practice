@@ -1,0 +1,160 @@
+﻿Session Management in Django:
+Session simply means a particular interval of time. Session Tracking is a way to maintain state (data) of an user. It is also known as Session Tracking. Http protocol is a stateless so we need to maintain state using session tracking techniques. 
+
+1)Cookies		2)Session API
+
+Session Management By using Cookies:
+Cookie is a very small amount of information created by Server and maintained by client.
+OR
+Cookies are usually small text files.  Cookies are intended to help you access a site faster and more efficiently. 
+
+Why Cookie?
+Cookies are created when you use your browser to visit a website that uses cookies to keep track of your movements within the site, invented by Netscape.
+
+There are two types of cookies: 
+1. Session cookies 	2. Persistent cookies. 
+
+1. Session Cookies
+These are created temporarily in your browser's subfolder while you are visiting a website. Once you leave the site, the session cookie is deleted. 
+
+2. Persistent Cookies. 
+These files remain in your browser's subfolder and are activated again once you visit the website that created that particular cookie. You cannot store binary data in a cookie. Cookies can be a maximum of 4kb in size each.
+
+Features of Cookies 
+1. Cookies do not require any server resources since they are stored on the client. 
+2. Cookies are easy to implement. 
+
+Limitations of Cookies
+1. User can delete cookies. 
+2. Cookies can be disabled on user browsers, No security for sensitive data
+
+Cookie Resources:
+http://www.allaboutcookies.org
+
+Test our Browser, Supports Cookies or NOT:
+We have to use the following 3 methods on the request object.
+1. set_test_cookie(): Sets a test cookie to determine whether the user’s browser supports cookies
+2. test_cookie_worked(): Returns either True or False, depending on whether the user’s browser accepted the test cookie.
+3. delete_test_cookie(): Use this to clean up after yourself.
+
+BASIC LIVE EXAMPLE ON DJANGO COOKIES
+STEP1:
+$django-admin startproject CookiesProject
+$cd CookiesProject
+STEP2:
+$django-admin startapp WebApp
+STEP3:
+Do required settings in settings.py file
+STEP4:
+$py manage.py makemigrations
+STEP5:
+$py manage.py migrate
+
+NOTE: 
+If you are not migrate, django displays, OperationalError, no such table: django_session
+
+STEP6: views.py
+from django.http import HttpResponse
+
+def Test_Cookie(request):
+    request.session.set_test_cookie()
+    return HttpResponse("<h1>We are Testing Cookies..!! </h1>")
+
+def Check_Cookie(request):
+      if request.session.test_cookie_worked():
+          print("Say Hey Cookies are Working Fine..!!")
+          request.session.delete_test_cookie()
+          return HttpResponse("<h1>Cookies are Deleted...!!</h1>")
+
+STEP7:urls.py
+from django.contrib import admin
+from django.urls import path
+from WebApp import views
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('test/',views.Test_Cookie),
+    path('check/',views.Check_Cookie),
+]
+
+STEP8:
+Send the request to server: 
+http://127.0.0.1:8000/test/ 
+http://127.0.0.1:8000/check/
+
+Django has more built-in methods to set ,get and delete Cookie(s).
+
+1 set_cookie() method is used to set a cookie 
+Syntax:
+response.set_cookie(cname,cvalue)
+
+Example:
+response.set_cookie('hit', newhit) ==> Temporary Cookie
+response.set_cookie('hit', newhit,max_age=120) ==> Persistent Cookie #Default in seconds..!!
+
+if I want cookie life 5 months 
+5*30*24*60*60==>Months*Days*Hours*Mins*Seconds, We can pass as an argument..!!
+
+if I want cookie life 2.4 years
+2*4*30*24*60*60==>Years*Months*Days*Hours*Mins*Seconds, We can pass as an argument..!!
+
+2 get() or get_cookie(): It is used to get the cookie.
+
+Syntax:
+request.get['cname']
+
+3 request.COOKIES.get('count'): array can also be used to get cookie values.
+
+Syntax:
+request.COOKIES.get(cname,value)
+
+Example:
+request.COOKIES.get('hit',0)
+
+4. delete_cookie(): To delete cookie(s)
+
+Syntax: 
+response.delete_cookie('cname')
+
+LIVE PROJECT ON MORE COOKIE METHODS:
+STEP1:
+$django-admin startproject Cookies_Django
+$cd Cookies_Django
+STEP2:
+$django-admin startapp WebApp
+STEP3:
+Do required settings in Settings.py file, Create templates folder 
+STEP4:
+$py manage.py makemigrations
+STEP5:
+$py manage.py migrate
+
+STEP6: views.py
+from django.shortcuts import render
+from django.http import HttpResponse
+# Create your views here.
+def setcookie(request):
+    response = HttpResponse("<h1>Say Hey Cookie Set..!!</h1>")
+    response.set_cookie('user', 'Raju')
+    return response
+
+def getcookie(request):
+    user  = request.COOKIES['user']
+    return HttpResponse(user  + ' Hey Get Cookie Success')
+
+def delcookie(request):
+    response = HttpResponse('<h1>Say Hey Cookie Deleted..!!</h1>')
+    response.delete_cookie('user')
+    return response
+
+STEP7:urls.py
+from django.contrib import admin
+from django.urls import path
+from WebApp import views
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('set-cook/',views.setcookie),
+    path('get-cook/',views.getcookie),
+    path('del-cook/',views.delcookie)
+]

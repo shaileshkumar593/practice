@@ -1,0 +1,117 @@
+Step-by-Step Explanation of Job Handling
+1️⃣ jobs := make(chan int)
+This is the shared job queue.
+
+It’s unbuffered, meaning:
+
+Every send (jobs <- j) blocks until some worker is ready to receive.
+
+So, workers and the job producer synchronize naturally — no job is lost or skipped.
+
+2️⃣ Starting the Workers
+for w := 1; w <= 5; w++ {
+	wg.Add(1)
+	go worker(w, jobs, &wg)
+}
+5 workers are launched as goroutines.
+
+Each worker is running the same function worker(id, jobs, wg).
+
+They immediately start waiting on this line:
+
+for job := range jobs {
+i.e., they’re blocked until a job is sent into the channel.
+
+3️⃣ Sending the Jobs
+for j := 1; j <= 20; j++ {
+	jobs <- j
+}
+Now the main goroutine starts sending jobs into the channel, one by one.
+
+For an unbuffered channel, this happens like a relay race:
+
+jobs <- 1 → wakes up one worker that’s waiting on range jobs.
+
+That worker receives 1, starts processing it, and the main goroutine continues.
+
+jobs <- 2 → wakes up another (or possibly same, if it finished fast) worker.
+
+And so on.
+
+Each job is automatically distributed among available workers.
+
+4️⃣ Internal Coordination — The Scheduling Magic
+You have:
+
+5 workers waiting to receive from jobs
+
+1 producer sending 20 jobs into jobs
+
+Since Go’s scheduler runs goroutines cooperatively:
+
+Each jobs <- j sends the job to one ready worker.
+
+If all workers are busy (e.g., blocked doing I/O or computation), the main goroutine will pause at jobs <- j until any worker finishes and becomes ready again.
+
+In other words:
+
+Only one worker consumes a job at a time.
+
+The scheduler balances the load automatically.
+
+5️⃣ Closing the Channel
+close(jobs)
+After sending 20 jobs, we close the channel.
+
+Closing means: “No more jobs will come.”
+
+Workers reading from range jobs see:
+
+All pending jobs (if any), then
+
+When empty and closed → range exits automatically.
+
+6️⃣ Waiting for Completion
+wg.Wait()
+Waits until all 5 workers call wg.Done().
+
+Once all workers exit (because channel closed and loop ended), wg.Wait() returns.
+
+Program ends only after all 20 jobs are fully processed.
+
+🔁 Visualization of the Flow
+                  +--------------------+
+                  |       main()       |
+                  |--------------------|
+                  | create 5 workers   |
+                  | send 20 jobs       |
+                  | close(jobs)        |
+                  | wg.Wait()          |
+                  +---------+----------+
+                            |
+                            ↓
+       +------------------------------------------+
+       |                 jobs chan                |
+       +------------------------------------------+
+              ↑        ↑        ↑        ↑        ↑
+              |        |        |        |        |
+     +---------+   +---------+  +---------+  +---------+  +---------+
+     | Worker 1|   | Worker 2|  | Worker 3|  | Worker 4|  | Worker 5|
+     +---------+   +---------+  +---------+  +---------+  +---------+
+         ↓              ↓             ↓             ↓             ↓
+  Process job 1    Process job 2  Process job 3  Process job 4  Process job 5
+  Process job 6    Process job 7  ... etc until all 20 jobs done
+
+You have 20 total jobs to process.
+
+You have 5 workers, each running in a separate goroutine.
+
+Go’s runtime automatically schedules jobs across workers:
+
+At most 5 jobs run concurrently.
+
+When one finishes, it picks up the next.
+
+The process continues until all 20 jobs are done.
+
+Would you like me to modify this to a rate-limited version (e.g., only N jobs per second) or a context-based cancellable version (stop workers when cancelled)?

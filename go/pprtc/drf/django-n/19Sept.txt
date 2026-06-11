@@ -1,0 +1,334 @@
+﻿JavaScript Code
+JavaScript code is a sequence of JavaScript statements. Each statement is executed by the browser in the sequence they are written.
+
+This example will write a heading and two paragraphs to a web page:
+Example
+<script type="text/javascript">
+document.write("<h1>This is a heading</h1>");
+document.write("<p>This is a paragraph.</p>");
+document.write("<p>This is another paragraph.</p>");
+</script> 
+
+JavaScript Blocks
+JavaScript statements can be grouped together in blocks. Blocks start with a left curly bracket {, and end with a right curly bracket }. The purpose of a block is to make the sequence of statements execute together. 
+
+This example will write a heading and two paragraphs to a web page:
+Example
+<script type="text/javascript">
+{
+document.write("<h1>This is a heading</h1>");
+document.write("<p>This is a paragraph.</p>");
+document.write("<p>This is another paragraph.</p>");
+}
+</script>
+
+JavaScript Popup Boxes
+
+Alert Box
+It is often used if you want to make sure information comes through the user. When an alert box pops up, the user will have to click "OK" to proceed. 
+
+Syntax
+alert("Message");
+
+Example:
+<!doctype html>
+<head>
+<script type="text/javascript">
+alert("Click OK to Proceed");
+alert("Naresh i Technologies");
+</script>
+</head>
+
+Confirm Box:
+It is often used, if you want the user to verify or accept something,  When a confirm box pops up, the user will have to click either "OK" or "Cancel" to proceed. If the user clicks "OK", the box returns true. If the user clicks "Cancel", the box returns false.
+
+Syntax
+confirm("Message");
+
+Example:
+<!doctype html>
+<head>
+<script type="text/javascript">
+confirm("Click OK or Cancel");
+</script>
+</head>
+
+Prompt Box
+It is often used if you want the user to input a value before entering a page. When a prompt box pops up, the user will have to click either "OK" or "Cancel" to proceed after entering an input value. If the user clicks "OK" the box returns the input value. If the user clicks "Cancel" the box returns null.
+
+Syntax
+prompt("sometext","defaultvalue");
+
+Example:
+<!doctype html>
+<head>
+<script type="text/javascript">
+var x=prompt("Enter the number","20");
+alert("The Value that u entered is "+x);	
+</script>
+</head>
+
+Example2:
+<html>
+<head>
+<script type="text/javascript">
+function show_prompt()
+{
+var name=prompt("Please enter your name","Raju");
+if (name!=null && name!="")
+  {
+  document.write("<p>Hello " + name + "! How are you today?</p>");
+  }
+}
+</script>
+</head>
+<body>
+<input type="button" onclick="show_prompt()" value="Show prompt box" />
+</body>
+</html>
+
+
+Variables:Use the following naming rules: 
+1. A variable may include only the letters a-z, A-Z, 0-9, the $ symbol, and the underscore (_).
+2. No other characters such as spaces or punctuation are allowed in a variable name.
+3. The first character of a variable name can be only a-z, A-Z, $, or _ (no numbers).
+4. Names are case-sensitive. Count, count, and COUNT are all different variables.
+5. There is no set limit on variable name lengths.
+6. Variable names must begin with a letter, the $ character, or the underscore character
+7. You declare JavaScript variables with the var keyword
+
+In JavaScript DataTypes are divided into the following types
+1. Primitive Data Types
+2. Non Primitive Data Types
+
+1. Primitive Data Types
+JavaScript has five primitive data types: String, Number, Boolean, Undefined, and Null. These are the most simple forms of data we can use in JS programming.
+
+2. Non Primitive Data Types
+Only Object
+
+Syntax:
+var name = new String();//String Object
+var x =new Number();//Number Object
+var y =new Boolean();//Boolean Object
+
+
+JavaScript Strings
+A string is a variable which stores a series of characters like "nit". A string can be any text inside quotes. You can use single or double quotes:
+
+Example
+var name="nit";
+var name='nit';
+
+Number Data Type
+JavaScript has only one type of numbers. Numbers can be written with, or without decimals:
+
+Example
+var x1=34.00;      // Written with decimals
+var x2=34;         // Written without decimals
+
+Example:
+<html>
+<head>
+<title>Variables</title>
+<script type="text/javascript">
+var x=10;
+var y=20;
+var z=x+y;
+var name="NiT";
+document.write("The value of x is "+x);
+document.write("<br>");
+document.write("The value of y is "+y);
+document.write("<br>");
+document.write("The value of z is "+z);
+document.write("<br>");
+document.write(name+" is Leader in IT Training");	
+</script>
+</head>
+<body>
+</body>
+</html>
+
+Boolean Data Type
+The Boolean data type
+The Boolean data type is used to represent a Boolean value. A Boolean value can be used to represent data that is in either of two states.Booleans are often used in conditional testing.
+
+The two Boolean values
+true // equivalent to true, yes, or on
+false // equivalent to false, no, or off
+
+Undefined 
+It is the value of a variable with no value. 
+
+Example
+var x;               // Now x is undefined
+
+Null:
+Variables can be emptied by setting the value to null;
+
+Example:
+var x=null;       // Now x is null
+
+2. Non Primitive Data Types
+Object:
+
+Declaring Variables as Objects.When a variable is declared with the keyword "new", the variable is declared as an object:
+
+Syntax:
+var name = new String();//String Object
+var x =new Number();//Number Object
+var y =new Boolean();//Boolean Object
+
+Dynamic Types:
+JavaScript has dynamic types. This means that the same variable can be used as different types:
+
+Example
+var x;               // Now x is undefined
+var x = 5;           // Now x is a Number
+var x = "RaaJ";      // Now x is a String
+
+Example:
+<body>
+<script>
+var x=6; 
+document.write(x);
+document.write("<br/>");
+var x="RaaJ";
+document.write(x);
+var x=null;
+document.write(x);
+var x=true;
+document.write(x);
+var x;
+document.write(x);
+</script>
+</body>
+
+HTML <noscript> Tag
+The <noscript> tag is used to provide an alternate content for users that have disabled scripts in their browser or have a browser that doesn’t support client-side scripting. The <noscript> element can contain all the elements that you can find inside the <body> element of a normal HTML page. The content inside the <noscript> element will only be displayed if scripts are not supported, or are disabled in the user’s browser.
+
+Syntax: <noscript>..............</noscript>
+
+Example:
+<html>
+<head>
+<title>
+Alert PopUp Using NOSCRIPT
+</title>
+<head>
+<script>
+function Show_Alert()
+{
+alert("Hi Friends")
+}
+</script>
+</head>
+<body bgcolor="lightgreen">
+<noscript>
+<p> Hi User Ur Using Too lower version Browser Please Update </p>
+</noscript>
+<input type="submit" onclick="Show_Alert()" value="ClickMe" />
+</body>
+</html>
+
+Example2:
+<html>
+<head>
+<title>No Script</title>
+<script type="text/javascript">
+document.write("Welcome to JavaScript");
+</script>
+</head>
+<body>
+<noscript>
+<h2>Sorry, this page requires JavaScript.</h2>
+</noscript>
+</body>
+</html>
+
+JavaScript Operators
+Arithmetic Operators:
+Arithmetic operators are used to perform mathematics. You can use them for the main four operations (addition, subtraction, multiplication, and division) as well as to find the modulus (the remainder after a division) and to increment or decrement a value.
+
+Operator 		Description		Example
++ 		Addition 			j + 12
+- 		Subtraction 		j - 22
+* 		Multiplication 		j * 7
+/ 		Division 			j / 3.14
+% 		Modulus (division remainder) 	j % 6
+++ 		Increment 		++j
+-- 		Decrement 		--j
+
+JavaScript Assignment/Comparison Operators:
+Comparison operators are generally used inside a construct such as an if statement where you need to compare two items.
+
+Operator 		Description		Example
+== 		Is equal to 		j==42
+!= 		Is not equal to  		j !=17
+> 		Is greater than  		j >0
+<		Is less than		j <100
+>= 		Is greater than or equal to	j >=23
+<= 		Is less than or equal to  	j <=13
+
+Logical Operators:
+JavaScript’s logical operators do not include and and or equivalents to && and ||, and there is no xor operator.
+
+Operator 		Description	Example
+&& 		And 		j == 1 && k ==2
+|| 		Or 		j < 100 || j >0
+! 		Not 		! (j == k)
+
+String Concatenation:
+The + Operator Used on Strings
+The + operator can also be used to add string variables or text values together. To add two or more string variables together, use the + operator.
+str1="Naresh i ";
+str2="Technologies";
+str3=str1+str2;
+
+Example:
+<body>
+<script type="text/javascript">
+var x;
+x=5+8;
+document.write(x +"<br />");//13
+x="8"+"9";
+document.write(x +"<br />");//89
+x=9+"5";
+document.write(x +"<br />");//95
+x="9"+5;
+document.write(x +"<br />");//95
+</script>
+</body>
+
+NOTE:
+
+Example:
+<html>
+<head>
+<title>+ Operator on String</title>
+<script type="text/javascript">
+var x=10;
+var y=20;
+var a="10";
+var b="20";
+document.write("The value for adding two strings a + b = "+a+b);
+document.write("<br>");
+document.write("The value for adding number and string x + b = "+x+b);		
+</script>
+</head>
+<body>
+</body>
+</html>
+
+Escaping Characters
+Escape characters, which you’ve seen used to insert quotation marks in strings, can also insert various special characters such as tabs, new lines, and carriage returns. 
+
+Character 	Meaning
+\b 		Backspace
+\f 		Form feed
+\n 		New line
+\r 		Carriage return
+\t 		Tab
+\' 		Single quote (or apostrophe)
+\" 		Double quote
+\\ 		Backslash

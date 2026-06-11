@@ -1,0 +1,24 @@
+Key Concepts
+
+go.mod file: This file, located in the root directory of a Go project, defines the module's path and lists all its dependencies along with their required versions.
+
+go.sum file: This file is automatically created and stores checksums for all direct and indirect dependencies to verify their integrity and ensure reproducible builds across different environments. You must commit both go.mod and go.sum files to version control.
+
+Module Path: The module path (e.g., example.com/greetings) serves as the import path prefix for all packages within that module and indicates where the go command should look to download it. 
+The Go Programming Language
+The Go Programming Language
+ 
+Essential go mod Commands
+Here are some of the most commonly used go mod commands:
+go mod init [module_path]: Initializes a new Go module in the current directory and creates the go.mod file. The module path should ideally be the repository's location (e.g., ://github.com).
+
+go mod tidy: Adds any missing module requirements to go.mod and removes unused dependencies, ensuring the go.mod file accurately reflects the source code's actual dependencies. This is good practice before committing changes.
+
+go mod download: Downloads the required modules to the local cache.
+
+go mod graph: Prints the module requirement graph, showing how different modules depend on each other.
+
+go mod edit: Provides a command-line interface to programmatically edit the go.mod file, which is useful for tasks like adding a replace directive for local development.
+
+go mod vendor: Creates a vendor directory containing copies of all the project's dependencies. 
+

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+{%load static%}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DJANGO FORMS</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+          integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+
+    <link href="{% static 'css/myapp.css' %}" rel="stylesheet">
+</head>
+<body>
+<h1 style="color : green; text-align:center;" > Employee Sample Form....!!!</h1>
+<div class="container" align="center">
+<form method="post">
+    {{sample_form.as_p}}
+    {% csrf_token %}
+    <input type="submit" value="Employee" class="btn btn-success">
+</form>
+</div>
+</body>
+</html>

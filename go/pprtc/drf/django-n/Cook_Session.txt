@@ -1,0 +1,194 @@
+﻿LIVE PROJECT ON MORE COOKIE METHODS:
+STEP1:
+$django-admin startproject Cookies_Django
+$cd Cookies_Django
+STEP2:
+$django-admin startapp WebApp
+STEP3:
+Do required settings in Settings.py file, Create templates folder 
+STEP4:
+$py manage.py makemigrations
+STEP5:
+$py manage.py migrate
+
+STEP6: views.py
+from django.shortcuts import render
+from django.http import HttpResponse
+# Create your views here.
+def setcookie(request):
+    response = HttpResponse("<h1>Say Hey Cookie Set..!!</h1>")
+    response.set_cookie('user', 'Raju')
+    return response
+
+def getcookie(request):
+    user  = request.COOKIES['user']
+    return HttpResponse(user  + ' Hey Get Cookie Success')
+
+def delcookie(request):
+    response = HttpResponse('<h1>Say Hey Cookie Deleted..!!</h1>')
+    response.delete_cookie('user')
+    return response
+
+STEP7:urls.py
+from django.contrib import admin
+from django.urls import path
+from WebApp import views
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('set-cook/',views.setcookie),
+    path('get-cook/',views.getcookie),
+    path('del-cook/',views.delcookie)
+]
+
+LIVE ADVANCED PROJECT ON COOKIES
+STEP1:
+$django-admin startproject Cookies_Django
+$cd Cookies_Django
+STEP2:
+$django-admin startapp WebApp
+STEP3:
+Do required settings in Settings.py file, Create a hits.html file in templates folder 
+STEP4:
+$py manage.py makemigrations
+STEP5:
+$py manage.py migrate
+
+STEP6: views.py
+from django.shortcuts import render
+def Hits_View(request):
+    hit=request.COOKIES.get('hit',0)
+    newhit=int(hit)+1
+    response= render(request,'MyApp/hits.html',{'hit':newhit})
+    response.set_cookie('hit',newhit)
+    return  response
+
+STEP7:hits.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome to Cookies</title>
+    <style type='text/css'>
+        span{
+        font-size:300px;font-family:candara;color:#FF00FF;
+        }
+    </style>
+</head>
+<body>
+<h1>WebPage Hits are:<span>{{hit}}</span></h1>
+</body>
+</html>
+
+STEP8:urls.py
+from django.contrib import admin
+from django.urls import path
+from WebApp import views
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('Cookies_Count/',views.Hits_View),
+]
+
+STEP9:Send the request to server, http://127.0.0.1:8000/Cookies_Count/
+
+DJANGO SESSION FRAMEWORK:
+Session Management By using Session API:
+A session is mechanism to store information on the server side during the interaction with the web application. In Django, by default session stores in the database and also allows file-based and cache based sessions.
+
+Put django.contrib.sessions.middleware.SessionMiddleware in MIDDLEWARE and django.contrib.sessions in INSTALLED_APPS of settings.py file. To set and get the session in views, we can use request.session and can set multiple times too.
+
+Note: Session information will be stored in one of following possibilities
+1.Inside a File	2.Inside a database		3.Inside Cache
+
+The  straight forward approach is to use django.contrib.sessions application to store session information in a Django Model or database. The Model is: django.contrib.sessions.models.Session
+
+Useful Methods for Session Management:
+1)request.session['key'] = value ==> To Add Data to the Session.
+2)value = request.session['key'] ==> To get Data from the Session
+3)request.session.set_expiry(seconds) ==> Sets the expiry Time for the Session. (default 2 weeks)
+4)request.session.get_expiry_age() ==>Returns the expiry age in seconds
+5)request.session.get_expiry_date() ==> Returns the date on which this session will expire
+
+LIVE EXAMPLE ON SESSION FRAMEWORK
+STEP1:
+$django-admin startproject djsessions
+$cd djsessions
+
+STEP2:
+$django-admin startapp WebApp
+
+STEP3:
+Do required settings in Settings.py file, Create a hits.html file in templates folder 
+
+STEP4:
+$py manage.py makemigrations
+
+STEP5:
+$py manage.py migrate
+
+STEP6:views.py
+from django.shortcuts import render
+def Page_Hit_View(request):
+    hit=request.session.get('hit',0)
+    newhit=hit+1
+    request.session['hit']=newhit
+    return render(request,'MyApp/hits.html',{'hit':newhit})
+
+Step7: hits.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        b{
+        font-size:300px;color:red;
+        font-family:candara;
+        }
+    </style>
+</head>
+<body>
+<h1>Number of Hits are:<b>{{hit}}</b> </h1>
+</body>
+</html>
+
+STEP8:urls.py
+from django.contrib import admin
+from django.urls import path
+from WebApp import views
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('hits/',views.Page_Hit_View),
+]
+
+Step9:
+Send the request to the server: 
+http://127.0.0.1:8000/hits/
+
+EXAMPLE: PERSISTANT SESSION
+Step4:views.py 
+from django.shortcuts import render
+def Page_Hit_View(request):
+    hit=request.session.get('hit',0)
+    newhit=hit+1
+    request.session['hit']=newhit
+    print("Session expired age: ",request.session.get_expiry_age())
+    print("Session expired date: ",request.session.get_expiry_date())
+    return render(request,'MyApp/Welcome.html',{'hit':newhit})
+
+Step5: Send the request to the server: http://127.0.0.1:8000/hits/
+
+How to Delete Session Data:
+Syntax:
+del request.session[sessionkey]
+
+Example:
+del request.session['user']
+
+Browser Length Sessions and Persistent Sessions
+If the session information stored inside browsers cache, sessions are called browser length sessions.
+If the session information stored persistently inside file/database/cache, sessions are called Persistent sessions.
+
+NOTE: 
+In Django default sessions are Persistent Sessions.

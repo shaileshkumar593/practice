@@ -1,0 +1,134 @@
+﻿User Authentication and Authorization
+Django provides an authentication and authorization ("permission") system, built on top of the session framework. The authentication system is very flexible, and you can build up your URLs, forms, views, and templates from scratch if you like, just calling the provided API to log in the user.
+
+Authentication: The process of validating user is called authentication.
+Authorization: The process of validating access permissions of user is called authorization.
+
+Syntax1: 
+INSTALLED_APPS = [
+  'django.contrib.auth',  #Core authentication framework and its default models.
+   'django.contrib.contenttypes',  #Django content type system (allows permissions to be associated with models).
+]
+
+Syntax2:
+MIDDLEWARE = [
+  'django.contrib.sessions.middleware.SessionMiddleware',   #Manages sessions across requests
+ 'django.contrib.auth.middleware.AuthenticationMiddleware',   #Associates users with requests using sessions.
+]
+
+The auth system consists of:
+1 Users	2 Permissions	3 Groups
+4 A configurable password hashing system
+5 Forms and view tools for logging in users, or restricting content
+6 A pluggable backend system
+
+NOTE POINTS: 
+1 PBKDF1 and PBKDF2 (Password-Based Key Derivation Function 2)
+2 bcrypt is a password hashing function
+3 Argon2 is a key derivation function 
+4 More secured algorithm is argon2 and then bcrypt followed PBKDF2. 
+
+$pip install bcrypt
+$pip install django[argon2]
+
+In settings.py we have to configure password hashers as follows.
+PASSWORD_HASHERS=[
+  'django.contrib.auth.hashers.Argon2PasswordHasher',
+  'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
+  'django.contrib.auth.hashers.BCryptPasswordHasher',
+  'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+  'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
+]
+
+Live Example on Authentication and Authorization:
+STEP1: 
+$django-admin startproject Auth_Project
+$cd Auth_Project
+STEP2:
+$django-admin startapp WebApp
+STEP3:
+Do required settings, templates & static  files
+STEP4:
+$py manage.py makemigrations
+STEP5:
+$py manage.py migrate
+
+STEP6:base.html
+<!DOCTYPE html>
+{%load static%}
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Django Auth..!!</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="{%static 'css/MyFile.css'%}">
+  </head>
+  <body>
+    <nav class='navbar navbar-default navbar-inverse'>
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="/">CORE BANKING</a>
+        </div>
+        <ul class='nav navbar-nav'>
+          <li> <a href="/cust">Customer</a> </li>
+        </ul>
+        <ul class='nav navbar-nav navbar-right'>
+          <li> <a href="#">Signup</a> </li>
+          <li> <a href="#">Login</a> </li>
+          <li> <a href="#">Logout</a> </li>
+        </ul>
+      </div>
+    </nav>
+    {%block body_block%}
+    {%endblock%}
+  </body>
+</html>
+
+STEP7:home.html
+<!DOCTYPE html>
+{%extends 'MyApp/base.html'%}
+      {%block body_block%}
+      <div class="jumbotron" >
+        <div class="container">
+          <h1>Welcome to CORE BANKING</h1>
+          <h2>Bank Rules:</h2>
+          <ul>
+            <li>Term-1:You should Login one time in a Week</li>
+            <li>Term-2:You should Login Two times in a Month</li>
+          </ul>
+        </div>
+      </div>
+      {%endblock%}
+
+STEP8: cusomer.html
+<!DOCTYPE html>
+{%extends 'MyApp/base.html'%}
+      {%block body_block%}
+      <div class="jumbotron" >
+        <div class="container">
+          <h1>Welcome to CORE BANKING CUTSTOMERS</h1>
+          <h2>Rules:</h2>
+          <ul>
+            <li>Term-1:You should Login one time in a Week</li>
+            <li>Term-2:You should Login Two times in a Month</li>
+          </ul>
+        </div>
+      </div>
+      {%endblock%}
+
+STEP9: views.py
+from django.shortcuts import render
+def Home_Page(request):
+    return render(request,'MyApp/home.html')
+def Customer(request):
+    return render(request,'MyApp/customer.html')
+
+STEP10: urls.py
+from django.contrib import admin
+from django.urls import path
+from WebApp import views
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('',views.Home_Page),
+    path('cust/',views.Customer),
+]

@@ -1,0 +1,118 @@
+﻿WEB: 
+Collection of E-resources is called Web. The father of web is Tim Berners-Lee.
+
+What is W3C?
+World Wide Web Consortium.It is an organization to maintain web standards. It was founded in 1994 by Tim Berners-Lee.
+
+NETWORK: 
+A group of computers to exchange resources each other. First Network is ARPANET. Advanced Research Projects Agency NET work.
+
+What is INTERNET?
+INTERnational NETwork. Father of Internet is Mr. VINT CERF
+OR
+Collection of  TCP/IP communications protocols.
+
+Protocol :Collection of rules between sender and receiver.
+
+Define TCP:
+Transmission Control Protocol
+OR
+It is connectvity between computers in a Network.(LAN/INTRANET)
+
+Define IP
+INTERNET PROTOCOL
+OR
+Is is connectvity between networks in WAN.
+
+Email: 
+It is a method of exchanging messages between E-Devices. It is classified into the following two types.
+
+WebMail:  Web-based email accounts. It is Online Mail System.
+Example: Hotmail, Gmail, Yahoo, AOL Mail, Outlook.com etc..!!
+
+PoP Mail:PostOfficeProtocol. It is Popularly known as Offline Mail System.
+Example: MSOutlook Express, Mozilla Thunderbird, Eudora, GNUMail, or (Mac) Mail
+
+Define SMTP 
+Simple Mail Transfer Protocol
+OR
+Cross Mail Domain Communications
+
+Define MIME
+Multipurpose Internet Mail Extensions
+OR
+We can send any kind of attachments *
+
+What is URL?
+Uniform Resource Locator. or Uniform Resource Name or Uniform Resource Identifier
+
+Example:
+https://www.nareshit.com
+
+1. http ==> Common language between client and server
+2. :// ==> Delimiter(s), Special Characters
+3. www --> Default Domain or SubDomain
+4. . ==> Period or Embed Character
+5. nareshit ==> PLD ==> Primary Level Domain
+6. com ==>TLD => Top Level Domain
+7. s ==> SSL ==> Secure Sockets Layer ==> Data Encryption
+
+Realtime Project Architectures..!!
+1.Single Tier Architecture(StandAloneEnvironment)
+2.Two Tier Architecture(ClientServerEnvironment)
+3.Three Tier Architecture(WebEnvironment) 
+4.N Tier Architecture(DistributedEnvironment)
+5. MVC  Architecture (ModelViewController)
+Model=>Data,View=>UI,Controller=>BusinessLogic
+
+S/W Development Layers
+1.PresentationLayer(UI)=>HTML,HTML5,CSS,CSS3, SASS, LESS, CSS4, JavaScript, jQuery, AngularJS, Angular.!(FrontEnd)
+
+2.Business Logic Layer (Coding)=>PYTHON,Django, JAVA, .NET, PHP, NodeJS (Middle)
+
+3. Data Access Layer (Storage)=>Oracle,SQLServer, MySQL, DB2, SQLite..!! (BackEnd)
+
+What is Web Browser?
+It is  client side software, it takes http request from client to server, it renders http response from server to client.
+
+Web page:
+Web Page is a document in the World Wide Web. 
+
+Types of Web pages:
+Web pages are classified into two types.
+1. Static web pages:-
+User cannot interact directly with these web pages.
+Example: HTML, CSS
+
+2.  Dynamic web pages:-
+User can  interact directly with these webpages. To create these web pages we use DHTML.
+Example: HTML, CSS, JavaScript, jQuery
+
+What is Website?
+A website is a collection of web pages or web documents that are accessed through the Internet.
+
+Types of Websites:
+Static websites :  Static websites are written in HTML and CSS only.
+
+Dynamic Websites: Dynamic websites are generated in real-time with Client+Server technologies
+Example: HTML,CSS,JS, PYTHON, Django ASP JSP PHP PERL ...
+
+Script:
+A script is a type of programming language that can be used to fetch and display Web pages
+
+Types of Scripts:
+Client side Scritps:
+A script which executes in the web browser is called as client side script. Like HTML, Java Script etc...
+
+Server Side Scripts:
+This script executes in the web server. 
+Example: ASP, PHP, JSP, PERL etc...
+
+Library
+A library is a collection of precompiled routines that a program can use.
+
+FRAMEWORK
+A framework, is a platform for developing software applications. It include code libraries, a compiler, and other programs.
+
+Web Framework (WF) or WAF Web Application Framework:
+A web framework is a server-side application framework which is designed to support the development of dynamic websites.

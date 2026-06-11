@@ -1,0 +1,86 @@
+STEP1: Develop required project in Django with Any IDE
+
+STEP2:If any Folder starts with . (period) remove it (.idea, .git, venv), If you want to view these files go views, select show hidden files, folders and drives.
+$cd Project Name
+
+STEP3:C:\Program Files\Heroku\bin (Do the path settings)
+$pip install django-heroku
+Login heroku:
+$heroku login
+
+STEP4:
+Goto Project Folder, Create Virtual Environment..!!
+$virtualenv .
+
+STEP5:
+Goto Project folder and activate the virtual enviroment
+I:\herokuproject>.\Scripts\activate
+(herokuproject) I:\herokuproject>
+
+STEP6:
+(herokuproject) I:\herokuproject> py manage.py runserver
+Traceback (most recent call last):
+ModuleNotFoundError: No module named 'django'
+
+STEP7:
+$pip install django
+All project required resources need to install in the virtual enviroment..!!
+
+STEP8:
+Create a Procfile in ourproject folder where manage.py existed...!!
+Open the file and paste: web: gunicorn MBF.wsgi & save it.
+Create a runtime.txt in ourproject folder where manage.py existed...!!
+Open the file python-3.7.0
+This Procfile requires Gunicorn, the production web server that we recommend for Django applications.
+$pip install gunicorn
+$ ren Procfile.txt Procfile
+web: gunicorn locallibrary.wsgi --log-file -
+web: gunicorn herokuproject.wsgi
+$pip freeze > requirements.txt
+
+Runtime
+The runtime.txt file, if defined, tells Heroku which programming language to use. Create the file in the root of the repo and add python-3.7.0
+$ notepad runtime.txt 
+
+STEP9:
+$pip install django-heroku
+$ pip install dj-database-url
+
+STEP10:
+Add stuff to settings.py file
+Add the following import statement to the top of settings.py:
+import django_heroku
+
+Then add the following to the bottom of settings.py:
+#To activate Django-Heroku.
+django_heroku.settings(locals())
+
+import django_heroku
+ALLOWED_HOSTS = ['*']
+
+configure the following @ middlewares
+'whitenoise.middleware.WhiteNoiseMiddleware',
+
+Database configure the following exist comment it
+import dj_database_url
+DATABASES = {
+    'default': dj_database_url.config()
+}
+
+End of settings.py
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_URL = '/static/'
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+django_heroku.settings(locals())
+
+C:\Program Files\Git\bin\
+STEP11:
+$git init
+$git status
+$git add manage.py ProjectName WebApp static templates requirements.txt Procfile runtime.txt
+$git commit -m "first commit"

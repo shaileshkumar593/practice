@@ -1,0 +1,65 @@
+﻿STEP11:
+$py manage.py  createsuperuser
+After successful creation of the super user Login into admin through http://127.0.0.1:8000/admin/
+Find "Users" under Authentication and Authorization.
+
+STEP12:
+Click on Adduser, Enter the required details and click on save, It show cross symbol means normal user. 
+STAFF STATUS indicates Super User. 
+
+NOTE:
+Logout from super-user, for perfect server response..!!
+
+STEP13:views.py (Update)
+from django.contrib.auth.decorators import login_required
+@login_required
+def Customer(request):
+    return render(request,'MyApp/Customer.html')
+
+STEP14:
+if you click on customer link, you will get error, Page not found (404) django auth generates the following URL: http://127.0.0.1:8000/accounts/login/?next=/cust/
+
+STEP15:
+urls.py add the following:
+from django.urls import path,include
+path('accounts/',include('django.contrib.auth.urls')),
+
+It displays the following error:
+TemplateDoesNotExist at /accounts/login/
+
+STEP:16 
+Goto templates folder, Create registration folder ==> login.html
+<!DOCTYPE html>
+{%extends 'MyApp/base.html'%}
+      {%block body_block%}
+       <div class="container" align='center'>
+         <h1>Login to View Account Details...</h1>
+         <form  method="post">
+           {{form.as_p}}
+           {%csrf_token%}
+           <button type="submit" class='btn btn-lg btn-primary'>Login</button>
+         </form>
+       </div>
+      {%endblock%}
+
+Send the request to web server, Click on Customers link..!!
+Enter User Name:
+Enter Password:
+
+STEP17:
+Goto base.html file : 
+<li> <a href="/accounts/login">Login</a> </li> 
+Refresh the server. click on Login..!!
+
+If you enter the following credentials
+Enter User Name:
+Enter Password:
+Click on Login link, It displays the following Error Msgs..!!
+
+Page not found (404)
+Request Method: 	GET
+Request URL: 	http://127.0.0.1:8000/accounts/profile/
+
+STEP18:
+To avoid that error go to settings.py file, under STATIC_URL, configure the following address
+LOGIN_REDIRECT_URL='/' ==> It redirect to home page..!!

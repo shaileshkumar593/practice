@@ -1,0 +1,172 @@
+﻿Django Static Files Handling
+What are Static files?
+Static files are those files which can not be processed, generated or modified by the server.
+
+Benefits of Static Files
+1They are static
+2 Static files are easier to cache
+3 Static files are energy efficient
+
+Working with Django Advanced Templates:
+1)Template Inheritance
+2)Template Filters
+
+Define Template Inheritance:
+It is an approach to managing templates that resembles object-oriented programming techniques. This keeps template management minimal and efficient. It allows you to build a base "skeleton" template that contains all the common elements of your site and defines blocks that child templates can override. 
+
+base.html
+It defines a simple HTML skeleton document that you might use for a simple two-column page. It is the job of "child" templates to fill the empty blocks with content. 
+
+block: 
+It Defines a block that can be overridden by child templates. All the block tag does is to tell the template engine that a child template may override those portions of the template.
+
+Syntax:
+{% block child_block %} 
+
+{% endblock %}
+
+NOTE: 
+child_block name is any name we can write as per the business requirements..!!
+
+Example:
+{% block title %}
+My amazing blog for NEWS
+{% endblock %}
+
+Example:
+{% block content %}
+{% for entry in blog_entries %}
+    <h2>{{ entry.title }}</h2>
+    <p>{{ entry.body }}</p>
+{% endfor %}
+{% endblock %}
+
+child.html
+The extends tag is the key here. It tells the template engine that this template "extends" another template. When the template system evaluates this template, first it locates the parent "base.html".
+
+extends: 
+It Signals that this template extends a parent template.
+
+Syntax:
+{% extends 'AppName/base.html' %}
+{% block child_block %}
+Child Specific code we need develop here...!!
+{% endblock %}
+
+Example:
+<!DOCTYPE html>
+{% extends 'MyApp/base.html' %}
+{% block body_block %}
+<h1>Welcome to NareshIT..!!</h1>
+{% endblock %}
+
+Live Example on Template Ineritance
+STEP1:
+$django-admin startproject AdvTemplate
+$cd AdvTemplate
+$django-admin startapp WebApp
+
+STEP2:
+Do required settings, create templates, static resources.
+
+STEP3:
+In templates folder ==> base.html, home.html, courses.html, sports.html, news.html, MyFile.css..!!
+
+STEP4: base.html
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello Template Inheritance</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/MyFile.css' %}">
+</head>
+<body>
+<nav class="navbar navbar-default navbar-inverse">
+  <div class="container">
+    <div class="navbar-header">
+       <a class="navbar-brand" href="/">Django_NareshIT</a>
+    </div>
+     <ul class="nav navbar-nav">
+        <li class="active"><a href="/">Home</a></li>
+        <li><a href="/sports">Sports</a></li>
+        <li><a href="/news">News</a></li>
+        <li><a href="/courses">Courses</a></li>
+      </ul>
+  </div>
+</nav>
+{% block body_block %}
+{% endblock %}
+</body>
+</html>
+
+STEP5:home.html
+<!DOCTYPE html>
+{% extends 'MyApp/base.html' %}
+{% block body_block %}
+<h1>Django Web Framework Home Page..!!</h1>
+{% endblock %}
+
+STEP6:courses.html
+<!DOCTYPE html>
+{% extends 'MyApp/base.html' %}
+{% block body_block %}
+<h1>Welcome to IT Courses..!!</h1>
+{% endblock %}
+
+STEP7:news.html
+<!DOCTYPE html>
+{% extends 'MyApp/base.html' %}
+{% block body_block %}
+<h1>Welcome to Latest NEWS..!!</h1>
+{% endblock %}
+
+STEP8:sports.html
+<!DOCTYPE html>
+{% extends 'MyApp/base.html' %}
+  {% block body_block  %}
+  <h1>Sports Related INFORMATION...!! </h1>
+  {% endblock %}
+
+STEP9:MyFile.css
+h1{
+text-align:center;font-size:90px;
+}
+
+STEP10:views.py
+from django.shortcuts import render
+# Create your views here.
+def Home_View(request):
+    return render(request,'MyApp/home.html')
+def Sports_View(request):
+    return  render(request,'MyApp/sports.html')
+def News_View(request):
+    return  render(request,'MyApp/news.html')
+def Courses_View(request):
+    return  render(request,'MyApp/courses.html')
+
+STEP11:urls.py
+from django.contrib import admin
+from django.urls import path
+from WebApp import views
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('',views.Home_View),
+    path('news/',views.News_View),
+    path('sports/',views.Sports_View),
+    path('courses/',views.Courses_View),
+]
+
+STEP12:
+Send the request to server, http://127.0.0.1:8000/
+
+Advantages of Template Inheritance:
+1). It promotes Code Reusability (DRY).
+2). It improves readability and reduces time.
+3). It provides same look and feel for complete WebApp.
+
+Note: 
+Based on our business requirement we can extend any number of base templates. Multiple Inheritance is applicable for Templates.
+
+https://docs.djangoproject.com/en/2.1/ref/templates/builtins/

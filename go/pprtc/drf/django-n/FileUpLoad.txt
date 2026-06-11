@@ -1,0 +1,116 @@
+DJANGO FILE UPLOAD (DFU):
+In realtime projects, we can do file upload in django effectively through DFU.
+
+1. Basic Concepts
+Sending a file using POST method
+Set proper form encode type ==> enctype="multipart/form-data"
+Files are uploaded to request.FILES
+Dictionary Like Object
+Each file is UploadedFile Instance
+
+For reference:
+https://docs.djangoproject.com/en/2.1/topics/http/file-uploads/
+
+2 Configuration: settings.py 
+1. Media Root
+MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+
+2. Media URL
+MEDIA_URL ='/media/'
+
+3. Saving Media files on local Machine @ urls.py
+from django.conf import settings
+from django.conf.urls.static import static
+
+if settings.DEBUG:
+    urlpatterns +=static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)
+    urlpatterns +=static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+Handling Uploaded Files:
+1.Filestorage API-FileSystemStorage
+2. Model form fields FileField or ImageField
+
+Basics of File Upload:
+1 When files are submitted to the server, the file data ends up placed in request.FILES.
+2 It is mandatory for the HTML form to have the attribute enctype="multipart/form-data" set correctly. Otherwise the request.FILES will be empty.
+3 The form must be submitted using the POST method.
+4 Django have proper model fields to handle uploaded files: FileField and ImageField.
+5 The files uploaded to FileField or ImageField are not stored in the database but in the filesystem.
+6 FileField and ImageField are created as a string field in the database (usually VARCHAR), containing the reference to the actual file.
+7 If you delete a model instance containing FileField or ImageField, Django will not delete the physical file, but only the reference to the file.
+8 The request.FILES is a dictionary-like object. Each key in request.FILES is the name from the <input type="file" name="" />.
+9 Each value in request.FILES is an UploadedFile instance.
+10 You will need to set MEDIA_URL and MEDIA_ROOT in your project’s settings.py.
+
+LIVE  EXAMPLE ON SIMPLE FILE UPLOAD:
+STEP1:
+$django-admin startproject UploadFile
+$cd UploadFile
+
+STEP2:
+$django-admin startapp WebApp
+Configure required settings like templates, static, and Media
+
+STEP3:
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Working With Django File Upload..!!</title>
+</head>
+<body>
+<form method="POST"  enctype="multipart/form-data">
+{% csrf_token %}
+    <input type="file" name="myfile"> <br>
+    <button type="submit">Upload</button>
+</form>
+{% if uploaded_file_url %}
+    <p>File Uploaded at: <a href="{{ uploaded_file_url }}">{{ uploaded_file_url }}</a></p>
+  {% endif %}
+</body>
+</html>
+
+STEP4: views.py
+from django.shortcuts import render
+from django.core.files.storage import FileSystemStorage
+
+def simple_upload(request):
+    if request.method == 'POST' and request.FILES['myfile']:
+        myfile = request.FILES['myfile']
+        print(myfile.name)
+        print(myfile.size)
+        fs = FileSystemStorage()
+        filename = fs.save(myfile.name, myfile)
+        uploaded_file_url = fs.url(filename)
+        return render(request, 'SimpleUp.html',{'uploaded_file_url': uploaded_file_url})
+    return render(request, 'SimpleUp.html')
+
+STEP5: urls.py
+from django.contrib import admin
+from django.urls import path
+from WebApp import views
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('upload/',views.simple_upload),
+]
+
+NOTE:
+Uploaded file unable to display, Page not found (404)
+
+STEP6:
+Goto settings.py add under OS
+MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+Goto settings.py add under STATIC_URL
+MEDIA_URL ='/media/'
+
+STEP7:urls.py  (Add the the following media settings)
+from django.conf import settings
+from django.conf.urls.static import static
+
+if settings.DEBUG:
+    urlpatterns +=static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)
+    urlpatterns +=static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+STEP8:
+Run the server, send the request http://127.0.0.1:8000/upload
+Click on Browse Button, select the media (image, audio, video) resource location. Click on Upload, Click on the link to open uploaded resources on the new tab of the web browser..!!

@@ -1,0 +1,236 @@
+WORKING WITH DJANGO FORMS:
+
+What are Forms?
+Forms are a collection of HTML elements to take input from the user. The input elements come inside <form></form> tags.
+
+It is a class which is used to create an HTML form by using the Model. It is an efficient way to create a form without writing HTML code. Django automatically does it for us to reduce the application development time. 
+
+Example: 
+Signin, Signup, Enquiry, Feedback forms..!! 
+
+Advantages of Django Forms:
+1)We can develop forms with python code
+2)We can generate HTML Form widgets
+3)Validating data is simple and easy
+4)Processing data into python data structures like list, set.!
+
+LIVE PROJECT ON DJANGO FORMS:
+
+STEP1: Create Project
+$django-admin startproject djFormsProject
+$cd djFormsProject
+
+STEP2:Create Application
+$django-admin startapp WebApp
+
+STEP3:$py manage.py runserver
+
+STEP4:Open Project with PyCharm or Any IDE(ATOM, Visual Studio Code, Sublime, Brackets..)
+
+STEP5: Do required settings, App configuration @ Installed Apps, Template configuration @ TEMPLATES, Static Configuration @ End of the settings.py.	
+
+STEP6: Create inside the WebApp: forms.py
+from django import forms
+class EmpForm(forms.Form):
+    Name=forms.CharField()
+    Job=forms.CharField()
+    Loc=forms.CharField()
+    Salary=forms.FloatField()
+     
+NOTE:
+Name,Job,Loc and Salary are the field names which are available in html form like labels.
+
+STEP-7: views.py:
+from django.shortcuts import render
+from WebApp import forms
+# Create your views here.
+def EmpView(request):
+    form=forms.EmpForm()
+    return render(request,'MyApp/Welcome.html',{'form':form})
+
+NOTE:
+views.py file is responsible to send this form to the template html file
+
+STEP-8: Welcome.html
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Forms</title>
+    <link rel="stylesheet" href="{% static 'css/MyFile.css'%}">
+</head>
+<body>
+{{ form }}
+</body>
+</html>
+
+NOTE
+Inside template file we have to use template tag to inject form {{form}}. It will add only form fields. 
+
+STEP9:MyFile.css
+body{
+background-image:url(https://image.shutterstock.com/image-vector/jungle-zoo-themed-animal-background-450w-1018271374.jpg);
+background-repeat:no-repeat;
+background-size:cover;
+}
+
+STEP-10:urls.py
+from django.contrib import admin
+from django.urls import path
+from WebApp import views
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('djforms/',views.EmpView),
+]
+
+Step11: 
+Send the request to Web Server. http://127.0.0.1:8000/djforms
+
+What is HTTP?
+http is the common language between client and server. HTTP is a generic and stateless protocol which can be used for other purposes as well using extensions of its request methods, error codes, and headers.
+
+Client
+The HTTP client sends a request to the server in the form of a request method.
+
+Server
+The HTTP server responds with a status line, including the message's protocol version and a success or error code.
+
+Basic Features
+1. connectionless	2. media independent	3. stateless
+
+http request methods:
+get, post, put, delete, trace, connect, head, move, lock, profind, options 
+
+Define GET:
+A GET request retrieves data from a web server by specifying parameters in the URL portion of the request. Get means read operation.
+
+Define POST:
+The POST method is used when you want to send some data to the server, for example, file update, form data, etc. Post means update operation.
+
+How to send GET Request:
+1. Open the web browser enter URL and Submit
+2. Click the anchor tag or Hyperlinks
+3. <form action="target">...</form>
+4. <form action="target" method='GET' ></form>
+
+How to Send POST request:
+1. <form method="post">...</form>
+
+HTTP - Responses (Status Messages)
+1xx-199: Informational Messages
+2xx-299: Success Messages
+3xx-399: Redirection Messages
+4xx-499: Client Side Messages
+5xx-599: Server Side Messages
+
+EXAMPLE:
+LIVE EXAMPLE ON FORMS WITH BOOTSTRAP CONTROLS:
+
+STEP1: Create Project
+$django-admin startproject Forms_Project
+$cd Forms_Project
+
+STEP2:Create Application
+$django-admin startapp WebApp
+
+STEP3:$py manage.py runserver
+
+STEP4:Open Project with PyCharm or Any IDE(ATOM, Visual Studio Code, Sublime, Brackets..)
+
+STEP5: Do required settings, App configuration @ Installed Apps, Template configuration @ TEMPLATES, Static Configuration @ End of the settings.py.
+
+STEP6: forms.py
+from django import forms
+class EmpForm(forms.Form):
+    Name=forms.CharField()
+    Job=forms.CharField()
+    Loc=forms.CharField()
+    Salary=forms.FloatField()
+
+STEP7: views.py:
+from django.shortcuts import render
+from WebApp import forms
+# Create your views here.
+def EmpView(request):
+    form=forms.EmpForm()
+    MyDict={'form':form}
+    return render(request,'MyApp/Welcome.html',MyDict)
+
+STEP8: Welcome.html:
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Django Forms..!!</title>
+    <link rel="stylesheet" href="Copy Bootstrap CDN Link">
+    <link href="{% static 'css/MyFile.css' %}" rel="stylesheet">
+</head>
+<body>
+<h1>Employee Sample Form..!!</h1>
+<div class="container" align="center">
+<form method="post">
+{{ form.as_p }}
+<input type="submit" value="Employee" class="btn btn-success">
+</form>
+</div>
+</body>
+</html>
+
+Step9:MyFile.css
+body{
+background-image:url(https://image.shutterstock.com/image-vector/jungle-zoo-themed-animal-background-450w-1018271374.jpg);
+background-repeat:no-repeat;
+background-size:cover;
+}
+
+h1{
+color:red;text-align:center;font-family:candara;
+}
+
+Step:10 urls.py
+from django.contrib import admin
+from django.urls import path
+from WebApp import views
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('djforms/',views.EmpView),
+]
+
+Step:11 : 
+Send the request to Web Server. http://127.0.0.1:8000/djforms/
+
+NOTE:
+If method='post' not declared it never shows any Forbidden Error.
+ 
+NOTE:
+If we submit this form we will get 403 status code response Forbidden (403) CSRF verification failed. Request aborted.
+
+1 CSRF  (Cross Site Request Forgery) token missing or incorrect.
+2 Every form should satisfy CSRF Verification, otherwise Django won't accept our form.
+3 It is meant for website security.
+4 But we have to add csrf_token in our form @ Template.
+
+Go To Welcome.html:
+<body>
+<h1>Employee Sample Form..!!</h1>
+<div class="container" align="center">
+<form method="post">
+{{ form.as_p }}
+    {% csrf_token %}
+</form>
+</div>
+</body>
+
+NOTE:
+If we add csrf_token then in the generate form the following hidded field will be added,which makes our post request secure.
+
+Inspect Element(F12) & Observe the following:
+<input type='hidden' name='csrfmiddlewaretoken' value='1ZqIJJqTLMVa6RFAyPJh7pwzyFmdiHzytLxJIDzAkKULJz4qHcetLoKEsRLwyz4h'/>
+
+NOTE:
+The value of this hidden field is keep on changing from request to request.Hence it is impossible to forgery of our request.If you are opening view source code, it displays "Document Expired".
+
+
+

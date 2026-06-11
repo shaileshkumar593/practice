@@ -1,0 +1,512 @@
+In Go (Golang), “gotchas” are common mistakes or surprising behaviors that can cause bugs — especially in concurrency-heavy backend systems (which you often work with 🚀).
+
+Here are the most important Go gotchas from beginner → advanced level.
+
+1️⃣ Loop Variable Capture in Goroutines (Very Common Bug)
+❌ Problem
+for i := 0; i < 5; i++ {
+	go func() {
+		fmt.Println(i)
+	}()
+}
+❗ Output (unexpected)
+5
+5
+5
+5
+5
+✅ Why?
+The goroutine captures the same i variable, not its value.
+
+✅ Fix
+for i := 0; i < 5; i++ {
+	go func(i int) {
+		fmt.Println(i)
+	}(i)
+}
+
+2️⃣ Nil Interface vs Nil Pointer
+This is a famous Go trap.
+
+var p *int = nil
+var i interface{} = p
+
+fmt.Println(i == nil) // false ❗
+Why?
+Interface = (type, value)
+
+Even though value is nil, type is *int, so interface is NOT nil.
+
+3️⃣ Defer Inside Loop
+for i := 0; i < 3; i++ {
+	defer fmt.Println(i)
+}
+Output:
+2
+1
+0
+Why?
+defer uses LIFO (stack)
+
+Executes after function returns
+
+4️⃣ Map Is NOT Thread Safe
+m := make(map[int]int)
+
+go func() {
+	m[1] = 10
+}()
+
+go func() {
+	fmt.Println(m[1])
+}()
+❗ Panic:
+fatal error: concurrent map read and map write
+✅ Fix
+Use:
+
+sync.Mutex
+
+sync.RWMutex
+
+sync.Map
+
+5️⃣ Slice Append May Reallocate
+s := []int{1, 2, 3}
+t := s
+
+s = append(s, 4)
+
+fmt.Println(t) // may not include 4
+If capacity exceeded → new array allocated.
+
+6️⃣ Zero Values Are Valid Values
+In Go:
+
+var m map[string]int
+m["a"] = 1 // panic
+Because map is nil.
+
+But:
+
+var s []int
+s = append(s, 1) // works
+Slice nil → safe for append
+Map nil → panic on write
+
+7️⃣ Range Over Slice Copies Value
+nums := []int{1,2,3}
+
+for _, v := range nums {
+	v = v * 10
+}
+Original slice unchanged.
+
+Fix
+for i := range nums {
+	nums[i] *= 10
+}
+8️⃣ Comparing Structs With Slices Fails
+type A struct {
+	Name string
+	Data []int
+}
+You cannot compare two A values using ==.
+
+Because slice is not comparable.
+
+9️⃣ Channel Deadlock
+ch := make(chan int)
+
+ch <- 1 // deadlock
+No receiver.
+
+🔟 Goroutine Leak
+func worker(ch chan int) {
+	for {
+		<-ch
+	}
+}
+If ch never closed → goroutine leak.
+
+1️⃣1️⃣ Recover Only Works Inside Deferred Function
+func main() {
+	recover() // does nothing
+}
+Must be:
+
+defer func() {
+	if r := recover(); r != nil {
+		fmt.Println("Recovered:", r)
+	}
+}()
+1️⃣2️⃣ Shadowing Variables (Very Dangerous)
+err := doSomething()
+
+if err != nil {
+	err := fmt.Errorf("wrapped: %w", err) // NEW err
+	fmt.Println(err)
+}
+Outer err unchanged.
+
+1️⃣3️⃣ String Is Immutable
+s := "hello"
+s[0] = 'H' // compile error
+Must convert to []byte.
+
+1️⃣4️⃣ JSON Unexported Fields Not Marshaled
+type User struct {
+	name string
+}
+Will NOT be marshaled.
+
+Must be:
+
+type User struct {
+	Name string
+}
+1️⃣5️⃣ Context Not Passed Properly (Production Gotcha)
+Common backend mistake:
+
+http.Get(url)
+Instead of:
+
+req, _ := http.NewRequestWithContext(ctx, "GET", url, nil)
+Without context → no timeout → goroutine leaks.
+
+🧠 Advanced Production Gotchas (Important for You)
+Since you work with:
+
+Kafka
+
+High RPS systems
+
+Goroutines
+
+Atomic counters
+
+Watch for:
+
+🔴 Lock Contention
+Heavy mutex usage reduces scalability.
+
+🔴 Unbounded Goroutines
+for {
+	go handle()
+}
+Use worker pool.
+
+🔴 Large Struct Copy
+Pass pointer instead of large struct by value.
+
+🚀 Top 5 Most Dangerous in Real Systems
+Loop variable capture
+
+Map concurrency panic
+
+Goroutine leaks
+
+Nil interface confusion
+
+Context misuse
+
+If you want, I can next give:
+
+🔥 Go Interview Gotchas (with tricky questions)
+
+🚀 Real Production Debugging Examples
+
+🧠 Concurrency Gotchas Deep Dive
+
+📊 Memory & GC Gotchas
+
+⚡ Performance Gotchas
+
+Which one do you want?
+
+
+You said:
+yes
+
+ChatGPT said:
+Great 👍 Since you're working heavily with goroutines, Kafka, high RPS systems, atomic ops, let’s go deep.
+
+🔥 Advanced Go Concurrency Gotchas (Production Level)
+These are the ones that break real backend systems.
+
+1️⃣ Goroutine Leak (Silent Killer)
+❌ Bad Code
+func worker(ch chan int) {
+	for {
+		v := <-ch
+		fmt.Println(v)
+	}
+}
+If:
+
+channel never closed
+
+sender stops
+
+no context cancellation
+
+👉 This goroutine will live forever.
+
+🔥 In production:
+Memory slowly increases
+
+CPU stable
+
+Hard to detect
+
+✅ Proper Pattern (With Context)
+func worker(ctx context.Context, ch <-chan int) {
+	for {
+		select {
+		case v := <-ch:
+			fmt.Println(v)
+		case <-ctx.Done():
+			return
+		}
+	}
+}
+Always use:
+
+context
+
+channel close
+
+graceful shutdown
+
+2️⃣ Unbounded Goroutines (1M RPS Disaster)
+❌ Dangerous Pattern
+http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+	go processRequest(r)
+})
+If traffic spikes:
+
+50K requests
+
+50K goroutines
+
+memory explosion
+
+✅ Worker Pool Pattern
+jobs := make(chan Request, 1000)
+
+for i := 0; i < 100; i++ {
+	go worker(jobs)
+}
+
+func handler(w http.ResponseWriter, r *http.Request) {
+	jobs <- Request{}
+}
+Bound concurrency.
+
+3️⃣ Channel Blocking Under Load
+Unbuffered channel:
+
+ch := make(chan int)
+If sender faster than receiver → blocking → throughput collapse.
+
+✅ Solution
+Use buffered channel:
+
+ch := make(chan int, 10000)
+But:
+
+⚠️ Large buffer = memory spike risk.
+
+Better: Use backpressure logic.
+
+4️⃣ Context Ignored in HTTP / DB / Kafka
+Very common production mistake.
+
+❌ Wrong
+db.Query("SELECT ...")
+No timeout.
+
+If DB hangs → goroutine leak.
+
+✅ Correct
+ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
+defer cancel()
+
+db.QueryContext(ctx, "SELECT ...")
+Always propagate context.
+
+5️⃣ sync.Mutex Lock Contention
+Heavy lock use:
+
+mu.Lock()
+counter++
+mu.Unlock()
+Under 1M RPS → CPU spikes.
+
+✅ Use Atomic
+var counter int64
+
+atomic.AddInt64(&counter, 1)
+Much faster.
+
+6️⃣ RWMutex Misuse
+People think RWMutex is always faster.
+
+Not true.
+
+If:
+
+Writes frequent
+
+Reads frequent
+
+RWMutex becomes slower than Mutex.
+
+7️⃣ Closing Channel From Receiver
+Only sender should close.
+
+❌
+
+go func() {
+	close(ch)
+}()
+If sender still writing → panic.
+
+8️⃣ Slice Shared Between Goroutines
+data := []int{}
+
+go func() {
+	data = append(data, 1)
+}()
+
+go func() {
+	data = append(data, 2)
+}()
+Race condition.
+
+9️⃣ defer Inside High Throughput Loop
+for i := 0; i < 1000000; i++ {
+	defer fmt.Println(i)
+}
+Each defer allocates.
+
+Under heavy load → performance drop.
+
+🔟 Large Struct Passed By Value
+func process(req BigRequest) {}
+Copies entire struct.
+
+Better:
+
+func process(req *BigRequest) {}
+1️⃣1️⃣ select Without Default
+select {
+case ch <- value:
+}
+If no receiver → blocks forever.
+
+Add default if non-blocking behavior required.
+
+1️⃣2️⃣ time.After Memory Leak Pattern
+for {
+	select {
+	case <-time.After(1 * time.Second):
+		fmt.Println("tick")
+	}
+}
+Each time.After allocates timer.
+
+Better:
+
+ticker := time.NewTicker(time.Second)
+defer ticker.Stop()
+
+for {
+	select {
+	case <-ticker.C:
+		fmt.Println("tick")
+	}
+}
+1️⃣3️⃣ JSON Marshalling in Hot Path
+json.Marshal(obj)
+Allocates heavily.
+
+In 1M RPS system:
+
+GC pressure increases
+
+latency spikes
+
+Use:
+
+sync.Pool
+
+reuse buffers
+
+1️⃣4️⃣ Not Using pprof in Production
+Many engineers guess performance issues.
+
+Instead use:
+
+go tool pprof http://localhost:6060/debug/pprof/goroutine
+1️⃣5️⃣ Kafka Consumer Goroutine Leak Pattern
+Common mistake:
+
+for {
+	msg := consumer.ReadMessage(-1)
+	go process(msg)
+}
+If process slower than consumption:
+
+infinite goroutines
+
+OOM
+
+Use:
+
+worker pool
+
+max in-flight limit
+
+🚨 Real Production Failure Scenario
+High RPS API:
+
+Each request spawns 3 goroutines
+
+No context timeout
+
+Redis slow
+
+Goroutines pile up
+
+GC spikes
+
+Latency 5ms → 2 seconds
+
+System crashes
+
+Root cause:
+Unbounded goroutines + no timeout.
+
+🧠 Golden Rules for High-Performance Go
+Never spawn unbounded goroutines
+
+Always pass context
+
+Prefer atomic over mutex (when safe)
+
+Measure with pprof
+
+Use worker pools
+
+Avoid shared mutable memory
+
+Close channels correctly
+
+Design backpressure
+
+Since you're aiming for backend/system-level mastery:
+
+Next I can give you:
+
+🚀 

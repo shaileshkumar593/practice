@@ -1,0 +1,169 @@
+LIVE EXAMPLE ON TEMPLATE ENGINE:
+How to get data from the database and send to TEMPLATE.
+
+STEP1:
+$django-admin startproject TemplateProject
+STEP2:
+$django-admin startapp WebApp
+STEP3:
+Configure App,templates,static in settings.py, create templates==>MyApp==>Welcome.html
+STEP4:
+Create static ==> CSS ==> MyFile.css
+
+STEP5:models.py
+from django.db import models
+# Create your models here.
+class Emp(models.Model):
+    EmpId=models.IntegerField()
+    EmpName=models.CharField(max_length=30)
+    EmpSal=models.IntegerField()
+    EmpAdd=models.CharField(max_length=30)
+
+STEP6:
+$py manage.py makemigrations
+$py manage.py migrate
+
+STEP7:Creating Super User to login to admin Interface:
+$ python manage.py createsuperuser
+User Name:KSRAJU
+Email:ksrajupy@gmail.com
+Password:********
+Password(Again):********
+SuperUser Created Successfully..!!
+
+$ python manage.py runserver
+http://127.0.0.1:8000/admin
+Provide created username and password to login. It displays Django administration, It is a Django Admin Dashboard.  But we can't see any Emp table here, do the following..!!
+Register Model Inside Admin Interface: (admin.py)
+
+STEP8:admin.py
+from django.contrib import admin
+from WebApp.models import Emp
+# Register your models here.
+class EmpAdmin(admin.ModelAdmin):
+    list_display = ['EmpId','EmpName','EmpSal','EmpAdd']
+admin.site.register(Emp,EmpAdmin)
+
+NOTE: 
+Afer implementing admin.py, refresh the url. It show the Created Emp Table.
+
+Adding
+ Records..: 
+Click add  ==>Add few records==>Click on SAVE..!!
+Go to browser for sqlite, execute query
+select * from WebApp_Emp;
+
+STEP9:Welcome.html:
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Template Language</title>
+    <link rel="stylesheet" href="{% static 'css/MyFile.css'%}">
+</head>
+<body>
+<h1>EMPLOYEES LIST IS...!!</h1>
+{% if elist %}
+<table border="1px">
+    <thead>
+    <th>EMPID</th>
+    <th>EMPNAME</th>
+    <th>EMPSAL</th>
+    <th>EMPADD</th>
+    </thead>
+    {% for emp in elist %}
+    <tr>
+        <td>{{emp.EmpId}}</td>
+        <td>{{emp.EmpName}}</td>
+        <td>{{emp.EmpSal}}</td>
+        <td>{{emp.EmpAdd}}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% else %}
+<h2>Sorry No Records Found..!!</h2>
+{% endif %}
+</body>
+</html>
+
+STEP10:MyFile.css
+body{
+background-image:url(https://image.shutterstock.com/image-vector/jungle-zoo-themed-animal-background-450w-1018271374.jpg);
+background-repeat:no-repeat;
+background-size:cover;
+}
+table{
+margin:auto;background:yellow;
+}
+h1{
+color:red;text-align:center;font-family:tahoma;
+}
+
+STEP11:views.py:
+from django.shortcuts import render
+from WebApp.models import Emp
+# Create your views here.
+def EmpView(request):
+    EmpList=Emp.objects.all()
+    My_Dict={'elist':EmpList}
+    return render(request,'MyApp/Welcome.html',My_Dict)
+
+STEP12: urls.py
+from django.contrib import admin
+from django.urls import path
+from WebApp import views
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('Jinja/',views.EmpView),
+]
+
+STEP13:
+Send the requst to web server: http://127.0.0.1:8000/Jinja
+
+Faker Module: https://pypi.org/project/Faker/
+We can use Faker Module to generate fake data for our database models. Faker is a Python package that generates fake data for you.
+
+URL:
+https://anaconda.org/conda-forge/faker
+
+Installation: 
+$ conda install -c conda-forge faker 
+
+Syntax:
+from faker import Faker
+
+Example:
+from faker import Faker 
+fake = Faker() 
+print (fake.email()) 
+print(fake.country()) 
+print(fake.name()) 
+print(fake.text()) 
+print(fake.latitude(), fake.longitude()) 
+print(fake.url()) 
+
+Example:
+from faker import Faker
+fake=Faker()
+for i in range(10):
+    print(fake.address())
+
+Example:
+from faker import Faker 
+fake = Faker('hi_IN')
+for i in range(0, 10): 
+    print('Name->', fake.name(), 'Country->', fake.country()) 
+
+Example:
+from faker import Faker
+fake = Faker() 
+print(fake.profile()) 
+
+Example:
+from faker import Faker
+fake=Faker()
+for i in range(11):
+    print(fake.address()) #city(), name(), email() etc...........!!
+    print()

@@ -1,0 +1,16 @@
+<html>
+<head>
+<title>contact us</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+<body>
+<h2>Mail Sending Page..!!</h2>
+<hr>
+ <form  method="post">
+{% csrf_token %}
+     {{form.as_p}}
+ <button type="submit" name="save" class="btn btn-primary">submit </button>
+</form>
+</body>
+</html>
+
