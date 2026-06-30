@@ -1,0 +1,28 @@
+fastapi
+
+uvicorn[standard]
+
+sqlalchemy
+
+psycopg[binary]
+
+alembic
+
+pydantic
+
+python-dotenv
+
+python-jose[cryptography]
+
+passlib[bcrypt]
+
+python-multipart
+
+pydantic-settings
+
+alembic
+
+
+ +91-8885 25 26 27
+              +91-7207 21 24 27 
+              +91-7207 21 24 28     
