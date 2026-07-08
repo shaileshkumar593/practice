@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"sync"
+	"sync/once"
 )
 
 var once sync.Once

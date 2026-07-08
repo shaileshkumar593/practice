@@ -1,0 +1,15 @@
+{
+  "name": "typescript-course",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "start:first": "node dist/first.js",
+    "start:second": "node dist/second.js",
+    "start:third": "node dist/third.js"
+  },
+  "devDependencies": {
+    "@types/node": "^26.1.0",
+    "typescript": "^6.0.0-dev.20250731"
+  }
+}

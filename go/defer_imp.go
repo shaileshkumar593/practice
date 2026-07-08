@@ -16,6 +16,7 @@ func case1() (i int) {
 }
 
 // CASE 2: Named return + explicit return value
+// A deferred function can modify named return values before the function actually returns.
 func case2() (i int) {
 	defer func() {
 		i = 100

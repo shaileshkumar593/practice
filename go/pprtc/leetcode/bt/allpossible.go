@@ -7,9 +7,9 @@ import "fmt"
 func CombinationSum(data []int, target int)[][]int{
 	var result [][]int
 
-	var dfs func(start int, remain int, path []int)
+	var backtrack func(start int, remain int, path []int)
 
-	dfs = func(start int, remain int, path []int){
+	backtrack = func(start int, remain int, path []int){
 		if remain == 0{
 			temp := append([]int{}, path...)
 			result = append(result, temp)
@@ -27,7 +27,7 @@ func CombinationSum(data []int, target int)[][]int{
 		}
 	}
 
-	dfs(0, target, []int{})
+	backtrack(0, target, []int{})
 
 	return result
 }
