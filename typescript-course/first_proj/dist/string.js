@@ -1,0 +1,11 @@
+"use strict";
+let names = "Mohit";
+console.log(names);
+let firstname = "shailesh";
+let lastname = 'kumar';
+let courses = `pcm bio`;
+console.log(firstname, lastname, courses);
+let fullname = firstname + " " + lastname;
+console.log(fullname);
+let fullName = `My name is ${firstname} ${lastname}`;
+console.log(fullName);

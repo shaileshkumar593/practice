@@ -4,19 +4,19 @@ import "fmt"
 
 func main() {
 
-    ch := make(chan int, 3)
+	ch := make(chan int, 3)
 
-    ch <- 1
-    ch <- 2
-    ch <- 3
+	ch <- 1
+	ch <- 2
+	ch <- 3
 
-    close(ch)
+	close(ch)
 
-    for v := range ch {
-        fmt.Println(v)
-    }
+	for v := range ch {
+		fmt.Println(v)
+	}
 
-    fmt.Println("Done")
+	fmt.Println("Done")
 }
 
 /*
@@ -42,7 +42,7 @@ The sender is typically responsible for closing the channel.
 
 Receivers should generally not close channels they didn't create.
 
-A channel is a thread-safe communication mechanism used by goroutines 
+A channel is a thread-safe communication mechanism used by goroutines
 to exchange data and synchronize execution. It allows concurrent programs to communicate without explicitly sharing memory.
 
 */

@@ -1,0 +1,15 @@
+"use strict";
+let num = [70, 25, 42, 25];
+console.log(num);
+let numArry = [62, 24, 84];
+console.log(numArry);
+console.log(numArry.push(2012));
+console.log(numArry.push(2026));
+numArry.push(2425);
+console.log(numArry.pop());
+let thrice = num.map(number => number * 3);
+console.log(thrice);
+let fltr = num.filter(number => number > 25);
+console.log(fltr);
+let sumofval = num.reduce((sum, val) => sum + val);
+console.log(sumofval);
