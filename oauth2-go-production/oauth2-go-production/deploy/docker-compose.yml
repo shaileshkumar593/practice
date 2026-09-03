@@ -1,0 +1,30 @@
+services:
+  auth-server:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+      args:
+        APP: auth-server
+    environment:
+      AUTH_ADDR: ":9000"
+      JWT_ISSUER: "http://localhost:9000"
+      JWT_PRIVATE_KEY_FILE: "/app/secrets/private.pem"
+    ports:
+      - "9000:9000"
+    volumes:
+      - ../devkeys:/app/secrets:ro
+
+  resource-server:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+      args:
+        APP: resource-server
+    environment:
+      RESOURCE_ADDR: ":9100"
+      JWT_ISSUER: "http://localhost:9000"
+      JWKS_URL: "http://auth-server:9000/.well-known/jwks.json"
+    ports:
+      - "9100:9100"
+    depends_on:
+      - auth-server

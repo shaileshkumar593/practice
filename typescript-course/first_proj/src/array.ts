@@ -1,4 +1,4 @@
-let num :number[] = [70,25,42,25]
+let num1 :number[] = [70,25,42,25]
 console.log(num)
 
 
@@ -12,14 +12,14 @@ numArry.push(2425)
 console.log(numArry.pop())
 
 
-let thrice : number[] = num.map(number => number * 3)
+let thrice : number[] = num1.map(number => number * 3)
 console.log(thrice)
 
-let fltr :number[] = num.filter(number => number > 25);
+let fltr :number[] = num1.filter(number => number > 25);
 
 console.log(fltr)
 
-let sumofval : number = num.reduce(
+let sumofval : number = num1.reduce(
     (sum, val) => sum + val
 );
 

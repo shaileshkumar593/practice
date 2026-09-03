@@ -1,0 +1,6 @@
+bin/
+.env
+devkeys/
+*.pem
+*.key
+*.crt

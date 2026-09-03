@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: knowledge-mcp
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: knowledge-mcp
+  template:
+    metadata:
+      labels:
+        app: knowledge-mcp
+    spec:
+      containers:
+        - name: mcp
+          image: myregistry/knowledge-mcp:1.0.0
+          ports:
+            - containerPort: 8080
+          env:
+            - name: PORT
+              value: "8080"
+            - name: NEO4J_URI
+              value: "neo4j://neo4j.default.svc.cluster.local:7687"
+            - name: NEO4J_USER
+              valueFrom:
+                secretKeyRef:
+                  name: neo4j-secret
+                  key: username
+            - name: NEO4J_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: neo4j-secret
+                  key: password
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "1"
+              memory: "512Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: knowledge-mcp
+spec:
+  selector:
+    app: knowledge-mcp
+  ports:
+    - port: 8080
+      targetPort: 8080

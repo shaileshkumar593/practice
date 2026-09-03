@@ -1,0 +1,12 @@
+"use strict";
+const msg = "hello world";
+console.log(msg);
+console.time();
+console.log(Number.MAX_SAFE_INTEGER);
+let num;
+console.log(num);
+num = "hello";
+console.log(num);
+num = 145;
+console.log(num);
+console.timeEnd();
