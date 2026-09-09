@@ -1,0 +1,36 @@
+# Git
+.git
+.gitignore
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+
+# Database migrations
+migrations/
+
+# Build output
+bin/
+dist/
+build/
+
+# Tests / coverage
+coverage.out
+coverage.html
+
+# Logs
+*.log
+logs/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temporary files
+tmp/
+*.tmp
