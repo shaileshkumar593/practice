@@ -1,0 +1,16 @@
+# Rename this file to backend.tf after creating the remote-state bucket.
+#
+# The bucket must already exist.
+# Example:
+#
+# terraform {
+#   backend "s3" {
+#     bucket       = "REPLACE-WITH-YOUR-UNIQUE-STATE-BUCKET"
+#     key          = "terraform/dev/terraform.tfstate"
+#     region       = "ap-south-1"
+#     use_lockfile = true
+#     encrypt      = true
+#   }
+# }
+#
+# Never put AWS access keys in this file.
