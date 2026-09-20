@@ -1,0 +1,2 @@
+Advanced Rust: ownership/borrowing, lifetimes, traits/generics, Result/Option, error libraries, async/await, Tokio, concurrency, channels, synchronization and memory/thread safety.
+Axum, Actix Web or comparable Rust web framework; Serde; Cargo; rustfmt; Clippy; cargo test; dependency and feature management.

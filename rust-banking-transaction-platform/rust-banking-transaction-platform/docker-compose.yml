@@ -1,0 +1,33 @@
+services:
+  postgres:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: banking
+      POSTGRES_USER: banking
+      POSTGRES_PASSWORD: banking
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+
+  api:
+    build: .
+    depends_on:
+      - postgres
+      - redis
+    environment:
+      PORT: 3000
+      DATABASE_URL: postgres://banking:banking@postgres:5432/banking
+      REDIS_URL: redis://redis:6379
+      REQUEST_TIMEOUT_SECS: 10
+      RUST_LOG: rust_banking_transaction_platform=info,tower_http=info
+    ports:
+      - "3000:3000"
+
+volumes:
+  postgres_data:
