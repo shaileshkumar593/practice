@@ -1,0 +1,94 @@
+ Build and deploy AI/GenAI applications including Retrieval-Augmented Generation (RAG), conversational AI, agentic workflows, and intelligent automation solutions.
+
+• Design and develop scalable backend services, APIs, and integrations connecting AI models with enterprise data platforms and business applications.
+
+• Architect and manage cloud-native AI workloads running on containerized platforms including Kubernetes and Amazon EKS.
+
+• Build and maintain CI/CD pipelines, infrastructure-as-code, model deployment frameworks, monitoring, and operational telemetry.
+
+• Design secure networking solutions including VPC architecture, private connectivity, load balancing, service-to-service communication, API gateways, DNS, and network security controls.
+
+• Optimize AI application performance, scalability, availability, and cost efficiency across compute, storage, and networking layers.
+
+• Implement MLOps/LLMOps practices including model versioning, automated testing, deployment, observability, rollback, and lifecycle management.
+
+• Partner with business and technology stakeholders to deploy production-ready AI capabilities while adhering to governance, security, and audit requirements.
+
+Required Skillsets:
+
+• Bachelor's degree in Computer Science, Engineering, Mathematics, or related discipline.
+
+• Relevant software engineering experience, including experience in building and deploying AI/ML or Generative AI applications in production environments.
+
+• Strong Python development skills and experience with AI orchestration frameworks such as LangChain, LangGraph, CrewAI, AutoGen, or equivalent.
+
+• Hands-on experience implementing RAG architectures, vector databases, semantic search, and LLM integrations.
+
+• Experience deploying and operating applications on AWS, including EKS, ECS, Lambda, Bedrock, SageMaker, S3, and related platform services.
+
+• Strong knowledge of containerization technologies including Docker, Kubernetes, Helm, and container security practices.
+
+• Experience with networking concepts including TCP/IP, DNS, VPCs, security groups, IAM, API gateways, load balancers, ingress controllers, certificates, and private network connectivity.
+
+• Experience designing production-grade CI/CD pipelines using GitLab, GitHub, Jenkins, or equivalent tooling.
+
+• Strong understanding of software engineering, SDLC, security, resiliency, testing, and operational support practices.
+
+Desirable Skillsets:
+
+• Experience building agentic AI systems and multi-agent orchestration frameworks.
+
+• Experience operating AI platforms in regulated environments with formal governance, controls, auditability, and monitoring requirements.
+
+• Experience with platform engineering, Kubernetes administration, cluster operations, and cloud infrastructure automation (Terraform, CloudFormation, or equivalent).
+
+• Experience supporting large-scale AI deployment programs that span model development, infrastructure, governance, and production operations.
+
+You may be assessed on key essential skills relevant for success in role, such as risk and controls, change and transformation, business acumen, strategic thinking and digital and technology, as well as job-specific technical skills.
+
+This role is based out of Noida.
+
+Purpose of the role
+
+To use innovative data analytics and machine learning techniques to extract valuable insights from the bank's data reserves, leveraging these insights to inform strategic decision-making, improve operational efficiency, and drive innovation across the organisation. 
+
+Accountabilities
+
+Identification, collection, extraction of data from various sources, including internal and external sources.
+Performing data cleaning, wrangling, and transformation to ensure its quality and suitability for analysis.
+Development and maintenance of efficient data pipelines for automated data acquisition and processing.
+Design and conduct of statistical and machine learning models to analyse patterns, trends, and relationships in the data.
+Development and implementation of predictive models to forecast future outcomes and identify potential risks and opportunities.
+Collaborate with business stakeholders to seek out opportunities to add value from data through Data Science.
+Assistant Vice President Expectations
+
+To advise and influence decision making, contribute to policy development and take responsibility for operational effectiveness. Collaborate closely with other functions/ business divisions.
+Lead a team performing complex tasks, using well developed professional knowledge and skills to deliver on work that impacts the whole business function. Set objectives and coach employees in pursuit of those objectives, appraisal of performance relative to objectives and determination of reward outcomes
+If the position has leadership responsibilities, People Leaders are expected to demonstrate a clear set of leadership behaviours to create an environment for colleagues to thrive and deliver to a consistently excellent standard. The four LEAD behaviours are: L – Listen and be authentic, E – Energise and inspire, A – Align across the enterprise, D – Develop others.
+OR for an individual contributor, they will lead collaborative assignments and guide team members through structured assignments, identify the need for the inclusion of other areas of specialisation to complete assignments. They will identify new directions for assignments and/ or projects, identifying a combination of cross functional methodologies or practices to meet required outcomes.
+Consult on complex issues; providing advice to People Leaders to support the resolution of escalated issues.
+Identify ways to mitigate risk and developing new policies/procedures in support of the control and governance agenda.
+Take ownership for managing risk and strengthening controls in relation to the work done.
+Perform work that is closely related to that of other areas, which requires understanding of how areas coordinate and contribute to the achievement of the objectives of the organisation sub-function.
+Collaborate with other areas of work, for business aligned support areas to keep up to speed with business activity and the business strategy.
+Engage in complex analysis of data from multiple sources of information, internal and external sources such as procedures and practises (in other areas, teams, companies, etc).to solve problems creatively and effectively.
+Communicate complex information. 'Complex' information could include sensitive information or information that is difficult to communicate because of its content or its audience.
+Influence or convince stakeholders to achieve outcomes.
+All colleagues will be expected to demonstrate the Barclays Values of Respect, Integrity, Service, Excellence and Stewardship – our moral compass, helping us do what we believe is right. They will also be expected to demonstrate the Barclays Mindset – to Empower, Challenge and Drive – the operating manual for how we behave.
+
+
+
+
+https://machinelearningmastery.com/?s=Understanding+RAG+V
+https://machinelearningmastery.com/?s=Understanding+RAG+XI
+https://machinelearningmastery.com/how-to-build-a-robust-rag-system-with-minimal-resources/
+https://machinelearningmastery.com/lets-build-a-rag-powered-research-paper-assistant/
+https://machinelearningmastery.com/7-chunking-strategies-that-decide-whether-your-rag-works/
+https://machinelearningmastery.com/agentic-rag-explained-in-3-levels-of-difficulty/
+https://machinelearningmastery.com/5-techniques-for-efficient-long-context-rag/
+https://machinelearningmastery.com/understanding-rag-part-x-rag-pipelines-in-production/
+https://machinelearningmastery.com/the-roadmap-to-mastering-agentic-ai-design-patterns/
+https://machinelearningmastery.com/agentic-rag-explained-in-3-levels-of-difficulty/
+https://machinelearningmastery.com/building-graph-rag-system-step-by-step-approach/
+https://machinelearningmastery.com/building-a-simple-rag-application-using-llamaindex/
+https://machinelearningmastery.com/build-and-understand-a-vector-database-from-scratch-in-10-easy-steps/

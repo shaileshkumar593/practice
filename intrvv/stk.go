@@ -1,62 +1,100 @@
 package main
 
-import (
-	"fmt"
-)
+import "fmt"
 
-var top int = -1
+const size = 5
 
-func Pushele(s []int, size int, ele int) {
-	if len(s) > size {
-		fmt.Println("stack overflow")
+var stack []int
+
+// len(slice) >= 0 not check for -ve
+// Push adds an element to the stack
+func Push(ele int) {
+	if len(stack) >= size {
+		fmt.Println("Stack Overflow")
 		return
 	}
-	top = top + 1
-	s[top] = ele
 
+	stack = append(stack, ele)
+
+	fmt.Println("Element pushed:", ele)
 }
 
-func Popele(s []int) (ele int) {
-	if len(s) < 0 {
-		fmt.Println("stack  underflow")
-		return -1
-	}
-	ele = s[top]
-	top = top - 1
-	if top < 0 {
-		top = 0
-
+// Pop removes the top element
+func Pop() {
+	if len(stack) == 0 {
+		fmt.Println("Stack Underflow")
+		return
 	}
 
-	return ele
+	ele := stack[len(stack)-1]
+
+	stack = stack[:len(stack)-1]
+
+	fmt.Println("Element popped:", ele)
+}
+
+// Peek displays the top element
+func Peek() {
+	if len(stack) == 0 {
+		fmt.Println("Stack is empty")
+		return
+	}
+
+	fmt.Println("Top element:", stack[len(stack)-1])
+}
+
+// Display displays all available elements
+func Display() {
+	if len(stack) == 0 {
+		fmt.Println("Stack is empty")
+		return
+	}
+
+	fmt.Println("Stack:", stack)
 }
 
 func main() {
-	fmt.Println("Hello, World!")
-	var size int = 5
-	var choice int = 0
-	var ele int
-
-	stackList := make([]int, size)
 
 	for {
-		fmt.Println("1. push 2. pop ")
+
+		fmt.Println("\n========== STACK ==========")
+		fmt.Println("1. Push")
+		fmt.Println("2. Pop")
+		fmt.Println("3. Peek")
+		fmt.Println("4. Display")
+		fmt.Println("5. Exit")
+		fmt.Println("===========================")
+
+		var choice int
+
+		fmt.Print("Enter choice: ")
 		fmt.Scan(&choice)
 
 		switch choice {
+
 		case 1:
-			fmt.Println("enter element to insert")
+			var ele int
+
+			fmt.Print("Enter element: ")
 			fmt.Scan(&ele)
-			Pushele(stackList, size, ele)
+
+			Push(ele)
 
 		case 2:
-			fmt.Println(Popele(stackList))
-			stackList = stackList[:top]
+			Pop()
+
+		case 3:
+			Peek()
+
+		case 4:
+			Display()
+
+		case 5:
+			fmt.Println("Exiting...")
+			return
 
 		default:
-			fmt.Println("not correct choice")
-
+			fmt.Println("Invalid choice")
 		}
 	}
-
 }

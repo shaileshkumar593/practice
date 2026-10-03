@@ -32,4 +32,5 @@ func CombinationSum(data []int, target int) [][]int {
 
 func main() {
 	fmt.Println(CombinationSum([]int{1, 2, 3, 4, 5, 6}, 6))
+	fmt.Println(CombinationSum([]int{1, 1, 4, 5, -1}, 4))
 }

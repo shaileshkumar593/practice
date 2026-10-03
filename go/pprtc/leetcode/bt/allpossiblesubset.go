@@ -1,28 +1,26 @@
-package main 
-
+package main
 
 import "fmt"
 
-
-func CombinationSum(data []int, target int)[][]int{
+func CombinationSum(data []int, target int) [][]int {
 	var result [][]int
 
 	var dfs func(start int, remain int, path []int)
 
-	dfs = func(start int, remain int, path []int){
-		if remain == 0{
+	dfs = func(start int, remain int, path []int) {
+		if remain == 0 {
 			temp := append([]int{}, path...)
 			result = append(result, temp)
 			return
 		}
 
-		if remain < 0{
-			return 
+		if remain < 0 {
+			return
 		}
 
-		for i := start; i < len(data);i++{
+		for i := start; i < len(data); i++ {
 			path = append(path, data[i])
-			dfs(i, remain - data[i], path)
+			dfs(i, remain-data[i], path)
 			path = path[:len(path)-1]
 		}
 	}
@@ -33,5 +31,6 @@ func CombinationSum(data []int, target int)[][]int{
 }
 
 func main() {
-	fmt.Println(CombinationSum([]int{1,2, 3,4,5, 6}, 6))
+	fmt.Println(CombinationSum([]int{1, 2, 3, 4, 5, 6}, 6))
+
 }

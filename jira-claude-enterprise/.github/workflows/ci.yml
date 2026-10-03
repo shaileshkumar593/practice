@@ -1,0 +1,30 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main, master]
+  push:
+    branches: [main, master]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: pgvector/pgvector:pg17
+        env:
+          POSTGRES_PASSWORD: orchestrator
+          POSTGRES_USER: orchestrator
+          POSTGRES_DB: orchestrator
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U orchestrator -d orchestrator"
+          --health-interval 5s --health-timeout 5s --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - run: ruff check app tests
+      - run: pytest -q

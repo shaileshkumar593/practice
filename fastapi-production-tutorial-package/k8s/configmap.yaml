@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata: {name: fastapi-config, namespace: fastapi}
+data:
+  ENVIRONMENT: kubernetes
+  DEBUG: "false"
+  CORS_ORIGINS: https://example.com

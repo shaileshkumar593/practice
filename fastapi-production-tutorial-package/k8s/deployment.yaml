@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: fastapi-api, namespace: fastapi}
+spec:
+  replicas: 3
+  selector: {matchLabels: {app: fastapi-api}}
+  template:
+    metadata: {labels: {app: fastapi-api}}
+    spec:
+      containers:
+      - name: api
+        image: YOUR_ECR_REPOSITORY:TAG
+        ports: [{containerPort: 8000}]
+        envFrom:
+        - configMapRef: {name: fastapi-config}
+        - secretRef: {name: fastapi-secret}
+        readinessProbe: {httpGet: {path: /ready, port: 8000}, initialDelaySeconds: 5, periodSeconds: 10}
+        livenessProbe: {httpGet: {path: /health, port: 8000}, initialDelaySeconds: 10, periodSeconds: 20}
+        resources:
+          requests: {cpu: 100m, memory: 128Mi}
+          limits: {cpu: 500m, memory: 512Mi}
+        securityContext: {allowPrivilegeEscalation: false, runAsNonRoot: true}
